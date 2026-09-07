@@ -1,0 +1,152 @@
+schema_version: 2
+catalog_reviewed_at: "2026-09-07"
+status_legend:
+  OPERATIVE_LOCAL: executable without external financial infrastructure
+  REQUIRES_CREDENTIALS: adapter exists; authorized provider credentials are required
+  REQUIRES_CERTIFICATION: contracts, onboarding or scheme certification are required
+  REQUIRES_HARDWARE: certified or physical infrastructure is required
+  DOCUMENTED: engineering and curriculum coverage; no executable external integration
+families:
+  - id: cash
+    instrument: bearer_value
+    cases: [cash-register, cash-on-delivery, cash-in, cash-out, bank-deposit]
+    technologies: [cash-management, counterfeit-detection, chain-of-custody]
+    status: DOCUMENTED
+  - id: paper
+    instrument: payment_order
+    cases: [cheque, cashiers-cheque, bank-draft, money-order]
+    technologies: [image-clearing, micr, batch-clearing]
+    status: DOCUMENTED
+  - id: cards
+    instrument: card_account
+    cases: [credit, debit, prepaid, commercial, card-present, card-not-present, recurring, installments]
+    technologies: [iso8583, emv-chip, emv-contactless, 3ds, tokenization, hsm, pci-dss]
+    status: REQUIRES_CERTIFICATION
+  - id: chile-webpay
+    instrument: card_account
+    cases: [webpay-plus-create, commit, status, refund]
+    technologies: [rest-json, redirect, tls]
+    status: REQUIRES_CREDENTIALS
+    adapter: payments_lab.adapters.transbank.WebpayPlusProvider
+  - id: chile-khipu
+    instrument: bank_account
+    cases: [instant-payment, query, delete, void, refund]
+    technologies: [rest-json, api-key, webhook]
+    status: REQUIRES_CREDENTIALS
+    adapter: payments_lab.adapters.khipu.KhipuProvider
+  - id: mercado-pago
+    instrument: multi_method_psp
+    cases: [payments-api, query, refund]
+    technologies: [rest-json, oauth-token, idempotency, webhook]
+    status: REQUIRES_CREDENTIALS
+    adapter: payments_lab.adapters.mercadopago.MercadoPagoProvider
+  - id: acceptance-devices
+    instrument: card_or_wallet
+    cases: [pos, mpos, softpos, tap-to-pay, unattended-terminal]
+    technologies: [emv-l1, emv-l2, emv-l3, nfc, pci-pts, pin, dukpt]
+    status: REQUIRES_HARDWARE
+  - id: tokenized-wallets
+    instrument: tokenized_card_or_account
+    cases: [apple-pay, google-pay, samsung-wallet, click-to-pay]
+    technologies: [network-tokenization, cryptogram, device-binding, src, 3ds]
+    status: REQUIRES_CERTIFICATION
+  - id: stored-value
+    instrument: prefunded_balance
+    cases: [e-money, closed-loop-wallet, prepaid-account, gift-card, store-credit, loyalty]
+    technologies: [ledger, safeguarding, tokenization, qr, nfc]
+    status: DOCUMENTED
+  - id: mobile-money
+    instrument: electronic_money
+    cases: [cash-in, cash-out, p2p, merchant-payment, bill-pay]
+    technologies: [ussd, sim-toolkit, app, agent-network]
+    status: DOCUMENTED
+  - id: qr
+    instrument: overlay
+    cases: [merchant-presented, consumer-presented, static, dynamic]
+    technologies: [emv-qr, deep-link, crc, tokenization]
+    status: DOCUMENTED
+  - id: bank-transfer
+    instrument: bank_account
+    cases: [domestic, scheduled, wire, account-to-account, bulk-credit]
+    technologies: [api, batch-sftp, iso20022, account-validation]
+    status: DOCUMENTED
+  - id: ach
+    instrument: bank_account
+    cases: [credit-transfer, debit, payroll, bulk, returns]
+    technologies: [batch-clearing, files, iso20022-or-local-format]
+    status: DOCUMENTED
+  - id: direct-debit
+    instrument: mandate
+    cases: [pac, ach-debit, sepa-direct-debit, recurring-bank-debit]
+    technologies: [mandate-management, batch, api, prenotification]
+    status: DOCUMENTED
+  - id: instant-payments
+    instrument: bank_account
+    cases: [pix, upi, spei, fednow, rtp, faster-payments, sepa-instant]
+    technologies: [iso20022, aliases, qr, request-to-pay, api, real-time-settlement]
+    status: DOCUMENTED
+  - id: payment-initiation
+    instrument: overlay
+    cases: [payment-link, invoice, request-to-pay, deep-link]
+    technologies: [url, qr, api, notifications]
+    status: DOCUMENTED
+  - id: cash-voucher
+    instrument: voucher_reference
+    cases: [boleto, pay-at-store, barcode-voucher, collection-network]
+    technologies: [barcode, qr, batch, webhook]
+    status: DOCUMENTED
+  - id: credit-alternatives
+    instrument: credit
+    cases: [bnpl, pay-in-four, point-of-sale-loan, invoice-financing]
+    technologies: [underwriting, schedule, disclosures, autopay]
+    status: DOCUMENTED
+  - id: carrier-billing
+    instrument: telecom_account
+    cases: [direct-carrier-billing, premium-sms, airtime-deduction]
+    technologies: [operator-api, otp, settlement-files]
+    status: DOCUMENTED
+  - id: platform-payments
+    instrument: multi_party
+    cases: [marketplace, split-payment, connected-account, payout, reserve]
+    technologies: [kyc-kyb, ledger, api, bank-payout]
+    status: DOCUMENTED
+  - id: b2b
+    instrument: card_account_or_bank_account
+    cases: [virtual-card, purchasing-card, invoice-payment, edi, treasury-payment]
+    technologies: [erp, edi, iso20022, approval-workflow]
+    status: DOCUMENTED
+  - id: international
+    instrument: bank_account_or_cash
+    cases: [swift, correspondent-banking, remittance, cross-border-card, fx]
+    technologies: [swift-messaging, iso20022, sanctions-screening, fx-engine, tracking]
+    status: REQUIRES_CERTIFICATION
+  - id: high-value
+    instrument: central_bank_or_commercial_bank_money
+    cases: [rtgs, lbtr, wholesale-transfer, net-settlement]
+    technologies: [iso20022, liquidity-management, pki, participant-gateway]
+    status: REQUIRES_CERTIFICATION
+  - id: open-finance
+    instrument: bank_account
+    cases: [payment-initiation, consent, account-information]
+    technologies: [oauth2, oidc, fapi2, mtls, dpop, par, private-key-jwt]
+    status: REQUIRES_CERTIFICATION
+  - id: digital-assets
+    instrument: digital_asset
+    cases: [bitcoin, lightning, stablecoin, tokenized-deposit, cbdc]
+    technologies: [blockchain, wallet, custody, signing, node, indexer]
+    status: DOCUMENTED
+  - id: machine-payments
+    instrument: delegated_credential
+    cases: [iot, ev-charging, tolling, usage-based, machine-to-machine]
+    technologies: [device-identity, metering, policy-engine, tokenization]
+    status: DOCUMENTED
+  - id: agentic-payments
+    instrument: delegated_authority
+    cases: [agent-purchase, budget, approval, recurring-agent-payment, post-purchase-action]
+    technologies: [policy-engine, verifiable-intent, scoped-token, audit-log, human-in-the-loop]
+    status: DOCUMENTED
+cross_cutting:
+  messaging: [rest-json, soap-xml, grpc, iso8583, iso20022, batch-sftp, webhooks, queues]
+  security: [tls, mtls, oauth2, oidc, fapi2, pki, hsm, kms, tokenization, pci-dss]
+  operations: [idempotency, retries, polling, reconciliation, settlement, observability, incident-response]
+  risk: [fraud, aml-cft, sanctions, disputes, chargebacks, consumer-protection, privacy]

@@ -1,0 +1,29 @@
+lab:
+  id: PAY-RAIL-PROVIDER-001
+  provider: replace-me
+  rail: replace-me
+  country: CL
+  currency: CLP
+  environment: certification
+  operation: purchase
+  flow:
+    - create
+    - authenticate_if_required
+    - authorize_or_confirm
+    - query_status
+    - reconcile
+  required_evidence:
+    - sanitized_request
+    - sanitized_response
+    - provider_reference
+    - internal_state_transition
+    - reconciliation_result
+  failures:
+    - duplicate_request
+    - timeout
+    - lost_webhook
+    - unknown_state
+  prohibited_evidence:
+    - api_secret
+    - cvv
+    - full_pan
