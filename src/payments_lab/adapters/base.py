@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+
 class PaymentProvider(ABC):
     @abstractmethod
     def create(self, payload: dict, **kwargs): ...

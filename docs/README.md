@@ -8,7 +8,7 @@ La documentación está organizada por la pregunta que una persona necesita resp
 | ¿Qué medios existen y en qué se diferencian? | [Catálogo](payment-methods/CATALOG.md) |
 | ¿Qué componentes necesita una plataforma? | [Arquitectura](architecture/ARCHITECTURE.md) |
 | ¿Qué protocolos intervienen? | [Stack tecnológico](technology/STACK.md) |
-| ¿Qué hacen exactamente los adapters? | [Adaptadores](integrations/ADAPTERS.md) |
+| ¿Cómo se integra y opera cada proveedor? | [Contrato común](integrations/ADAPTERS.md) · [Khipu](integrations/KHIPU.md) · [Mercado Pago](integrations/MERCADO_PAGO.md) · [Webpay](integrations/TRANSBANK_WEBPAY_PLUS.md) · [Oneclick](integrations/TRANSBANK_ONECLICK.md) |
 | ¿Qué está realmente implementado? | [Cobertura](operations/COVERAGE.md) |
 | ¿Cómo se opera? | [Runbook](operations/RUNBOOK.md) |
 | ¿Cómo cuadran proveedor, ledger y banco? | [Conciliación](operations/RECONCILIATION_SETTLEMENT.md) |

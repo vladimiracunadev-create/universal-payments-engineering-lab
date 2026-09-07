@@ -1,7 +1,8 @@
 from dataclasses import dataclass, field
+from datetime import UTC, datetime
 from decimal import Decimal
-from datetime import datetime, timezone
 from uuid import uuid4
+
 
 @dataclass(frozen=True)
 class Entry:
@@ -9,12 +10,14 @@ class Entry:
     amount: Decimal
     currency: str
 
+
 @dataclass(frozen=True)
 class Journal:
     id: str
     reference: str
     entries: tuple[Entry, ...]
-    created_at: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+    created_at: str = field(default_factory=lambda: datetime.now(UTC).isoformat())
+
 
 class Ledger:
     def __init__(self):

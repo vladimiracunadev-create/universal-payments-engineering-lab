@@ -1,8 +1,10 @@
 import hashlib
 import json
 
+
 class IdempotencyConflict(RuntimeError):
     pass
+
 
 class IdempotencyStore:
     def __init__(self):

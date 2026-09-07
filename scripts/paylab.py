@@ -9,6 +9,5 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from payments_lab.cli import main  # noqa: E402
 
-
 if __name__ == "__main__":
     main()

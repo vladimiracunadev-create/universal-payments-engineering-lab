@@ -18,10 +18,12 @@
 | ledger balanceado | `OPERATIVE_LOCAL` | `core/ledger.py` + pruebas | DB, chart of accounts, uniqueness, cierre de período |
 | idempotencia por fingerprint | `OPERATIVE_LOCAL` | `core/idempotency.py` + pruebas | TTL, respuesta cacheada, atomicidad distribuida |
 | conciliación referencia/monto/moneda | `OPERATIVE_LOCAL` | `core/reconciliation.py` + pruebas | estado, fees, FX, lotes, fechas y workflow de excepciones |
-| HTTP JSON | `OPERATIVE_LOCAL` | `core/http.py` | retry policy, telemetry, TLS policy, redacción |
-| Khipu v3 | `REQUIRES_CREDENTIALS` | adapter + CLI | validar contrato vigente, webhooks y certificación propia |
-| Mercado Pago Payments | `REQUIRES_CREDENTIALS` | adapter + CLI | webhooks, estados completos y certificación propia |
+| HTTP JSON | `OPERATIVE_LOCAL` | `core/http.py` + pruebas | proxy/mTLS, telemetría y redacción del entorno anfitrión |
+| webhooks Khipu/MP | `OPERATIVE_LOCAL` | HMAC, tiempo constante y anti-replay + pruebas | inbox persistente, rate limit y gestión real de secretos |
+| Khipu v3 | `REQUIRES_CREDENTIALS` | adapter + guía de punta a punta | prueba live, devolución habilitada y conciliación propia |
+| Mercado Pago Payments | `REQUIRES_CREDENTIALS` | adapter + guía de punta a punta | prueba live, estados por producto y conciliación propia |
 | Webpay Plus REST | `REQUIRES_CREDENTIALS` | adapter + CLI | flujo navegador, timeout/commit y certificación propia |
+| Oneclick Mall | `REQUIRES_CERTIFICATION` | inscripción, cobro, status, refund y baja | contrato comercial, certificación y prueba live |
 | resto del catálogo | `DOCUMENTED` o acceso externo | catálogo y docs | adaptador, pruebas contractuales y evidencia oficial |
 
 > [!CAUTION]

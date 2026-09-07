@@ -1,5 +1,5 @@
-import unittest
 import sys
+import unittest
 from decimal import Decimal
 from pathlib import Path
 
@@ -73,7 +73,9 @@ class ReconciliationTests(unittest.TestCase):
     def test_reference_and_amount_differences(self):
         local = [PaymentRecord("A", Decimal("100"), "CLP"), PaymentRecord("B", Decimal("50"), "CLP")]
         remote = [PaymentRecord("A", Decimal("101"), "CLP"), PaymentRecord("C", Decimal("50"), "CLP")]
-        self.assertEqual({item.kind for item in reconcile(local, remote)}, {"AMOUNT_MISMATCH", "LOCAL_ONLY", "REMOTE_ONLY"})
+        self.assertEqual(
+            {item.kind for item in reconcile(local, remote)}, {"AMOUNT_MISMATCH", "LOCAL_ONLY", "REMOTE_ONLY"}
+        )
 
     def test_currency_difference(self):
         local = [PaymentRecord("A", Decimal("100"), "CLP")]

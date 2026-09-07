@@ -11,10 +11,17 @@ Todos los cambios relevantes se documentan aquí siguiendo [Keep a Changelog](ht
 - Currículo de 8 partes y 32 módulos con resultados verificables.
 - Runbooks de certificación, controlled live, fault injection y production readiness.
 - Verificación automatizada de versión, enlaces, UTF-8, catálogo y estructura.
+- Integración real de Transbank Oneclick Mall: inscripción, autorización, consulta, devolución y baja.
+- Verificación HMAC y protección anti-replay para webhooks de Khipu y Mercado Pago.
+- Guías operativas caso a caso para Khipu, Mercado Pago, Webpay Plus y Oneclick.
+- CI multi-versión, build de wheel, Ruff, Bandit, pip-audit, CodeQL y Dependabot.
 
 ### Changed
 
 - Estados de integración corregidos para no confundir presencia de código con credenciales/certificación reales.
+- Transporte HTTP endurecido con HTTPS obligatorio, límites de respuesta y resultados de red inciertos.
+- Adaptadores con validación de contratos, identificadores, URLs e importes sin punto flotante.
+- Operaciones Khipu sin endpoint v3 verificado retiradas hasta disponer del contrato aplicable.
 
 ## [0.1.0] - 2026-09-07
 

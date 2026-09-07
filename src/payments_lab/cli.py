@@ -37,7 +37,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     khipu_create = commands.add_parser("khipu-create")
     khipu_create.add_argument("--subject", required=True)
-    khipu_create.add_argument("--amount", type=float, required=True)
+    khipu_create.add_argument("--amount", required=True, help="Decimal string; never binary float")
     khipu_create.add_argument("--currency", default="CLP")
     khipu_create.add_argument("--return-url", required=True)
     khipu_create.add_argument("--notify-url")
@@ -52,18 +52,18 @@ def build_parser() -> argparse.ArgumentParser:
     mp_refund = commands.add_parser("mp-refund")
     mp_refund.add_argument("payment_id")
     mp_refund.add_argument("--idempotency-key", required=True)
-    mp_refund.add_argument("--amount", type=float)
+    mp_refund.add_argument("--amount", help="Decimal string; omit for full refund")
 
     tbk_create = commands.add_parser("tbk-create")
     tbk_create.add_argument("--buy-order", required=True)
     tbk_create.add_argument("--session-id", required=True)
-    tbk_create.add_argument("--amount", type=float, required=True)
+    tbk_create.add_argument("--amount", required=True, help="Integer/decimal string")
     tbk_create.add_argument("--return-url", required=True)
     for command in ("tbk-commit", "tbk-status"):
         commands.add_parser(command).add_argument("token")
     tbk_refund = commands.add_parser("tbk-refund")
     tbk_refund.add_argument("token")
-    tbk_refund.add_argument("--amount", type=float, required=True)
+    tbk_refund.add_argument("--amount", required=True, help="Integer/decimal string")
     return parser
 
 
@@ -74,7 +74,12 @@ def main(argv=None) -> None:
     elif args.cmd == "states":
         print("\n".join(item.value for item in PaymentState))
     elif args.cmd == "khipu-create":
-        payload = {"subject": args.subject, "amount": args.amount, "currency": args.currency, "return_url": args.return_url}
+        payload = {
+            "subject": args.subject,
+            "amount": args.amount,
+            "currency": args.currency,
+            "return_url": args.return_url,
+        }
         if args.notify_url:
             payload["notify_url"] = args.notify_url
         print_json(KhipuProvider().create(payload))
@@ -85,9 +90,16 @@ def main(argv=None) -> None:
     elif args.cmd == "mp-get":
         print_json(MercadoPagoProvider().get(args.payment_id))
     elif args.cmd == "mp-refund":
-        print_json(MercadoPagoProvider().refund(args.payment_id, amount=args.amount, idempotency_key=args.idempotency_key))
+        print_json(
+            MercadoPagoProvider().refund(args.payment_id, amount=args.amount, idempotency_key=args.idempotency_key)
+        )
     elif args.cmd == "tbk-create":
-        payload = {"buy_order": args.buy_order, "session_id": args.session_id, "amount": args.amount, "return_url": args.return_url}
+        payload = {
+            "buy_order": args.buy_order,
+            "session_id": args.session_id,
+            "amount": args.amount,
+            "return_url": args.return_url,
+        }
         print_json(WebpayPlusProvider().create(payload))
     elif args.cmd == "tbk-commit":
         print_json(WebpayPlusProvider().commit(args.token))

@@ -14,13 +14,33 @@ from urllib.parse import unquote
 ROOT = Path(__file__).resolve().parents[1]
 TEXT_SUFFIXES = {".md", ".py", ".toml", ".yaml", ".yml", ".txt"}
 IGNORED_PARTS = {".git", ".venv", "__pycache__", "build", "dist"}
-ALLOWED_STATUSES = {"OPERATIVE_LOCAL", "REQUIRES_CREDENTIALS", "REQUIRES_CERTIFICATION", "REQUIRES_HARDWARE", "DOCUMENTED"}
-REQUIRED = {"README.md", "LICENSE", "SECURITY.md", "CONTRIBUTING.md", "CHANGELOG.md", "ROADMAP.md", "config/payment_rails.yaml", "docs/payment-methods/CATALOG.md", "docs/operations/RUNBOOK.md"}
+ALLOWED_STATUSES = {
+    "OPERATIVE_LOCAL",
+    "REQUIRES_CREDENTIALS",
+    "REQUIRES_CERTIFICATION",
+    "REQUIRES_HARDWARE",
+    "DOCUMENTED",
+}
+REQUIRED = {
+    "README.md",
+    "LICENSE",
+    "SECURITY.md",
+    "CONTRIBUTING.md",
+    "CHANGELOG.md",
+    "ROADMAP.md",
+    "config/payment_rails.yaml",
+    "docs/payment-methods/CATALOG.md",
+    "docs/operations/RUNBOOK.md",
+}
 
 
 def text_files():
     for path in ROOT.rglob("*"):
-        if path.is_file() and path.suffix.lower() in TEXT_SUFFIXES and not any(part in IGNORED_PARTS for part in path.parts):
+        if (
+            path.is_file()
+            and path.suffix.lower() in TEXT_SUFFIXES
+            and not any(part in IGNORED_PARTS for part in path.parts)
+        ):
             yield path
 
 
@@ -98,6 +118,15 @@ def check_python_syntax(errors: list[str]) -> None:
                 errors.append(f"python syntax: {path.relative_to(ROOT)}:{exc.lineno}: {exc.msg}")
 
 
+def check_workflows(errors: list[str]) -> int:
+    workflows = sorted((ROOT / ".github" / "workflows").glob("*.yml"))
+    mutable = re.compile(r"^\s*uses:\s*[^@\s]+@(?![0-9a-f]{40}(?:\s|$))", re.MULTILINE)
+    for path in workflows:
+        if mutable.search(path.read_text(encoding="utf-8")):
+            errors.append(f"workflow action is not pinned to a 40-character SHA: {path.relative_to(ROOT)}")
+    return len(workflows)
+
+
 def main() -> int:
     errors: list[str] = []
     missing = sorted(item for item in REQUIRED if not (ROOT / item).exists())
@@ -109,6 +138,7 @@ def main() -> int:
     check_markdown_links(errors)
     check_curriculum(errors)
     check_python_syntax(errors)
+    workflows = check_workflows(errors)
     tests = count_tests()
     if tests < 4:
         errors.append(f"expected at least 4 tests, discovered {tests}")
@@ -117,7 +147,10 @@ def main() -> int:
         for error in errors:
             print(f"- {error}")
         return 1
-    print(f"Repository verification OK: {families} payment families, 32 curriculum modules, {tests} tests")
+    print(
+        f"Repository verification OK: {families} payment families, 32 curriculum modules, "
+        f"{tests} tests, {workflows} workflows"
+    )
     return 0
 
 

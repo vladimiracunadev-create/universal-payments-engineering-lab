@@ -41,13 +41,14 @@ La regla de oro: **un error de transporte no demuestra un error financiero**. An
 | Superficie | Estado actual | Evidencia |
 |---|---|---|
 | Núcleo transaccional | `OPERATIVE_LOCAL` | estados, idempotencia, ledger balanceado y conciliación en `src/` |
-| Khipu API v3 | `REQUIRES_CREDENTIALS` | crear, consultar, eliminar, anular y reembolsar mediante API configurable |
-| Mercado Pago Payments API | `REQUIRES_CREDENTIALS` | crear, consultar y reembolsar; payload explícito e idempotencia obligatoria |
+| Khipu API v3 | `REQUIRES_CREDENTIALS` | crear, consultar y eliminar; webhook HMAC y guía operativa |
+| Mercado Pago Payments API | `REQUIRES_CREDENTIALS` | crear, consultar y reembolsar; idempotencia y webhook HMAC |
 | Transbank Webpay Plus REST | `REQUIRES_CREDENTIALS` | crear, confirmar, consultar y reembolsar contra el ambiente autorizado |
+| Transbank Oneclick Mall | `REQUIRES_CERTIFICATION` | inscripción, cobro, consulta, devolución y baja con contrato REST real |
 | Resto de medios y rails | `DOCUMENTED` / acceso externo | taxonomía, riesgos y ruta de laboratorio; sin falsa promesa productiva |
 | Pruebas | verificable en local y CI | `python -m unittest discover -s tests -v` |
 
-La matriz completa está en [Cobertura operativa](docs/operations/COVERAGE.md); su catálogo canónico legible por máquina vive en [`config/payment_rails.yaml`](config/payment_rails.yaml). El alcance preciso de cada integración está en [Adaptadores incluidos](docs/integrations/ADAPTERS.md).
+La matriz completa está en [Cobertura operativa](docs/operations/COVERAGE.md); su catálogo canónico legible por máquina vive en [`config/payment_rails.yaml`](config/payment_rails.yaml). El alcance y la operación caso a caso están en [Integraciones](docs/integrations/ADAPTERS.md).
 
 ## 💳 Cobertura del ecosistema
 
