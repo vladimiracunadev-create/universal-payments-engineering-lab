@@ -1,0 +1,2 @@
+# False positive: synthetic idempotency key in documentation, never a credential.
+a04f7b0127ba60157bdf420dcde3846df35cec4c:docs/integrations/MERCADO_PAGO.md:generic-api-key:30

@@ -27,7 +27,7 @@ payment = mp.create({
 }, idempotency_key="pay-ORD-20260907-001-v1")
 
 fresh = mp.get(str(payment["id"]))
-refund = mp.refund(str(payment["id"]), idempotency_key="refund-ORD-20260907-001-v1")
+refund = mp.refund(str(payment["id"]), idempotency_key=refund_idempotency_key)
 ```
 
 El token de tarjeta debe originarse en el SDK/checkout oficial y no persistirse. `X-Idempotency-Key` es obligatoria en creación y devolución; misma intención + mismo payload reutilizan clave, una intención nueva recibe otra. No use timestamp aleatorio al reintentar.
