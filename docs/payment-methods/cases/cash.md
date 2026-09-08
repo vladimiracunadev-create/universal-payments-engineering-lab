@@ -1,6 +1,6 @@
 # 01. Efectivo y caja
 
-[← Volver a la tabla web](../END_TO_END_MATRIX.html) · [← Volver a la tabla Markdown](../END_TO_END_MATRIX.md)
+[← Volver a la tabla](../END_TO_END_MATRIX.html) · [Ver esta guía .md en GitHub](https://github.com/vladimiracunadev-create/universal-payments-engineering-lab/blob/main/docs/payment-methods/cases/cash.md)
 
 ## En una frase
 
@@ -10,7 +10,19 @@
 
 ## Ejemplo concreto
 
-Imagina esta necesidad: Cobro presencial sin red electrónica. El negocio no puede limitarse a mostrar «pago exitoso»; debe conservar una referencia, obtener una confirmación autoritativa y demostrar después cómo terminó el dinero.
+<div class="case-example-grid">
+<article><span>Situación</span><p>Una cafetería cobra $12.500 en efectivo. Al cierre, el recibo, la caja física y el depósito del día siguiente deben explicar esos mismos $12.500.</p></article>
+<article><span>Detrás de la pantalla</span><p>Cajero abre turno y registra monto. Recibe efectivo y emite recibo único.</p></article>
+<article><span>Se acepta como pagado cuando</span><p>Cuenta caja con segundo responsable. Después: Deposita y concilia recibos contra banco.</p></article>
+</div>
+
+### No confundas estas tres cosas
+
+| Lo que ocurre | Lo que significa | Lo que NO significa |
+|---|---|---|
+| El usuario vuelve a tu web | Terminó la experiencia del navegador | Que el dinero esté confirmado |
+| El proveedor autoriza/confirma | Existe evidencia operativa del proveedor | Que el abono bancario ya esté conciliado |
+| El reporte y el ledger cuadran | Puedes explicar el cierre financiero | Que nunca pueda existir devolución o disputa |
 
 ## Quién participa
 

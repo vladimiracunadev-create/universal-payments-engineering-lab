@@ -1,6 +1,6 @@
 # 20. Cobro mediante operador móvil
 
-[← Volver a la tabla web](../END_TO_END_MATRIX.html) · [← Volver a la tabla Markdown](../END_TO_END_MATRIX.md)
+[← Volver a la tabla](../END_TO_END_MATRIX.html) · [Ver esta guía .md en GitHub](https://github.com/vladimiracunadev-create/universal-payments-engineering-lab/blob/main/docs/payment-methods/cases/carrier-billing.md)
 
 ## En una frase
 
@@ -10,7 +10,19 @@
 
 ## Ejemplo concreto
 
-Imagina esta necesidad: Cargo a factura o saldo del operador móvil. El negocio no puede limitarse a mostrar «pago exitoso»; debe conservar una referencia, obtener una confirmación autoritativa y demostrar después cómo terminó el dinero.
+<div class="case-example-grid">
+<article><span>Situación</span><p>Un usuario compra contenido por $3.990 cargado a su cuenta móvil. El operador valida línea, límite y OTP, y después reporta el reparto de ingresos.</p></article>
+<article><span>Detrás de la pantalla</span><p>Verifica línea, elegibilidad y límite. Usuario confirma con OTP/consentimiento.</p></article>
+<article><span>Se acepta como pagado cuando</span><p>Operador devuelve transaction ID. Después: Reporte divide ingreso entre comercio y operador.</p></article>
+</div>
+
+### No confundas estas tres cosas
+
+| Lo que ocurre | Lo que significa | Lo que NO significa |
+|---|---|---|
+| El usuario vuelve a tu web | Terminó la experiencia del navegador | Que el dinero esté confirmado |
+| El proveedor autoriza/confirma | Existe evidencia operativa del proveedor | Que el abono bancario ya esté conciliado |
+| El reporte y el ledger cuadran | Puedes explicar el cierre financiero | Que nunca pueda existir devolución o disputa |
 
 ## Quién participa
 

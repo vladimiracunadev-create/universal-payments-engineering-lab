@@ -1,6 +1,6 @@
 # 16. Pagos instantáneos
 
-[← Volver a la tabla web](../END_TO_END_MATRIX.html) · [← Volver a la tabla Markdown](../END_TO_END_MATRIX.md)
+[← Volver a la tabla](../END_TO_END_MATRIX.html) · [Ver esta guía .md en GitHub](https://github.com/vladimiracunadev-create/universal-payments-engineering-lab/blob/main/docs/payment-methods/cases/instant-payments.md)
 
 ## En una frase
 
@@ -10,7 +10,19 @@
 
 ## Ejemplo concreto
 
-Imagina esta necesidad: Transferencia cuenta a cuenta casi inmediata 24/7. El negocio no puede limitarse a mostrar «pago exitoso»; debe conservar una referencia, obtener una confirmación autoritativa y demostrar después cómo terminó el dinero.
+<div class="case-example-grid">
+<article><span>Situación</span><p>Un cliente paga $42.000 mediante un rail 24/7. La respuesta llega en segundos, pero un timeout sigue necesitando consulta por referencia end-to-end.</p></article>
+<article><span>Detrás de la pantalla</span><p>Resuelve alias/cuenta y crea referencia end-to-end. Rail valida e instruye en tiempo real.</p></article>
+<article><span>Se acepta como pagado cuando</span><p>Confirmación con finalidad declarada cierra el pago. Después: Concilia mensajes, cuentas técnicas y banco.</p></article>
+</div>
+
+### No confundas estas tres cosas
+
+| Lo que ocurre | Lo que significa | Lo que NO significa |
+|---|---|---|
+| El usuario vuelve a tu web | Terminó la experiencia del navegador | Que el dinero esté confirmado |
+| El proveedor autoriza/confirma | Existe evidencia operativa del proveedor | Que el abono bancario ya esté conciliado |
+| El reporte y el ledger cuadran | Puedes explicar el cierre financiero | Que nunca pueda existir devolución o disputa |
 
 ## Quién participa
 

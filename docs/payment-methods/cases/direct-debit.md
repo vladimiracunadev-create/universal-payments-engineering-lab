@@ -1,6 +1,6 @@
 # 15. Débito directo
 
-[← Volver a la tabla web](../END_TO_END_MATRIX.html) · [← Volver a la tabla Markdown](../END_TO_END_MATRIX.md)
+[← Volver a la tabla](../END_TO_END_MATRIX.html) · [Ver esta guía .md en GitHub](https://github.com/vladimiracunadev-create/universal-payments-engineering-lab/blob/main/docs/payment-methods/cases/direct-debit.md)
 
 ## En una frase
 
@@ -10,7 +10,19 @@
 
 ## Ejemplo concreto
 
-Imagina esta necesidad: Cobros recurrentes autorizados desde cuenta. El negocio no puede limitarse a mostrar «pago exitoso»; debe conservar una referencia, obtener una confirmación autoritativa y demostrar después cómo terminó el dinero.
+<div class="case-example-grid">
+<article><span>Situación</span><p>Una academia cobra $29.990 mensuales. Antes del primer débito guarda el mandato; si se revoca o vuelve por fondos, detiene la secuencia según la regla.</p></article>
+<article><span>Detrás de la pantalla</span><p>Captura mandato, versión y consentimiento. Presenta débito en la fecha notificada.</p></article>
+<article><span>Se acepta como pagado cuando</span><p>Banco informa aceptación o return. Después: Liquida y concilia por mandato/referencia.</p></article>
+</div>
+
+### No confundas estas tres cosas
+
+| Lo que ocurre | Lo que significa | Lo que NO significa |
+|---|---|---|
+| El usuario vuelve a tu web | Terminó la experiencia del navegador | Que el dinero esté confirmado |
+| El proveedor autoriza/confirma | Existe evidencia operativa del proveedor | Que el abono bancario ya esté conciliado |
+| El reporte y el ledger cuadran | Puedes explicar el cierre financiero | Que nunca pueda existir devolución o disputa |
 
 ## Quién participa
 

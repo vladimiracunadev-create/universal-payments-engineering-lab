@@ -244,6 +244,8 @@ def check_product_assets(errors: list[str]) -> None:
         missing_sections = [section for section in required_sections if section not in content]
         if content.startswith("---") or missing_sections:
             errors.append(f"incomplete individual guide for {rail_id}: {missing_sections}")
+        if "case-example-grid" not in content or "### No confundas estas tres cosas" not in content:
+            errors.append(f"individual guide lacks a concrete teaching example for {rail_id}")
 
 
 def check_markdown_links(errors: list[str]) -> None:

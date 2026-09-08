@@ -1,6 +1,6 @@
 # 10. Saldo almacenado y gift cards
 
-[← Volver a la tabla web](../END_TO_END_MATRIX.html) · [← Volver a la tabla Markdown](../END_TO_END_MATRIX.md)
+[← Volver a la tabla](../END_TO_END_MATRIX.html) · [Ver esta guía .md en GitHub](https://github.com/vladimiracunadev-create/universal-payments-engineering-lab/blob/main/docs/payment-methods/cases/stored-value.md)
 
 ## En una frase
 
@@ -10,7 +10,19 @@
 
 ## Ejemplo concreto
 
-Imagina esta necesidad: Gift card o saldo mantenido por el propio programa. El negocio no puede limitarse a mostrar «pago exitoso»; debe conservar una referencia, obtener una confirmación autoritativa y demostrar después cómo terminó el dinero.
+<div class="case-example-grid">
+<article><span>Situación</span><p>Un cliente usa $8.000 de una gift card con saldo $10.000. El sistema reserva, captura y deja $2.000 sin permitir dos consumos simultáneos.</p></article>
+<article><span>Detrás de la pantalla</span><p>Identifica cuenta y saldo disponible. Reserva atómica evita gastar dos veces.</p></article>
+<article><span>Se acepta como pagado cuando</span><p>Captura consume saldo o libera la reserva. Después: Ledger demuestra saldo y pasivo del programa.</p></article>
+</div>
+
+### No confundas estas tres cosas
+
+| Lo que ocurre | Lo que significa | Lo que NO significa |
+|---|---|---|
+| El usuario vuelve a tu web | Terminó la experiencia del navegador | Que el dinero esté confirmado |
+| El proveedor autoriza/confirma | Existe evidencia operativa del proveedor | Que el abono bancario ya esté conciliado |
+| El reporte y el ledger cuadran | Puedes explicar el cierre financiero | Que nunca pueda existir devolución o disputa |
 
 ## Quién participa
 

@@ -1,6 +1,6 @@
 # 12. Pagos QR
 
-[← Volver a la tabla web](../END_TO_END_MATRIX.html) · [← Volver a la tabla Markdown](../END_TO_END_MATRIX.md)
+[← Volver a la tabla](../END_TO_END_MATRIX.html) · [Ver esta guía .md en GitHub](https://github.com/vladimiracunadev-create/universal-payments-engineering-lab/blob/main/docs/payment-methods/cases/qr.md)
 
 ## En una frase
 
@@ -10,7 +10,19 @@
 
 ## Ejemplo concreto
 
-Imagina esta necesidad: Iniciar un pago escaneando un código. El negocio no puede limitarse a mostrar «pago exitoso»; debe conservar una referencia, obtener una confirmación autoritativa y demostrar después cómo terminó el dinero.
+<div class="case-example-grid">
+<article><span>Situación</span><p>Un restaurante genera un QR por $27.500 con expiración. Escanearlo sólo inicia el pago; el pedido se confirma cuando responde el rail subyacente.</p></article>
+<article><span>Detrás de la pantalla</span><p>Genera QR firmado, único y expirable. App interpreta datos e inicia el rail subyacente.</p></article>
+<article><span>Se acepta como pagado cuando</span><p>API/webhook del rail confirma; el QR no confirma. Después: Conciliar referencia QR contra abono o adquirente.</p></article>
+</div>
+
+### No confundas estas tres cosas
+
+| Lo que ocurre | Lo que significa | Lo que NO significa |
+|---|---|---|
+| El usuario vuelve a tu web | Terminó la experiencia del navegador | Que el dinero esté confirmado |
+| El proveedor autoriza/confirma | Existe evidencia operativa del proveedor | Que el abono bancario ya esté conciliado |
+| El reporte y el ledger cuadran | Puedes explicar el cierre financiero | Que nunca pueda existir devolución o disputa |
 
 ## Quién participa
 

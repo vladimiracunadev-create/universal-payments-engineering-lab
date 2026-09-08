@@ -1,6 +1,6 @@
 # 02. Cheques y órdenes en papel
 
-[← Volver a la tabla web](../END_TO_END_MATRIX.html) · [← Volver a la tabla Markdown](../END_TO_END_MATRIX.md)
+[← Volver a la tabla](../END_TO_END_MATRIX.html) · [Ver esta guía .md en GitHub](https://github.com/vladimiracunadev-create/universal-payments-engineering-lab/blob/main/docs/payment-methods/cases/paper.md)
 
 ## En una frase
 
@@ -10,7 +10,19 @@
 
 ## Ejemplo concreto
 
-Imagina esta necesidad: Cheque u orden física con cobro diferido. El negocio no puede limitarse a mostrar «pago exitoso»; debe conservar una referencia, obtener una confirmación autoritativa y demostrar después cómo terminó el dinero.
+<div class="case-example-grid">
+<article><span>Situación</span><p>Una empresa recibe un cheque por $1.200.000. La factura sigue pendiente hasta que el banco confirme el cobro; recibir el papel no libera el pedido.</p></article>
+<article><span>Detrás de la pantalla</span><p>Registra emisor, monto, fecha e imagen restringida. Entrega el documento al banco y queda PENDING.</p></article>
+<article><span>Se acepta como pagado cuando</span><p>El banco informa cobro o devolución. Después: Aplica asiento final y concilia cartola.</p></article>
+</div>
+
+### No confundas estas tres cosas
+
+| Lo que ocurre | Lo que significa | Lo que NO significa |
+|---|---|---|
+| El usuario vuelve a tu web | Terminó la experiencia del navegador | Que el dinero esté confirmado |
+| El proveedor autoriza/confirma | Existe evidencia operativa del proveedor | Que el abono bancario ya esté conciliado |
+| El reporte y el ledger cuadran | Puedes explicar el cierre financiero | Que nunca pueda existir devolución o disputa |
 
 ## Quién participa
 

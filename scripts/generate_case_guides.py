@@ -13,6 +13,37 @@ from payments_lab.catalog import enriched_catalog
 ROOT = Path(__file__).resolve().parents[1]
 TARGET = ROOT / "docs" / "payment-methods" / "cases"
 
+CASE_SCENARIOS = {
+    "cash": "Una cafetería cobra $12.500 en efectivo. Al cierre, el recibo, la caja física y el depósito del día siguiente deben explicar esos mismos $12.500.",
+    "paper": "Una empresa recibe un cheque por $1.200.000. La factura sigue pendiente hasta que el banco confirme el cobro; recibir el papel no libera el pedido.",
+    "cards": "Una tienda vende un notebook por $649.990. El cliente ve una aprobación inmediata, pero el comercio todavía debe capturar, liquidar y conciliar el abono neto.",
+    "chile-webpay": "Una persona compra entradas por $19.990. Tu backend crea la transacción, Transbank procesa la tarjeta y sólo el commit del backend permite confirmar la orden.",
+    "chile-oneclick": "Un cliente inscribe su tarjeta una vez y luego paga una compra de $9.990. El comercio usa tbk_user, aplica límites y conserva el consentimiento de inscripción.",
+    "chile-khipu": "Un cliente paga una factura de $35.000 desde su banco. Khipu inicia la experiencia y el comercio espera un webhook o consulta del payment ID antes de entregar.",
+    "mercado-pago": "Una tienda cobra $24.990 con Checkout. El frontend obtiene un token o redirección; el access token permanece en backend y el webhook se deduplica.",
+    "acceptance-devices": "Una caja envía $18.500 a un POS. El terminal procesa la tarjeta y el cierre de lote debe coincidir con el voucher, la caja y el adquirente.",
+    "tokenized-wallets": "Una persona paga $32.990 con una wallet. El comercio recibe un token de red y criptograma, nunca el PAN completo, y procesa el cargo mediante su PSP.",
+    "stored-value": "Un cliente usa $8.000 de una gift card con saldo $10.000. El sistema reserva, captura y deja $2.000 sin permitir dos consumos simultáneos.",
+    "mobile-money": "Una persona envía el equivalente a $15.000 desde su wallet móvil a un comercio. El operador confirma y luego se cuadran saldos y comisión del agente.",
+    "qr": "Un restaurante genera un QR por $27.500 con expiración. Escanearlo sólo inicia el pago; el pedido se confirma cuando responde el rail subyacente.",
+    "bank-transfer": "Un cliente transfiere $180.000 por una factura. La imagen del comprobante no sirve como confirmación: el abono debe aparecer en la API o cartola bancaria.",
+    "ach": "Una empresa envía una nómina de 500 pagos. El operador acepta el lote hoy, pero cada entry puede liquidar o volver días después con su propio código.",
+    "direct-debit": "Una academia cobra $29.990 mensuales. Antes del primer débito guarda el mandato; si se revoca o vuelve por fondos, detiene la secuencia según la regla.",
+    "instant-payments": "Un cliente paga $42.000 mediante un rail 24/7. La respuesta llega en segundos, pero un timeout sigue necesitando consulta por referencia end-to-end.",
+    "payment-initiation": "Un profesional envía un link por una factura de $75.000. La URL expira y sólo conecta la orden con el medio elegido; no demuestra el pago por sí sola.",
+    "cash-voucher": "Una tienda crea un voucher por $16.990 pagable en un recaudador. La orden queda pendiente hasta recibir el archivo o evento de la red física.",
+    "credit-alternatives": "Una persona compra un teléfono en cuatro cuotas. El financiador evalúa y paga al comercio; el cliente acepta un contrato con costo total y calendario.",
+    "carrier-billing": "Un usuario compra contenido por $3.990 cargado a su cuenta móvil. El operador valida línea, límite y OTP, y después reporta el reparto de ingresos.",
+    "platform-payments": "Un marketplace cobra $100.000: $85.000 son del vendedor, $10.000 comisión y $5.000 reserva. El subledger debe conservar esa igualdad.",
+    "b2b": "Una compañía paga una factura de $8.000.000. Compras valida, tesorería aprueba con doble control, el banco ejecuta y el ERP recibe la remittance.",
+    "international": "Una empresa envía USD 10.000 a otro país. Antes fija tasa y fees; después explica cuánto salió, cuánto cobraron corresponsales y cuánto recibió el beneficiario.",
+    "high-value": "Tesorería instruye un pago RTGS de alto valor. Dos personas autorizan, el rail puede ponerlo en cola y sólo la finalidad oficial permite cerrarlo.",
+    "open-finance": "Una app inicia $55.000 desde la cuenta bancaria del usuario. El consentimiento limita monto y propósito; FAPI y mTLS protegen el intercambio con el banco.",
+    "digital-assets": "Un comercio emite una invoice Lightning o dirección Bitcoin por un monto y tiempo definidos. Payment hash o confirmaciones se enlazan con la orden.",
+    "machine-payments": "Un cargador de vehículo paga automáticamente por 18 kWh. La identidad del dispositivo, la medición y un presupuesto máximo deben viajar juntos.",
+    "agentic-payments": "Un agente reserva un hotel dentro de un presupuesto de $300.000. Si cambia precio, destino o límite, pide aprobación humana antes de ejecutar.",
+}
+
 
 def _text(value: object) -> str:
     return str(value).replace("\n", " ").strip()
@@ -77,7 +108,7 @@ def render_markdown(family: dict[str, object], number: int) -> str:
     lines = [
         f"# {number:02d}. {title}",
         "",
-        "[← Volver a la tabla web](../END_TO_END_MATRIX.html) · [← Volver a la tabla Markdown](../END_TO_END_MATRIX.md)",
+        f"[← Volver a la tabla](../END_TO_END_MATRIX.html) · [Ver esta guía .md en GitHub](https://github.com/vladimiracunadev-create/universal-payments-engineering-lab/blob/main/docs/payment-methods/cases/{rail_id}.md)",
         "",
         "## En una frase",
         "",
@@ -87,7 +118,19 @@ def render_markdown(family: dict[str, object], number: int) -> str:
         "",
         "## Ejemplo concreto",
         "",
-        f"Imagina esta necesidad: {_text(journey['when'])} El negocio no puede limitarse a mostrar «pago exitoso»; debe conservar una referencia, obtener una confirmación autoritativa y demostrar después cómo terminó el dinero.",
+        '<div class="case-example-grid">',
+        f"<article><span>Situación</span><p>{CASE_SCENARIOS[rail_id]}</p></article>",
+        f"<article><span>Detrás de la pantalla</span><p>{_text(journey['start'])} {_text(journey['process'])}</p></article>",
+        f"<article><span>Se acepta como pagado cuando</span><p>{_text(journey['confirm'])} Después: {_text(journey['close'])}</p></article>",
+        "</div>",
+        "",
+        "### No confundas estas tres cosas",
+        "",
+        "| Lo que ocurre | Lo que significa | Lo que NO significa |",
+        "|---|---|---|",
+        "| El usuario vuelve a tu web | Terminó la experiencia del navegador | Que el dinero esté confirmado |",
+        "| El proveedor autoriza/confirma | Existe evidencia operativa del proveedor | Que el abono bancario ya esté conciliado |",
+        "| El reporte y el ledger cuadran | Puedes explicar el cierre financiero | Que nunca pueda existir devolución o disputa |",
         "",
         "## Quién participa",
         "",

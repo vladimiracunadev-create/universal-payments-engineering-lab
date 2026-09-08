@@ -1,6 +1,6 @@
 # 21. Marketplaces, splits y payouts
 
-[← Volver a la tabla web](../END_TO_END_MATRIX.html) · [← Volver a la tabla Markdown](../END_TO_END_MATRIX.md)
+[← Volver a la tabla](../END_TO_END_MATRIX.html) · [Ver esta guía .md en GitHub](https://github.com/vladimiracunadev-create/universal-payments-engineering-lab/blob/main/docs/payment-methods/cases/platform-payments.md)
 
 ## En una frase
 
@@ -10,7 +10,19 @@
 
 ## Ejemplo concreto
 
-Imagina esta necesidad: Marketplace que cobra y paga a terceros. El negocio no puede limitarse a mostrar «pago exitoso»; debe conservar una referencia, obtener una confirmación autoritativa y demostrar después cómo terminó el dinero.
+<div class="case-example-grid">
+<article><span>Situación</span><p>Un marketplace cobra $100.000: $85.000 son del vendedor, $10.000 comisión y $5.000 reserva. El subledger debe conservar esa igualdad.</p></article>
+<article><span>Detrás de la pantalla</span><p>Onboarding/KYB habilita cada beneficiario. Cobro crea split inmutable, comisión y reserva.</p></article>
+<article><span>Se acepta como pagado cuando</span><p>Webhook confirma entrada y subledger distribuye. Después: Payout liquida a vendedores y se concilia.</p></article>
+</div>
+
+### No confundas estas tres cosas
+
+| Lo que ocurre | Lo que significa | Lo que NO significa |
+|---|---|---|
+| El usuario vuelve a tu web | Terminó la experiencia del navegador | Que el dinero esté confirmado |
+| El proveedor autoriza/confirma | Existe evidencia operativa del proveedor | Que el abono bancario ya esté conciliado |
+| El reporte y el ledger cuadran | Puedes explicar el cierre financiero | Que nunca pueda existir devolución o disputa |
 
 ## Quién participa
 

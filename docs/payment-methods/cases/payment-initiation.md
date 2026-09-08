@@ -1,6 +1,6 @@
 # 17. Links y solicitud de pago
 
-[← Volver a la tabla web](../END_TO_END_MATRIX.html) · [← Volver a la tabla Markdown](../END_TO_END_MATRIX.md)
+[← Volver a la tabla](../END_TO_END_MATRIX.html) · [Ver esta guía .md en GitHub](https://github.com/vladimiracunadev-create/universal-payments-engineering-lab/blob/main/docs/payment-methods/cases/payment-initiation.md)
 
 ## En una frase
 
@@ -10,7 +10,19 @@
 
 ## Ejemplo concreto
 
-Imagina esta necesidad: Cobrar mediante link o solicitud compartible. El negocio no puede limitarse a mostrar «pago exitoso»; debe conservar una referencia, obtener una confirmación autoritativa y demostrar después cómo terminó el dinero.
+<div class="case-example-grid">
+<article><span>Situación</span><p>Un profesional envía un link por una factura de $75.000. La URL expira y sólo conecta la orden con el medio elegido; no demuestra el pago por sí sola.</p></article>
+<article><span>Detrás de la pantalla</span><p>Crea orden firmada, expirable y de un solo uso. Cliente abre link y elige el rail final.</p></article>
+<article><span>Se acepta como pagado cuando</span><p>Backend confirma por API/webhook del rail. Después: Atribuye liquidación a orden, campaña o factura.</p></article>
+</div>
+
+### No confundas estas tres cosas
+
+| Lo que ocurre | Lo que significa | Lo que NO significa |
+|---|---|---|
+| El usuario vuelve a tu web | Terminó la experiencia del navegador | Que el dinero esté confirmado |
+| El proveedor autoriza/confirma | Existe evidencia operativa del proveedor | Que el abono bancario ya esté conciliado |
+| El reporte y el ledger cuadran | Puedes explicar el cierre financiero | Que nunca pueda existir devolución o disputa |
 
 ## Quién participa
 
