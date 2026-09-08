@@ -123,6 +123,8 @@ img { max-width: 100%; height: auto; border: 1px solid #234038; }
 .docs-filter { display: flex; align-items: center; gap: 14px; margin: 20px 0 8px; color: #edf5f2; font-weight: 800; }
 .docs-filter input { width: min(440px, 100%); padding: 12px 14px; border: 1px solid #4d786c; background: #0d1c18; color: #edf5f2; }
 .docs-case-count { margin: 0 0 12px; color: #9cb0aa; font-size: 14px; }
+.post-header { display: none; }
+.post-content > h1:first-child { margin-top: 0; }
 @media (max-width: 600px) {
   header span, header nav { display: none; }
   footer { flex-direction: column; }
