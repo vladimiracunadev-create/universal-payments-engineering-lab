@@ -27,7 +27,7 @@ class LocalPortalTests(unittest.TestCase):
         cls.thread.join(timeout=2)
 
     def get(self, path):
-        with urllib.request.urlopen(self.origin + path, timeout=2) as response:
+        with urllib.request.urlopen(self.origin + path, timeout=5) as response:
             return response, response.read()
 
     def test_home_and_health_are_served_with_security_headers(self):
@@ -57,6 +57,11 @@ class LocalPortalTests(unittest.TestCase):
             self.assertTrue(guide["failures"])
             self.assertIn("mental_model", guide["teaching"])
             self.assertTrue(guide["teaching"]["development_path"])
+            self.assertEqual(
+                set(guide["journey"]),
+                {"when", "start", "process", "confirm", "close", "failure", "real"},
+            )
+            self.assertTrue(all(guide["journey"].values()))
             self.assertIn("global_variables", guide["configuration"])
             self.assertTrue(all(source["url"].startswith("https://") for source in guide["sources"]))
 

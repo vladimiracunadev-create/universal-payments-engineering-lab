@@ -19,6 +19,7 @@
         <a href="#lab">Laboratorio</a>
         <a href="#configuration">Configuración</a>
         <a href="#implementation">Implementación</a>
+        <a href="#case-matrix">Matriz completa</a>
         <a href="#catalog-title">28 casos</a>
       </nav>
       <div class="mode-lock" title="Este servidor no contacta proveedores">
@@ -159,6 +160,42 @@
         </div>
         <p class="section-intro">Esta parte no simula: explica qué tecnología elegir, dónde comenzar el alta, qué validar antes de pagar y cómo operar fallos.</p>
         <div id="playbook" class="playbook" aria-live="polite"></div>
+      </section>
+
+      <section id="case-matrix" class="matrix-section" aria-labelledby="matrix-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">La respuesta completa, en una sola tabla</p>
+            <h2 id="matrix-title">Los 28 casos: desde la necesidad hasta producción</h2>
+          </div>
+          <span class="mode sandbox">28 DE 28</span>
+        </div>
+        <p class="section-intro">Lee cada fila de izquierda a derecha. “Confirmar” responde si ocurrió; “cerrar” demuestra cómo terminó financieramente. Pulsa un caso para abrir su configuración y guía detallada.</p>
+        <div class="matrix-legend" aria-label="Leyenda del recorrido">
+          <span><b>1</b> Necesidad</span><i>→</i>
+          <span><b>2</b> Inicio</span><i>→</i>
+          <span><b>3</b> Proceso</span><i>→</i>
+          <span><b>4</b> Confirmación</span><i>→</i>
+          <span><b>5</b> Cierre</span>
+        </div>
+        <label class="matrix-search">
+          <span>Filtrar la tabla</span>
+          <input id="matrix-filter" type="search" placeholder="Ej.: Webpay, presencial, recurrente, banco">
+        </label>
+        <div class="case-matrix-wrap">
+          <table class="case-matrix">
+            <thead>
+              <tr>
+                <th scope="col">Caso y cuándo usarlo</th>
+                <th scope="col">Recorrido de comienzo a fin</th>
+                <th scope="col">Si falla</th>
+                <th scope="col">Qué construir en real</th>
+              </tr>
+            </thead>
+            <tbody id="case-matrix-body"></tbody>
+          </table>
+        </div>
+        <p id="matrix-count" class="matrix-count" aria-live="polite"></p>
       </section>
 
       <section class="catalog-section" aria-labelledby="catalog-title">

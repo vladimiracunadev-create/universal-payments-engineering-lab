@@ -6,6 +6,8 @@ const result = document.querySelector("#result");
 const catalog = document.querySelector("#catalog");
 const search = document.querySelector("#search");
 const guidedRun = document.querySelector("#guided-run");
+const matrixBody = document.querySelector("#case-matrix-body");
+const matrixFilter = document.querySelector("#matrix-filter");
 
 const LESSONS = {
   success: {
@@ -162,6 +164,49 @@ function renderCatalog(query = "") {
     .join("");
 }
 
+function renderCaseMatrix(query = "") {
+  const needle = query.trim().toLocaleLowerCase("es");
+  const visible = state.families.filter((family) => {
+    const journey = family.playbook.journey;
+    return [family.title, family.solves, ...Object.values(journey)]
+      .join(" ")
+      .toLocaleLowerCase("es")
+      .includes(needle);
+  });
+  matrixBody.innerHTML = visible
+    .map((family, index) => {
+      const journey = family.playbook.journey;
+      const stages = [
+        ["Inicio", journey.start],
+        ["Proceso", journey.process],
+        ["Confirmar", journey.confirm],
+        ["Cerrar", journey.close],
+      ]
+        .map(
+          ([label, value], stageIndex) =>
+            `<span class="matrix-stage"><b>${stageIndex + 2} · ${escapeHtml(label)}</b>${escapeHtml(value)}</span>`,
+        )
+        .join('<i aria-hidden="true">→</i>');
+      return `
+        <tr>
+          <th scope="row">
+            <button type="button" data-matrix-rail="${escapeHtml(family.id)}">
+              <small>${String(state.families.indexOf(family) + 1).padStart(2, "0")}</small>
+              ${icon(iconFor(family))}
+              <span><strong>${escapeHtml(family.title)}</strong>${escapeHtml(journey.when)}</span>
+            </button>
+          </th>
+          <td><div class="matrix-journey">${stages}</div></td>
+          <td><span class="matrix-warning">${icon("alert")}${escapeHtml(journey.failure)}</span></td>
+          <td><span class="matrix-real">${icon("code")}${escapeHtml(journey.real)}</span></td>
+        </tr>
+      `;
+    })
+    .join("");
+  document.querySelector("#matrix-count").textContent =
+    visible.length === 28 ? "Mostrando los 28 casos." : `Mostrando ${visible.length} de 28 casos.`;
+}
+
 function renderRun(run) {
   const lesson = LESSONS[run.scenario];
   const steps = run.steps
@@ -301,6 +346,7 @@ async function initialize() {
     document.querySelector("#family-count").textContent = doctor.demo.families;
     document.querySelector("#runtime-status").textContent = doctor.status === "ready" ? "Operativo" : "Revisar";
     renderCatalog();
+    renderCaseMatrix();
     renderPlaybook(state.families[0]);
     renderSelectedSummary(state.families[0]);
     renderConfiguration(state.families[0]);
@@ -363,6 +409,16 @@ catalog.addEventListener("click", (event) => {
 });
 
 search.addEventListener("input", () => renderCatalog(search.value));
+matrixFilter.addEventListener("input", () => renderCaseMatrix(matrixFilter.value));
+matrixBody.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-matrix-rail]");
+  if (!button) return;
+  rail.value = button.dataset.matrixRail;
+  renderPlaybook(selectedFamily());
+  renderSelectedSummary(selectedFamily());
+  renderConfiguration(selectedFamily());
+  document.querySelector("#implementation").scrollIntoView({ behavior: "smooth", block: "start" });
+});
 rail.addEventListener("change", () => {
   renderPlaybook(selectedFamily());
   renderSelectedSummary(selectedFamily());

@@ -12,6 +12,7 @@ La documentación está organizada por la pregunta que una persona necesita resp
 | ¿Qué componentes necesita una plataforma? | [Arquitectura](architecture/ARCHITECTURE.md) |
 | ¿Qué protocolos intervienen? | [Stack tecnológico](technology/STACK.md) |
 | ¿Cómo se integra y opera cada proveedor? | [Contrato común](integrations/ADAPTERS.md) · [Khipu](integrations/KHIPU.md) · [Mercado Pago](integrations/MERCADO_PAGO.md) · [Webpay](integrations/TRANSBANK_WEBPAY_PLUS.md) · [Oneclick](integrations/TRANSBANK_ONECLICK.md) |
+| ¿Cómo comparo los 28 recorridos de comienzo a fin? | [Matriz completa](payment-methods/END_TO_END_MATRIX.md) |
 | ¿Cómo llevo cada uno de los 28 casos a desarrollo? | [Casebook pedagógico](payment-methods/CASEBOOK.md) |
 | ¿Cómo configuro localhost y variables? | [Configuración local](LOCALHOST_AND_CONFIGURATION.md) |
 | ¿Qué publica GitHub Pages? | [GitHub Pages](GITHUB_PAGES.md) |

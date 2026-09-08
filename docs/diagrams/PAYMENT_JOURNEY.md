@@ -1,3 +1,8 @@
+---
+layout: default
+title: Diagramas para comprender un pago
+---
+
 # 📊 Diagramas para comprender un pago
 
 ## 1. Quién hace qué

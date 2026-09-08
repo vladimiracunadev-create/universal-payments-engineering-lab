@@ -1,3 +1,8 @@
+---
+layout: default
+title: Implementar un pago en cualquier web
+---
+
 # Implementar un medio de pago en cualquier web
 
 Esta guía responde la pregunta práctica: **qué lenguaje y API usar, dónde inscribirse, cuánto cuesta, cómo probar, cómo proteger datos y qué hacer cuando falla**. El portal en localhost muestra el playbook específico al elegir cualquiera de las 28 modalidades.

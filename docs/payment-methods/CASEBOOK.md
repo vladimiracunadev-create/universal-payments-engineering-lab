@@ -1,4 +1,11 @@
+---
+layout: default
+title: Casebook de 28 medios de pago
+---
+
 # 🧩 Los 28 casos: del concepto al desarrollo
+
+> ¿Quieres comparar los casos sin saltar entre secciones? Abre primero la [tabla de comienzo a fin](END_TO_END_MATRIX.html).
 
 Cada caso responde cuatro preguntas: cómo imaginarlo, qué construir primero, qué prueba el éxito y qué falta antes de producción. Ejecuta el caso en localhost y contrasta el resultado con esta guía.
 

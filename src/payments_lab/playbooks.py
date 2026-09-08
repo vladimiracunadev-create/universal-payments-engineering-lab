@@ -6,6 +6,7 @@ from __future__ import annotations
 from copy import deepcopy
 
 from .configuration import configuration_for
+from .journeys import journey_for
 from .teaching import teaching_for
 
 WEB_STACK = {
@@ -185,6 +186,7 @@ def build_playbook(rail_id: str, title: str) -> dict[str, object]:
     )
     return {
         "teaching": teaching_for(rail_id),
+        "journey": journey_for(rail_id),
         "configuration": configuration_for(rail_id),
         "decision": f"Usa {title} solo si su cobertura, experiencia, reversibilidad y conciliación resuelven tu caso; compara al menos dos proveedores antes de LIVE.",
         "stack": stack,

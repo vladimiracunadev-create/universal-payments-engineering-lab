@@ -1,3 +1,8 @@
+---
+layout: default
+title: Ruta de aprendizaje
+---
+
 # 🎓 Ruta de aprendizaje
 
 Esta ruta convierte el repositorio en un curso práctico. Cada laboratorio comienza con una pregunta, produce evidencia y termina con un criterio verificable.

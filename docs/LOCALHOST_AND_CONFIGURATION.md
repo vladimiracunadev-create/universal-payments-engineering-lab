@@ -1,3 +1,8 @@
+---
+layout: default
+title: Localhost y configuración
+---
+
 # ⚙️ Localhost, variables y configuración por medio de pago
 
 ## Dos superficies distintas

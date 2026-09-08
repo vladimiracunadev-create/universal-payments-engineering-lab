@@ -28,7 +28,7 @@ Si llegas por primera vez, abre [🧭 Empieza aquí](docs/START_HERE.md). Despu�
 4. Comprueba que el estado pasa por `UNKNOWN` y se recupera mediante consulta.
 5. Explica por qué un segundo cobro habría sido inseguro.
 
-Para avanzar caso por caso, usa el [🧩 casebook de las 28 modalidades](docs/payment-methods/CASEBOOK.md). La [⚙️ guía de configuración](docs/LOCALHOST_AND_CONFIGURATION.md) separa variables globales, secretos por proveedor y callbacks; [🌐 GitHub Pages](docs/GITHUB_PAGES.md) explica por qué la web pública documenta pero no ejecuta el backend.
+Para comparar todo sin perderte, empieza por la [📋 tabla de los 28 recorridos, de comienzo a fin](docs/payment-methods/END_TO_END_MATRIX.md). Luego usa el [🧩 casebook pedagógico](docs/payment-methods/CASEBOOK.md). La [⚙️ guía de configuración](docs/LOCALHOST_AND_CONFIGURATION.md) separa variables globales, secretos por proveedor y callbacks; [🌐 GitHub Pages](docs/GITHUB_PAGES.md) explica por qué la web pública documenta pero no ejecuta el backend.
 
 ## Qué puedes hacer hoy
 
@@ -84,6 +84,12 @@ El resultado contiene un mapa de decisiones, una conclusión pedagógica, la his
 La ventana enumera variables y callbacks sin mostrar valores de secretos.
 
 ![Configuración segura para Webpay](docs/assets/paylab-configuration.png)
+
+### Matriz completa de los 28 casos
+
+La matriz se lee horizontalmente: necesidad → inicio → proceso → confirmación → cierre. Las últimas columnas explican la recuperación y el stack real.
+
+![Matriz de los 28 recorridos de pago](docs/assets/paylab-case-matrix.png)
 
 ## Los tres modos no significan lo mismo
 

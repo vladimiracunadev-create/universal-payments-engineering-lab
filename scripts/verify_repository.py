@@ -45,6 +45,7 @@ REQUIRED = {
     "docs/REFERENCE_REPOSITORIES.md",
     "docs/diagrams/PAYMENT_JOURNEY.md",
     "docs/payment-methods/CASEBOOK.md",
+    "docs/payment-methods/END_TO_END_MATRIX.md",
     "docs/IMPLEMENTATION_GUIDE.md",
     "docs/payment-methods/CATALOG.md",
     "docs/operations/RUNBOOK.md",
@@ -53,6 +54,7 @@ REQUIRED = {
     "web/app.js",
     "scripts/start_paylab.ps1",
     "scripts/verify_portal_ui.py",
+    "scripts/generate_case_matrix.py",
 }
 
 
@@ -140,7 +142,13 @@ def check_product_assets(errors: list[str]) -> None:
     html = (ROOT / "web/index.html").read_text(encoding="utf-8")
     if "<script>" in html or "style=" in html:
         errors.append("portal must keep scripts/styles external for its strict CSP")
-    for teaching_marker in ("Empieza aquí", "Qué aprenderás", "Cómo leer el resultado", "Ejemplo guiado"):
+    for teaching_marker in (
+        "Empieza aquí",
+        "Qué aprenderás",
+        "Cómo leer el resultado",
+        "Ejemplo guiado",
+        "Los 28 casos: desde la necesidad hasta producción",
+    ):
         if teaching_marker not in html:
             errors.append(f"portal is missing teaching marker: {teaching_marker}")
     from payments_lab.catalog import enriched_catalog
@@ -158,6 +166,7 @@ def check_product_assets(errors: list[str]) -> None:
             "go_live",
             "sources",
             "teaching",
+            "journey",
             "configuration",
         }
         missing = sorted(required - set(guide))
@@ -174,6 +183,14 @@ def check_product_assets(errors: list[str]) -> None:
             or not teaching.get("success_evidence")
         ):
             errors.append(f"incomplete pedagogical explanation for {family['id']}")
+        journey = guide.get("journey", {})
+        journey_fields = {"when", "start", "process", "confirm", "close", "failure", "real"}
+        if set(journey) != journey_fields or not all(journey.values()):
+            errors.append(f"incomplete end-to-end journey for {family['id']}")
+    matrix = (ROOT / "docs/payment-methods/END_TO_END_MATRIX.md").read_text(encoding="utf-8")
+    for family in enriched_catalog():
+        if f"{family['title']}**" not in matrix:
+            errors.append(f"published end-to-end matrix is missing {family['id']}")
 
 
 def check_markdown_links(errors: list[str]) -> None:
@@ -185,7 +202,9 @@ def check_markdown_links(errors: list[str]) -> None:
             target = target.strip().split("#", 1)[0]
             if not target or "://" in target or target.startswith(("mailto:", "#")):
                 continue
-            if not (path.parent / unquote(target)).resolve().exists():
+            resolved = (path.parent / unquote(target)).resolve()
+            source_page = resolved.with_suffix(".md") if resolved.suffix == ".html" else resolved
+            if not resolved.exists() and not source_page.exists():
                 errors.append(f"broken link: {path.relative_to(ROOT)} -> {target}")
 
 

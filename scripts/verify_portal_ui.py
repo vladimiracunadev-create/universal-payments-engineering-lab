@@ -34,12 +34,19 @@ def main() -> int:
         assert page.locator("#family-count").inner_text() == "28"
         assert page.get_by_role("heading", name="Qué aprenderás").is_visible()
         assert page.locator("#configuration-panel").is_visible()
+        assert page.locator("#case-matrix-body tr").count() == 28
         assert page.locator("svg.icon use").count() >= 10
         page.screenshot(path=args.output / "paylab-home.png")
 
         page.locator("#rail").select_option("chile-webpay")
         page.get_by_text("TRANSBANK_API_KEY", exact=True).wait_for()
         page.locator("#configuration").screenshot(path=args.output / "paylab-configuration.png")
+
+        page.locator("#case-matrix").scroll_into_view_if_needed()
+        page.locator("#matrix-filter").fill("Webpay")
+        assert page.locator("#case-matrix-body tr").count() == 1
+        page.locator("#matrix-filter").fill("")
+        page.locator("#case-matrix").screenshot(path=args.output / "paylab-case-matrix.png")
 
         page.get_by_role("button", name="Ejemplo guiado").click()
         page.get_by_text("Un timeout no significa que el pago falló", exact=True).wait_for()
@@ -56,7 +63,7 @@ def main() -> int:
 
     if console_errors:
         raise AssertionError(f"browser console errors: {console_errors}")
-    print("Portal UI OK: purpose, 28 cases, icons, configuration, guided timeout and mobile layout")
+    print("Portal UI OK: purpose, 28-row matrix, icons, configuration, guided timeout and mobile layout")
     return 0
 
 

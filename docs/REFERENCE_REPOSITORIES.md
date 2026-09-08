@@ -1,3 +1,8 @@
+---
+layout: default
+title: Repositorios de referencia
+---
+
 # 🔎 Repositorios de referencia y decisiones adoptadas
 
 Esta revisión responde “¿cómo enseñan pagos otros proyectos y qué debe hacer distinto PayLab?”. Las referencias se usan como contraste de producto; no constituyen certificación ni sustituyen documentación oficial.

@@ -531,6 +531,122 @@ h1 {
 .implementation {
   border-top: 1px solid var(--line);
 }
+.matrix-section {
+  border-top: 1px solid var(--line);
+}
+.matrix-legend {
+  display: grid;
+  grid-template-columns: repeat(9, auto);
+  justify-content: start;
+  align-items: center;
+  gap: 8px;
+  margin: 22px 0;
+}
+.matrix-legend span {
+  padding: 9px 11px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--muted);
+  font-size: 13px;
+}
+.matrix-legend b { color: var(--mint); }
+.matrix-legend i { color: var(--mint); font-style: normal; }
+.matrix-search {
+  display: grid;
+  grid-template-columns: auto minmax(240px, 420px);
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+.matrix-search input {
+  width: 100%;
+  padding: 11px 13px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--ink);
+}
+.case-matrix-wrap {
+  max-height: 74vh;
+  overflow: auto;
+  border: 1px solid var(--line);
+  background: #091713;
+}
+.case-matrix {
+  width: 100%;
+  min-width: 1080px;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 13px;
+}
+.case-matrix thead { position: sticky; top: 0; z-index: 3; }
+.case-matrix th,
+.case-matrix td {
+  padding: 14px;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+.case-matrix thead th {
+  background: #17352d;
+  color: var(--mint);
+  letter-spacing: 0.03em;
+}
+.case-matrix tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  width: 230px;
+  padding: 0;
+  background: #10231e;
+}
+.case-matrix tbody tr:hover td,
+.case-matrix tbody tr:hover th { background-color: #153029; }
+.case-matrix button {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 24px 24px 1fr;
+  gap: 8px;
+  align-items: start;
+  padding: 14px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.case-matrix button:hover strong { color: var(--mint); }
+.case-matrix button small { color: var(--mint); font-weight: 800; }
+.case-matrix button .icon { color: var(--mint); }
+.case-matrix button span { display: grid; gap: 5px; color: var(--muted); font-weight: 500; }
+.case-matrix button strong { color: var(--ink); font-size: 14px; }
+.matrix-journey {
+  min-width: 430px;
+  display: grid;
+  grid-template-columns: repeat(7, auto);
+  align-items: stretch;
+  gap: 6px;
+}
+.matrix-journey i { align-self: center; color: var(--mint); font-style: normal; }
+.matrix-stage {
+  display: grid;
+  align-content: start;
+  gap: 5px;
+  min-width: 98px;
+  padding: 9px;
+  border-left: 2px solid var(--mint);
+  background: var(--panel);
+  color: var(--muted);
+}
+.matrix-stage b { color: var(--ink); font-size: 11px; text-transform: uppercase; }
+.matrix-warning,
+.matrix-real { display: grid; grid-template-columns: 18px minmax(150px, 1fr); gap: 8px; color: var(--muted); }
+.matrix-warning .icon { color: var(--amber); }
+.matrix-real .icon { color: var(--mint); }
+.matrix-count { margin: 10px 0 0; color: var(--muted); font-size: 13px; }
 .configuration-section {
   border-top: 1px solid var(--line);
   padding-top: 68px;
@@ -705,6 +821,8 @@ footer {
   .reading-grid { grid-template-columns: 1fr 1fr; }
   .configuration-grid { grid-template-columns: 1fr; }
   .configuration-grid > div + div { border-left: 0; border-top: 1px solid var(--line); }
+  .matrix-legend { grid-template-columns: 1fr; }
+  .matrix-legend i { transform: rotate(90deg); justify-self: center; }
 }
 
 @media (max-width: 580px) {
@@ -731,4 +849,5 @@ footer {
   .result-identity { justify-items: start; }
   .lesson { margin: 18px 14px; }
   .journey-map, .timeline, .timeline-heading { padding-left: 14px; padding-right: 14px; }
+  .matrix-search { grid-template-columns: 1fr; }
 }
