@@ -3,4 +3,5 @@ layout: default
 title: Pagos QR
 ---
 {% capture guide %}{% include_relative qr.md %}{% endcapture %}
-{{ guide | markdownify }}
+{% assign case_heading = "# 12. Pagos QR" %}
+{{ guide | remove_first: case_heading | markdownify }}

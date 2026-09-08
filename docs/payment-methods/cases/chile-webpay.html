@@ -3,4 +3,5 @@ layout: default
 title: Transbank Webpay Plus
 ---
 {% capture guide %}{% include_relative chile-webpay.md %}{% endcapture %}
-{{ guide | markdownify }}
+{% assign case_heading = "# 04. Transbank Webpay Plus" %}
+{{ guide | remove_first: case_heading | markdownify }}

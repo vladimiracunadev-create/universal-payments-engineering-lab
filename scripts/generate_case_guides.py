@@ -244,9 +244,10 @@ def render_markdown(family: dict[str, object], number: int) -> str:
     return "\n".join(lines)
 
 
-def render_wrapper(family: dict[str, object]) -> str:
+def render_wrapper(family: dict[str, object], number: int) -> str:
     rail_id = _text(family["id"])
     title = _text(family["title"])
+    markdown_heading = f"# {number:02d}. {title}"
     return "\n".join(
         [
             "---",
@@ -254,7 +255,8 @@ def render_wrapper(family: dict[str, object]) -> str:
             f"title: {title}",
             "---",
             f"{{% capture guide %}}{{% include_relative {rail_id}.md %}}{{% endcapture %}}",
-            "{{ guide | markdownify }}",
+            f'{{% assign case_heading = "{markdown_heading}" %}}',
+            "{{ guide | remove_first: case_heading | markdownify }}",
             "",
         ]
     )
@@ -265,7 +267,7 @@ def expected_files() -> dict[Path, str]:
     for number, family in enumerate(enriched_catalog(), 1):
         rail_id = _text(family["id"])
         files[TARGET / f"{rail_id}.md"] = render_markdown(family, number)
-        files[TARGET / f"{rail_id}.html"] = render_wrapper(family)
+        files[TARGET / f"{rail_id}.html"] = render_wrapper(family, number)
     return files
 
 

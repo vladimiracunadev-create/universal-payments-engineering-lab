@@ -3,4 +3,5 @@ layout: default
 title: Cheques y órdenes en papel
 ---
 {% capture guide %}{% include_relative paper.md %}{% endcapture %}
-{{ guide | markdownify }}
+{% assign case_heading = "# 02. Cheques y órdenes en papel" %}
+{{ guide | remove_first: case_heading | markdownify }}

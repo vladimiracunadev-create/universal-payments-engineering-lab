@@ -3,4 +3,5 @@ layout: default
 title: BNPL y crédito alternativo
 ---
 {% capture guide %}{% include_relative credit-alternatives.md %}{% endcapture %}
-{{ guide | markdownify }}
+{% assign case_heading = "# 19. BNPL y crédito alternativo" %}
+{{ guide | remove_first: case_heading | markdownify }}

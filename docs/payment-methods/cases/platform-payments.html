@@ -3,4 +3,5 @@ layout: default
 title: Marketplaces, splits y payouts
 ---
 {% capture guide %}{% include_relative platform-payments.md %}{% endcapture %}
-{{ guide | markdownify }}
+{% assign case_heading = "# 21. Marketplaces, splits y payouts" %}
+{{ guide | remove_first: case_heading | markdownify }}

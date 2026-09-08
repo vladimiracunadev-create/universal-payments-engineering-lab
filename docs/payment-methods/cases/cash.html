@@ -3,4 +3,5 @@ layout: default
 title: Efectivo y caja
 ---
 {% capture guide %}{% include_relative cash.md %}{% endcapture %}
-{{ guide | markdownify }}
+{% assign case_heading = "# 01. Efectivo y caja" %}
+{{ guide | remove_first: case_heading | markdownify }}

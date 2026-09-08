@@ -3,4 +3,5 @@ layout: default
 title: ACH y transferencias batch
 ---
 {% capture guide %}{% include_relative ach.md %}{% endcapture %}
-{{ guide | markdownify }}
+{% assign case_heading = "# 14. ACH y transferencias batch" %}
+{{ guide | remove_first: case_heading | markdownify }}
