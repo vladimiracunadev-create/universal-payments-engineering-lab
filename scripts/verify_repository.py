@@ -36,17 +36,27 @@ REQUIRED = {
     "config/case_guides.json",
     "docs/PRODUCT_GUIDE.md",
     "docs/START_HERE.md",
+    "docs/START_HERE.html",
     "docs/LEARNING_PATH.md",
+    "docs/LEARNING_PATH.html",
     "docs/LOCALHOST_AND_CONFIGURATION.md",
+    "docs/LOCALHOST_AND_CONFIGURATION.html",
     "docs/GITHUB_PAGES.md",
+    "docs/GITHUB_PAGES.html",
     "docs/index.md",
     "docs/_layouts/default.html",
     "docs/assets/docs.css",
+    "docs/assets/docs.js",
     "docs/REFERENCE_REPOSITORIES.md",
+    "docs/REFERENCE_REPOSITORIES.html",
     "docs/diagrams/PAYMENT_JOURNEY.md",
+    "docs/diagrams/PAYMENT_JOURNEY.html",
     "docs/payment-methods/CASEBOOK.md",
+    "docs/payment-methods/CASEBOOK.html",
     "docs/payment-methods/END_TO_END_MATRIX.md",
+    "docs/payment-methods/END_TO_END_MATRIX.html",
     "docs/IMPLEMENTATION_GUIDE.md",
+    "docs/IMPLEMENTATION_GUIDE.html",
     "docs/payment-methods/CATALOG.md",
     "docs/operations/RUNBOOK.md",
     "web/index.html",
@@ -55,6 +65,7 @@ REQUIRED = {
     "scripts/start_paylab.ps1",
     "scripts/verify_portal_ui.py",
     "scripts/generate_case_matrix.py",
+    "scripts/generate_case_guides.py",
 }
 
 
@@ -189,8 +200,50 @@ def check_product_assets(errors: list[str]) -> None:
             errors.append(f"incomplete end-to-end journey for {family['id']}")
     matrix = (ROOT / "docs/payment-methods/END_TO_END_MATRIX.md").read_text(encoding="utf-8")
     for family in enriched_catalog():
-        if f"{family['title']}**" not in matrix:
+        if f">{family['title']}</a>" not in matrix:
             errors.append(f"published end-to-end matrix is missing {family['id']}")
+    if matrix.startswith("---") or matrix.count('<tr data-search="') != 28:
+        errors.append("published matrix must be clean Markdown with exactly 28 HTML case rows")
+    for clean_doc in (
+        "START_HERE.md",
+        "LEARNING_PATH.md",
+        "LOCALHOST_AND_CONFIGURATION.md",
+        "GITHUB_PAGES.md",
+        "IMPLEMENTATION_GUIDE.md",
+        "payment-methods/CASEBOOK.md",
+        "payment-methods/END_TO_END_MATRIX.md",
+    ):
+        if (ROOT / "docs" / clean_doc).read_text(encoding="utf-8").startswith("---"):
+            errors.append(f"reader-facing Markdown exposes Jekyll front matter: docs/{clean_doc}")
+    case_dir = ROOT / "docs/payment-methods/cases"
+    markdown_guides = sorted(case_dir.glob("*.md"))
+    page_wrappers = sorted(case_dir.glob("*.html"))
+    if len(markdown_guides) != 28 or len(page_wrappers) != 28:
+        errors.append(
+            f"individual guide coverage must be 28 Markdown + 28 HTML: "
+            f"{len(markdown_guides)} Markdown, {len(page_wrappers)} HTML"
+        )
+    for family in enriched_catalog():
+        rail_id = family["id"]
+        guide_path = case_dir / f"{rail_id}.md"
+        if not guide_path.is_file():
+            continue
+        content = guide_path.read_text(encoding="utf-8")
+        required_sections = (
+            "## En una frase",
+            "## Ejemplo concreto",
+            "## Quién participa",
+            "## Recorrido completo, paso a paso",
+            "## Qué ocurre si falla",
+            "## Cómo llevarlo a una aplicación real",
+            "## Seguridad de datos",
+            "## Ventajas y desventajas",
+            "## Checklist antes de LIVE",
+            "## Fuentes",
+        )
+        missing_sections = [section for section in required_sections if section not in content]
+        if content.startswith("---") or missing_sections:
+            errors.append(f"incomplete individual guide for {rail_id}: {missing_sections}")
 
 
 def check_markdown_links(errors: list[str]) -> None:

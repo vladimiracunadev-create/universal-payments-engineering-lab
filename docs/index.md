@@ -48,7 +48,7 @@ flowchart LR
 ## Elige tu entrada
 
 <div class="docs-grid">
-  <a href="payment-methods/END_TO_END_MATRIX.html"><small>Vista central</small><strong>Tabla: 28 casos de comienzo a fin</strong><span>Compara necesidad, inicio, proceso, confirmación, cierre, fallos y stack real.</span></a>
+  <a href="payment-methods/END_TO_END_MATRIX.html"><small>Vista central + 28 guías individuales</small><strong>Tabla: 28 casos de comienzo a fin</strong><span>Cada fila abre un documento propio con ejemplo, actores, API, variables, pruebas, fallos, seguridad y LIVE.</span></a>
   <a href="START_HERE.html"><small>Primera vez</small><strong>Empieza aquí</strong><span>Objetivo, vocabulario y una práctica guiada de diez minutos.</span></a>
   <a href="LOCALHOST_AND_CONFIGURATION.html"><small>Ejecutar</small><strong>Localhost y variables</strong><span>Instalación, variables globales, credenciales por proveedor y callbacks.</span></a>
   <a href="IMPLEMENTATION_GUIDE.html"><small>Desarrollar</small><strong>Implementar en cualquier web</strong><span>Lenguaje, API, frontend, backend, datos, seguridad y operación.</span></a>
@@ -57,12 +57,6 @@ flowchart LR
   <a href="LEARNING_PATH.html"><small>Aprender</small><strong>Ruta por niveles</strong><span>De primer DEMO a un piloto productivo con criterios de salida.</span></a>
   <a href="GITHUB_PAGES.html"><small>Publicación</small><strong>GitHub Pages</strong><span>Qué publica, qué no ejecuta y por qué jamás contiene secretos.</span></a>
 </div>
-
-## La tabla que faltaba
-
-Cada una de las 28 filas muestra el recorrido entero y mantiene fija la modalidad mientras desplazas las etapas. Puedes [abrirla en pantalla completa](payment-methods/END_TO_END_MATRIX.html).
-
-![Matriz visual de los 28 recorridos](assets/paylab-case-matrix.png)
 
 ## Localhost y GitHub Pages no son lo mismo
 

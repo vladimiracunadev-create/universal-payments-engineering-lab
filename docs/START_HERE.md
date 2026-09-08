@@ -1,8 +1,3 @@
----
-layout: default
-title: Empieza aquí
----
-
 # 🧭 Empieza aquí
 
 ## El objetivo, sin jerga

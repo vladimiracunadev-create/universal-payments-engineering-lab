@@ -1,8 +1,3 @@
----
-layout: default
-title: GitHub Pages
----
-
 # 🌐 GitHub Pages
 
 ## Qué publica este repositorio

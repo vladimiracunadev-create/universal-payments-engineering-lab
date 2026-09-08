@@ -1,8 +1,3 @@
----
-layout: default
-title: Casebook de 28 medios de pago
----
-
 # 🧩 Los 28 casos: del concepto al desarrollo
 
 > ¿Quieres comparar los casos sin saltar entre secciones? Abre primero la [tabla de comienzo a fin](END_TO_END_MATRIX.html).

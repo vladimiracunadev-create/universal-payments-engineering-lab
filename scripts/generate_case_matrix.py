@@ -5,6 +5,7 @@
 from __future__ import annotations
 
 import argparse
+import html
 from pathlib import Path
 
 from payments_lab.catalog import enriched_catalog
@@ -13,51 +14,76 @@ TARGET = Path(__file__).resolve().parents[1] / "docs" / "payment-methods" / "END
 
 
 def _cell(value: object) -> str:
-    return str(value).replace("|", "&#124;").replace("\n", " ").strip()
+    return html.escape(str(value).replace("\n", " ").strip())
 
 
 def render() -> str:
     lines = [
-        "---",
-        "layout: default",
-        "title: Matriz de los 28 recorridos de pago",
-        "description: Cada modalidad de pago explicada desde la necesidad hasta producción.",
-        "---",
+        "# Tabla pedagógica: los 28 casos de comienzo a fin",
         "",
-        "# Los 28 casos, de comienzo a fin",
-        "",
-        '<p class="lede">Esta es la vista central del producto. Cada fila responde: <strong>cuándo usar el caso, cómo comienza, quién procesa, cómo se confirma, cómo se cierra, qué hacer si falla y qué construir en un sistema real.</strong></p>',
+        '<p class="lede">No necesitas conocer términos de pagos. Busca una necesidad y lee su fila de izquierda a derecha. Cada columna es una pregunta concreta que una integración real debe responder.</p>',
         "",
         '<div class="reading-path"><span><b>1</b> Necesidad</span><i>→</i><span><b>2</b> Inicio</span><i>→</i><span><b>3</b> Proceso</span><i>→</i><span><b>4</b> Confirmación</span><i>→</i><span><b>5</b> Cierre</span></div>',
         "",
-        "> Confirmar responde «¿ocurrió?». Cerrar responde «¿el ledger, el proveedor y el banco explican el mismo dinero?». Un retorno del navegador o una captura nunca bastan.",
+        '<section class="matrix-example"><p class="kicker">Ejemplo en 30 segundos</p><h2>Una compra de $19.990 con Webpay</h2><ol><li><b>Inicio:</b> tu backend crea una orden y una referencia.</li><li><b>Proceso:</b> Transbank presenta la pantalla y procesa la tarjeta.</li><li><b>Confirmar:</b> tu backend ejecuta <code>commit</code>; volver al navegador no basta.</li><li><b>Cerrar:</b> el ledger registra una sola operación y después se concilia con el reporte.</li><li><b>Si hay timeout:</b> queda <code>UNKNOWN</code> y se consulta; no se cobra otra vez a ciegas.</li></ol></section>',
         "",
-        '<div class="wide-table" markdown="1">',
+        "## Aquí comienza la tabla: 28 casos",
         "",
-        "| # / caso / cuándo | Inicio → proceso | Confirmación → cierre | Si falla | Implementación real |",
-        "|---|---|---|---|---|",
+        "Escribe una palabra para reducir las filas. Por ejemplo: **presencial**, **recurrente**, **Chile**, **banco** o **agente**.",
+        "",
+        '<label class="docs-filter" for="docs-case-filter"><span>Buscar un caso</span><input id="docs-case-filter" type="search" placeholder="Ej.: Webpay, recurrente, banco"></label>',
+        '<p id="docs-case-count" class="docs-case-count">Mostrando 28 de 28 casos.</p>',
+        "",
+        '<div class="wide-table">',
+        '<table id="docs-case-table" class="journey-table">',
+        "<thead><tr>",
+        '<th scope="col">#</th>',
+        '<th scope="col">Caso</th>',
+        '<th scope="col">¿Para qué sirve?</th>',
+        '<th scope="col">1 · Inicio</th>',
+        '<th scope="col">2 · Proceso</th>',
+        '<th scope="col">3 · Confirmar</th>',
+        '<th scope="col">4 · Cerrar</th>',
+        '<th scope="col">Si falla</th>',
+        '<th scope="col">Para hacerlo real</th>',
+        "</tr></thead>",
+        "<tbody>",
     ]
     for number, family in enumerate(enriched_catalog(), 1):
         journey = family["playbook"]["journey"]
         title = _cell(family["title"])
-        case = f"**{number}. {title}**<br>{_cell(journey['when'])}"
-        beginning = f"**Inicio:** {_cell(journey['start'])}<br>**Proceso:** {_cell(journey['process'])}"
-        ending = f"**Confirmar:** {_cell(journey['confirm'])}<br>**Cerrar:** {_cell(journey['close'])}"
-        failure = _cell(journey["failure"])
-        real = _cell(journey["real"])
-        lines.append(f"| {case} | {beginning} | {ending} | {failure} | {real} |")
+        rail_id = _cell(family["id"])
+        search_text = _cell(" ".join([str(family["title"]), *journey.values()])).lower()
+        lines.extend(
+            [
+                f'<tr data-search="{search_text}">',
+                f'<td class="case-number">{number:02d}</td>',
+                f'<th scope="row"><a href="cases/{rail_id}.html">{title}</a><small><a href="cases/{rail_id}.md">abrir guía .md</a></small></th>',
+                f"<td>{_cell(journey['when'])}</td>",
+                f"<td>{_cell(journey['start'])}</td>",
+                f"<td>{_cell(journey['process'])}</td>",
+                f"<td>{_cell(journey['confirm'])}</td>",
+                f"<td>{_cell(journey['close'])}</td>",
+                f'<td class="failure-cell">{_cell(journey["failure"])}</td>',
+                f'<td class="real-cell">{_cell(journey["real"])}</td>',
+                "</tr>",
+            ]
+        )
     lines.extend(
         [
-            "",
+            "</tbody>",
+            "</table>",
             "</div>",
             "",
-            "## Cómo usar esta tabla",
+            "## Qué debes poder explicar después de elegir una fila",
             "",
-            "1. Encuentra la necesidad en la primera columna.",
-            "2. Implementa primero el camino feliz de las dos columnas centrales.",
-            "3. Antes de liberar, reproduce el fallo descrito y demuestra que no duplica dinero ni evidencia.",
-            "4. Abre el [laboratorio en localhost](../LOCALHOST_AND_CONFIGURATION.html) para ejecutar cuatro escenarios.",
-            "5. Usa el [casebook detallado](CASEBOOK.html) para revisar alta, seguridad y salida a producción.",
+            "1. **Quién crea la referencia:** normalmente tu backend.",
+            "2. **Quién tiene autoridad para confirmar:** API, webhook, banco, operador o archivo; nunca una captura.",
+            "3. **Qué pasa si no sabes el resultado:** conservar `UNKNOWN`, consultar y evitar un segundo efecto.",
+            "4. **Cómo pruebas el dinero:** ledger balanceado y conciliación contra la fuente externa.",
+            "5. **Qué falta para LIVE:** contrato, credenciales separadas, seguridad, operación y regulación.",
+            "",
+            "Después abre el [laboratorio en localhost](../LOCALHOST_AND_CONFIGURATION.html) para ejecutar cuatro fallos, o el [casebook detallado](CASEBOOK.html) para revisar cada modalidad.",
             "",
             "## La arquitectura común",
             "",
@@ -71,7 +97,7 @@ def render() -> str:
             "  L --> R[Conciliación y operación]",
             "```",
             "",
-            "La tecnología cambia por fila; las responsabilidades no: el backend decide, la fuente autoritativa confirma y la conciliación demuestra.",
+            "**En una frase:** la tecnología cambia por fila; las responsabilidades no. El backend decide, una fuente autoritativa confirma y la conciliación demuestra.",
             "",
         ]
     )

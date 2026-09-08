@@ -87,17 +87,37 @@ img { max-width: 100%; height: auto; border: 1px solid #234038; }
 .reading-path b { display: block; color: #63e6be; }
 .reading-path i { align-self: center; color: #63e6be; font-style: normal; }
 .wide-table { overflow-x: auto; max-height: 75vh; border: 1px solid #234038; }
-.wide-table table { min-width: 1200px; }
+.wide-table table { min-width: 1900px; }
 .wide-table thead { position: sticky; top: 0; z-index: 3; background: #17352d; }
 .wide-table tbody tr:nth-child(even) { background: #0d1c18; }
 .wide-table tbody tr:hover { background: #153029; }
 .wide-table th:first-child, .wide-table td:first-child {
   position: sticky;
   left: 0;
-  min-width: 220px;
+  min-width: 58px;
   background: #10231e;
 }
-.wide-table td { min-width: 230px; }
+.wide-table th:nth-child(2), .wide-table td:nth-child(2) {
+  position: sticky;
+  left: 58px;
+  min-width: 210px;
+  background: #10231e;
+  z-index: 2;
+}
+.wide-table td { min-width: 190px; }
+.journey-table th { white-space: normal; }
+.journey-table th[scope="row"] a { color: #edf5f2; }
+.journey-table th[scope="row"] > small { display: block; margin-top: 8px; font-weight: 500; }
+.journey-table th[scope="row"] > small a { color: #63e6be; font-size: 12px; }
+.journey-table .case-number { color: #63e6be; font-weight: 900; }
+.journey-table .failure-cell { border-left: 2px solid #f4b860; background: rgba(244, 184, 96, .06); }
+.journey-table .real-cell { border-left: 2px solid #63e6be; background: rgba(99, 230, 190, .05); }
+.matrix-example { margin: 28px 0; padding: 22px; border: 1px solid #315047; background: #0d1c18; }
+.matrix-example h2 { margin: 5px 0 12px; font-size: 27px; }
+.matrix-example li + li { margin-top: 8px; }
+.docs-filter { display: flex; align-items: center; gap: 14px; margin: 20px 0 8px; color: #edf5f2; font-weight: 800; }
+.docs-filter input { width: min(440px, 100%); padding: 12px 14px; border: 1px solid #4d786c; background: #0d1c18; color: #edf5f2; }
+.docs-case-count { margin: 0 0 12px; color: #9cb0aa; font-size: 14px; }
 @media (max-width: 600px) {
   header span, header nav { display: none; }
   footer { flex-direction: column; }

@@ -1,0 +1,6 @@
+---
+layout: default
+title: Ruta de aprendizaje
+---
+{% capture guide %}{% include_relative LEARNING_PATH.md %}{% endcapture %}
+{{ guide | markdownify }}

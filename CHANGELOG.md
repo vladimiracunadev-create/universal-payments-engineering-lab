@@ -12,6 +12,8 @@
 - playbooks por modalidad con lenguaje/API, alta, costos, pruebas, seguridad, fallos, puesta en producción y fuentes oficiales.
 - matriz visual y filtrable con los 28 recorridos completos: necesidad, inicio, proceso, confirmación, cierre, recuperación e implementación real.
 - GitHub Pages rediseñado como sitio navegable; las guías principales ahora se renderizan con el mismo tema.
+- Markdown limpio de metadatos Jekyll y páginas HTML separadas; matriz con nueve columnas explícitas, ejemplo y filtro.
+- 28 guías pedagógicas individuales en Markdown y HTML, enlazadas desde cada fila de la matriz.
 - experiencia pedagógica con objetivo explícito, ejemplo guiado, iconos, mapas del recorrido y lecciones por escenario;
 - guías “Empieza aquí”, ruta de aprendizaje, diagramas y revisión comparativa de repositorios de referencia.
 - casebook pedagógico de 28 modalidades, configuración por variables de entorno y documentación de GitHub Pages.

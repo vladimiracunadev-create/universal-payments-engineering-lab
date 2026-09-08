@@ -85,11 +85,7 @@ La ventana enumera variables y callbacks sin mostrar valores de secretos.
 
 ![Configuración segura para Webpay](docs/assets/paylab-configuration.png)
 
-### Matriz completa de los 28 casos
-
-La matriz se lee horizontalmente: necesidad → inicio → proceso → confirmación → cierre. Las últimas columnas explican la recuperación y el stack real.
-
-![Matriz de los 28 recorridos de pago](docs/assets/paylab-case-matrix.png)
+Cada fila de la matriz abre una guía propia en HTML y Markdown. Por ejemplo: [Webpay Plus](docs/payment-methods/cases/chile-webpay.md), [transferencia bancaria](docs/payment-methods/cases/bank-transfer.md) y [pagos realizados por agentes](docs/payment-methods/cases/agentic-payments.md).
 
 ## Los tres modos no significan lo mismo
 
