@@ -1,5 +1,13 @@
 # 🏗️ Arquitectura de referencia
 
+## Arquitectura ejecutable hoy
+
+El checkout actual contiene un motor DEMO, una API HTTP local, un portal estático,
+un diagnóstico de credenciales, invariantes en memoria y cuatro adaptadores. No
+contiene todavía base de datos, cola, workers ni servicios separados. El diagrama
+siguiente es la arquitectura objetivo; el [roadmap](../../ROADMAP.md) indica el
+orden para convertirla en componentes persistentes.
+
 ## Objetivo
 
 La arquitectura preserva dos verdades simultáneas: la experiencia comercial (“esta orden debe pagarse”) y los hechos financieros externos (“el proveedor autorizó, la red liquidó, el banco abonó”). Ninguna API aislada domina todo el ciclo.

@@ -10,6 +10,10 @@
 | `REQUIRES_HARDWARE` | necesita dispositivo o infraestructura física/certificada | que Docker pueda reemplazarla |
 | `DOCUMENTED` | cobertura conceptual y contrato de laboratorio | implementación ejecutable |
 
+Todos los casos tienen un recorrido `DEMO` local. Ese recorrido demuestra la
+semántica educativa común; el estado de esta tabla indica la madurez de la
+implementación específica y de su acceso externo.
+
 ## Matriz actual
 
 | Capacidad | Estado | Evidencia | Brecha antes de producción |
@@ -19,7 +23,10 @@
 | idempotencia por fingerprint | `OPERATIVE_LOCAL` | `core/idempotency.py` + pruebas | TTL, respuesta cacheada, atomicidad distribuida |
 | conciliación referencia/monto/moneda | `OPERATIVE_LOCAL` | `core/reconciliation.py` + pruebas | estado, fees, FX, lotes, fechas y workflow de excepciones |
 | HTTP JSON | `OPERATIVE_LOCAL` | `core/http.py` + pruebas | proxy/mTLS, telemetría y redacción del entorno anfitrión |
-| webhooks Khipu/MP | `OPERATIVE_LOCAL` | HMAC, tiempo constante y anti-replay + pruebas | inbox persistente, rate limit y gestión real de secretos |
+| firma de webhooks Khipu/MP | `OPERATIVE_LOCAL` | HMAC, tiempo constante y ventana de frescura + pruebas | deduplicación/inbox persistente, rate limit y gestión real de secretos |
+| motor DEMO | `OPERATIVE_LOCAL` | 28 familias × 4 situaciones verificadas | escenarios especializados por proveedor y persistencia |
+| portal localhost | `OPERATIVE_LOCAL` | API, UI responsive y pruebas HTTP | persistencia, autenticación y despliegue compartido |
+| diagnóstico de modos | `OPERATIVE_LOCAL` | `paylab doctor` | prueba de conectividad/autorización contra cada sandbox |
 | Khipu v3 | `REQUIRES_CREDENTIALS` | adapter + guía de punta a punta | prueba live, devolución habilitada y conciliación propia |
 | Mercado Pago Payments | `REQUIRES_CREDENTIALS` | adapter + guía de punta a punta | prueba live, estados por producto y conciliación propia |
 | Webpay Plus REST | `REQUIRES_CREDENTIALS` | adapter + CLI | flujo navegador, timeout/commit y certificación propia |

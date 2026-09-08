@@ -10,6 +10,8 @@ La documentación está organizada por la pregunta que una persona necesita resp
 | ¿Qué protocolos intervienen? | [Stack tecnológico](technology/STACK.md) |
 | ¿Cómo se integra y opera cada proveedor? | [Contrato común](integrations/ADAPTERS.md) · [Khipu](integrations/KHIPU.md) · [Mercado Pago](integrations/MERCADO_PAGO.md) · [Webpay](integrations/TRANSBANK_WEBPAY_PLUS.md) · [Oneclick](integrations/TRANSBANK_ONECLICK.md) |
 | ¿Qué está realmente implementado? | [Cobertura](operations/COVERAGE.md) |
+| ¿Cómo uso el producto y qué resuelve cada caso? | [Guía del producto](PRODUCT_GUIDE.md) |
+| ¿Qué lenguaje/API uso y cómo contrato, pruebo y protejo una integración web? | [Guía de implementación](IMPLEMENTATION_GUIDE.md) |
 | ¿Cómo se opera? | [Runbook](operations/RUNBOOK.md) |
 | ¿Cómo cuadran proveedor, ledger y banco? | [Conciliación](operations/RECONCILIATION_SETTLEMENT.md) |
 | ¿Qué puede salir mal? | [Threat model](security/THREAT_MODEL.md) |

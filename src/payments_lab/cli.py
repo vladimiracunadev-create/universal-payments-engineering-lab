@@ -7,18 +7,11 @@ from pathlib import Path
 from .adapters.khipu import KhipuProvider
 from .adapters.mercadopago import MercadoPagoProvider
 from .adapters.transbank import WebpayPlusProvider
+from .catalog import catalog_text
 from .core.states import PaymentState
-
-
-def _catalog_path() -> Path:
-    candidates = (
-        Path.cwd() / "config" / "payment_rails.yaml",
-        Path(__file__).resolve().parents[2] / "config" / "payment_rails.yaml",
-    )
-    for candidate in candidates:
-        if candidate.is_file():
-            return candidate
-    raise FileNotFoundError("config/payment_rails.yaml was not found; run from the repository root")
+from .demo import SCENARIOS, run_demo
+from .doctor import diagnose
+from .web import serve
 
 
 def print_json(value) -> None:
@@ -34,6 +27,15 @@ def build_parser() -> argparse.ArgumentParser:
     commands = parser.add_subparsers(dest="cmd", required=True)
     commands.add_parser("catalog")
     commands.add_parser("states")
+    commands.add_parser("doctor")
+    demo = commands.add_parser("demo", help="Run a deterministic journey that never moves money")
+    demo.add_argument("rail")
+    demo.add_argument("--scenario", choices=tuple(SCENARIOS), default="success")
+    demo.add_argument("--amount", default="19990")
+    demo.add_argument("--currency", default="CLP")
+    local = commands.add_parser("serve", help="Open the local DEMO portal")
+    local.add_argument("--host", default="127.0.0.1")
+    local.add_argument("--port", type=int, default=8080)
 
     khipu_create = commands.add_parser("khipu-create")
     khipu_create.add_argument("--subject", required=True)
@@ -70,9 +72,15 @@ def build_parser() -> argparse.ArgumentParser:
 def main(argv=None) -> None:
     args = build_parser().parse_args(argv)
     if args.cmd == "catalog":
-        print(_catalog_path().read_text(encoding="utf-8"))
+        print(catalog_text())
     elif args.cmd == "states":
         print("\n".join(item.value for item in PaymentState))
+    elif args.cmd == "doctor":
+        print_json(diagnose())
+    elif args.cmd == "demo":
+        print_json(run_demo(args.rail, scenario=args.scenario, amount=args.amount, currency=args.currency))
+    elif args.cmd == "serve":
+        serve(args.host, args.port)
     elif args.cmd == "khipu-create":
         payload = {
             "subject": args.subject,

@@ -47,4 +47,12 @@ jobs:
       - name: Build distributions
         run: python -m pip install build && python -m build
       - name: Install wheel and run CLI
-        run: python -m pip install dist/*.whl && paylab states
+        run: |
+          python -m pip install dist/*.whl
+          smoke_dir="$(mktemp -d)"
+          cd "$smoke_dir"
+          paylab states
+          paylab doctor
+          paylab catalog > /dev/null
+          paylab demo cash > /dev/null
+          python -c "import threading, urllib.request; from payments_lab.web import create_server; server=create_server(port=0); thread=threading.Thread(target=server.serve_forever, daemon=True); thread.start(); response=urllib.request.urlopen(f'http://127.0.0.1:{server.server_port}/', timeout=2); assert response.status == 200 and b'PayLab' in response.read(); server.shutdown(); server.server_close(); thread.join(timeout=2)"

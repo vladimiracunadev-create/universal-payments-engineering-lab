@@ -14,12 +14,16 @@ Los laboratorios avanzan por nivel de riesgo. Empieza local; la ejecución exter
 
 ```bash
 python -m unittest discover -s tests -v
+python scripts/paylab.py doctor
+python scripts/paylab.py demo chile-webpay --scenario timeout-recovered
+python scripts/paylab.py serve
 python scripts/paylab.py states
 python scripts/paylab.py catalog
 python scripts/verify_repository.py
 ```
 
-Criterio: tests verdes, catálogo legible y capacidad de explicar por qué `TIMEOUT` no es `DECLINED`.
+Criterio: tests verdes, portal accesible en localhost, catálogo legible y
+capacidad de explicar por qué `TIMEOUT` no es `DECLINED`.
 
 ## Evidencia común
 

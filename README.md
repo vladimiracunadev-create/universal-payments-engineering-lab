@@ -1,171 +1,144 @@
 # 💳 Universal Payments Engineering Lab
 
-## Ingeniería de pagos de extremo a extremo · del intento al settlement
-
-Laboratorio profesional en español para diseñar, integrar, operar, probar y auditar sistemas de pago con la disciplina que exige dinero real: idempotencia, estados inciertos, ledger, conciliación, seguridad, cumplimiento y evidencia.
+Laboratorio ejecutable en español para **entender un pago completo**: desde la intención hasta el ledger, la liquidación y la conciliación.
 
 [![CI](https://github.com/vladimiracunadev-create/universal-payments-engineering-lab/actions/workflows/ci.yml/badge.svg)](https://github.com/vladimiracunadev-create/universal-payments-engineering-lab/actions/workflows/ci.yml)
 [![Python 3.11+](https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white)](pyproject.toml)
 [![License MIT](https://img.shields.io/badge/license-MIT-22c55e)](LICENSE)
-[![Status: laboratory](https://img.shields.io/badge/status-laboratorio_operativo-f59e0b)](docs/operations/COVERAGE.md)
+[![Mode: DEMO](https://img.shields.io/badge/mode-DEMO-63e6be)](docs/PRODUCT_GUIDE.md)
 
-🚀 [Inicio rápido](#-inicio-rápido) · 🗺️ [Arquitectura](docs/architecture/ARCHITECTURE.md) · 💳 [Medios de pago](docs/payment-methods/CATALOG.md) · ⚙️ [Tecnologías](docs/technology/STACK.md) · 🧪 [Laboratorios](labs/README.md) · 🛡️ [Seguridad](SECURITY.md) · 📊 [Cobertura](docs/operations/COVERAGE.md) · 🎓 [Currículo](curriculum/README.md)
+## Qué puedes hacer hoy
 
----
+Sin instalar servicios externos ni configurar credenciales puedes:
 
-> [!IMPORTANT]
-> Este repositorio enseña cómo se opera un sistema de pagos, pero no es por sí solo un PSP, adquirente, switch, banco ni procesador certificado. Una integración solo se marca como operativa cuando existe una ruta de código hacia infraestructura oficial; aun así, ejecutarla requiere credenciales, contrato y permisos propios. Nunca se simula una certificación o una liquidación real.
+- abrir un portal local y explorar **28 familias de pago**;
+- ejecutar cada familia en cuatro situaciones: éxito, timeout recuperado, evento duplicado y diferencia de conciliación;
+- observar actores, estados, tecnologías, evidencia, asiento balanceado y resultado de conciliación;
+- comprobar qué integraciones externas están configuradas con el comando `doctor`;
+- usar clientes HTTP para Khipu, Mercado Pago, Webpay Plus y Oneclick cuando dispongas de acceso autorizado.
 
-## 🎯 Qué resuelve
+El modo DEMO es una simulación determinista. **No contacta proveedores y no mueve dinero.**
 
-Una pantalla de checkout no es un sistema de pagos. El problema real empieza cuando una respuesta se pierde, un webhook llega dos veces, el proveedor autoriza después de un timeout, el dinero se liquida por un monto distinto o una devolución queda sin cuadrar.
+## Levántalo en dos minutos
 
-```mermaid
-flowchart LR
-    A[Experiencia<br/>web · app · POS · QR] --> B[Payment intent<br/>orden + monto + moneda]
-    B --> C[Orquestación<br/>routing + idempotencia]
-    C --> D[Proveedor / rail<br/>adquirente · banco · wallet]
-    D --> E[Clearing<br/>cálculo de obligaciones]
-    E --> F[Settlement<br/>movimiento final de fondos]
-    C --> G[Ledger interno<br/>doble partida]
-    D --> H[Eventos / consultas<br/>webhook + polling]
-    F --> I[Conciliación<br/>interno vs proveedor vs banco]
-    G --> I
-    H --> C
-```
-
-La regla de oro: **un error de transporte no demuestra un error financiero**. Ante un timeout, el resultado puede ser desconocido; reintentar sin idempotencia ni consulta de estado puede convertir una falla técnica en un doble cargo.
-
-## ✅ Estado verificable
-
-| Superficie | Estado actual | Evidencia |
-|---|---|---|
-| Núcleo transaccional | `OPERATIVE_LOCAL` | estados, idempotencia, ledger balanceado y conciliación en `src/` |
-| Khipu API v3 | `REQUIRES_CREDENTIALS` | crear, consultar y eliminar; webhook HMAC y guía operativa |
-| Mercado Pago Payments API | `REQUIRES_CREDENTIALS` | crear, consultar y reembolsar; idempotencia y webhook HMAC |
-| Transbank Webpay Plus REST | `REQUIRES_CREDENTIALS` | crear, confirmar, consultar y reembolsar contra el ambiente autorizado |
-| Transbank Oneclick Mall | `REQUIRES_CERTIFICATION` | inscripción, cobro, consulta, devolución y baja con contrato REST real |
-| Resto de medios y rails | `DOCUMENTED` / acceso externo | taxonomía, riesgos y ruta de laboratorio; sin falsa promesa productiva |
-| Pruebas | verificable en local y CI | `python -m unittest discover -s tests -v` |
-
-La matriz completa está en [Cobertura operativa](docs/operations/COVERAGE.md); su catálogo canónico legible por máquina vive en [`config/payment_rails.yaml`](config/payment_rails.yaml). El alcance y la operación caso a caso están en [Integraciones](docs/integrations/ADAPTERS.md).
-
-## 💳 Cobertura del ecosistema
-
-La documentación recorre las familias relevantes sin confundir instrumento, canal y rail:
-
-- efectivo, cheque, vale vista, contra entrega y cash-in/cash-out;
-- tarjetas de crédito, débito y prepago; presencial, CNP, recurrente, cuotas y credenciales almacenadas;
-- EMV chip/contactless, NFC, QR MPM/CPM, POS, mPOS, SoftPOS y Tap to Pay;
-- wallets, dinero electrónico, stored value, gift cards, loyalty y mobile money;
-- transferencias A2A, ACH, débito directo, mandatos, request-to-pay e instant payments;
-- Pix, UPI, SPEI, FedNow, RTP, Faster Payments y SEPA Instant como estudios de rail;
-- pagos internacionales, corresponsalía, SWIFT, FX, remesas y liquidación RTGS;
-- links de pago, vouchers, BNPL, carrier billing, marketplaces y split payments;
-- Bitcoin, Lightning, stablecoins y CBDC, condicionados a jurisdicción y custodia;
-- Open Banking/Open Finance, M2M/IoT y pagos agentic con autoridad delegada.
-
-Consulta el [catálogo de medios](docs/payment-methods/CATALOG.md) para entender actores, ciclo, riesgos y condición de integración de cada familia.
-
-## 🚀 Inicio rápido
-
-Requiere Python 3.11 o superior. El núcleo no tiene dependencias de runtime externas.
+Requiere Python 3.11 o superior. El producto no tiene dependencias de runtime externas.
 
 ```bash
 git clone https://github.com/vladimiracunadev-create/universal-payments-engineering-lab.git
 cd universal-payments-engineering-lab
-python -m unittest discover -s tests -v
-python scripts/paylab.py states
+python scripts/paylab.py doctor
+python scripts/paylab.py serve
+```
+
+Abre [http://127.0.0.1:8080](http://127.0.0.1:8080), elige un medio de pago y ejecuta el recorrido.
+
+En Windows PowerShell se usan exactamente los mismos comandos. Para instalar la CLI:
+
+```powershell
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+python -m pip install -e .
+paylab doctor
+paylab serve
+```
+
+## Qué verás
+
+![Portal local con los controles de ejecución](docs/assets/paylab-home.png)
+
+![Timeout recuperado sin crear un segundo efecto](docs/assets/paylab-timeout-recovered.png)
+
+## Los tres modos no significan lo mismo
+
+| Modo | Qué hace | Qué demuestra |
+|---|---|---|
+| `DEMO` | ejecuta datos y eventos deterministas dentro del proceso local | lógica, estados, fallos, ledger y conciliación |
+| `SANDBOX` | llama al ambiente de prueba oficial cuando existe y hay credenciales | contrato técnico del proveedor en una cuenta autorizada |
+| `LIVE` | opera contra infraestructura real bajo habilitación explícita | comportamiento real de esa cuenta; no implica certificación general |
+
+El modo se elige **antes** de crear un intento. Si una operación SANDBOX o LIVE vence por timeout, queda `UNKNOWN` y debe consultarse; nunca se sustituye silenciosamente por un resultado DEMO.
+
+## Qué problema resuelve cada grupo
+
+| Grupo | Casos disponibles | Pregunta principal |
+|---|---|---|
+| aceptación física | efectivo, cheque, POS, mPOS, SoftPOS y vouchers | ¿cómo se recibe, custodia y concilia valor físico? |
+| tarjetas y wallets | tarjetas, Webpay Plus, Oneclick, Mercado Pago y wallets tokenizadas | ¿cómo se autentica, autoriza, captura y devuelve un cargo? |
+| cuenta a cuenta | Khipu, transferencias, ACH, débito directo y pagos instantáneos | ¿cómo se confirma un movimiento cuando la respuesta puede ser diferida? |
+| experiencias de inicio | QR, links, facturas y request-to-pay | ¿cómo se conecta la orden comercial con el rail que mueve el dinero? |
+| saldos y crédito | stored value, gift cards, mobile money, BNPL y carrier billing | ¿quién mantiene el saldo o financia al pagador? |
+| plataformas y empresas | marketplace, splits, payouts, B2B y tesorería | ¿cómo se distribuyen fondos entre varias partes con control y auditoría? |
+| infraestructura global | SWIFT, FX, corresponsalía, RTGS y Open Finance | ¿qué contratos, mensajes y reglas determinan finalidad y settlement? |
+| nuevas formas | Bitcoin, Lightning, stablecoins, IoT y pagos agentic | ¿cómo se limita autoridad, custodia, firma y riesgo operacional? |
+
+La explicación individual de las 28 familias está en el [mapa de producto](docs/PRODUCT_GUIDE.md). El catálogo canónico legible por máquina vive en [`config/payment_rails.yaml`](config/payment_rails.yaml), y las descripciones simples en [`config/case_guides.json`](config/case_guides.json).
+
+## Qué está implementado y qué sigue siendo arquitectura
+
+### Ejecutable ahora
+
+- máquina de estados de pagos;
+- idempotencia por clave y fingerprint en memoria;
+- ledger balanceado en memoria;
+- conciliación por referencia, monto y moneda;
+- cliente HTTP JSON sin retries monetarios automáticos;
+- firma HMAC y ventana de frescura para webhooks Khipu y Mercado Pago;
+- adaptadores HTTP para Khipu, Mercado Pago, Webpay Plus y Oneclick;
+- motor DEMO para las 28 familias;
+- API y portal localhost;
+- diagnóstico de credenciales y límites de modo.
+
+### Todavía no implementado
+
+- base de datos y transacciones;
+- idempotencia distribuida con respuesta y TTL;
+- inbox/outbox y colas;
+- deduplicación persistente de webhooks;
+- recovery scheduler;
+- routing multi-proveedor y risk engine;
+- settlement bancario real, payouts y tesorería;
+- observabilidad, dashboards y SLO;
+- ejecución SANDBOX automatizada de punta a punta para todos los proveedores;
+- certificaciones, hardware y permisos externos.
+
+La secuencia completa y el estado de cada tecnología están en el [roadmap](ROADMAP.md) y la [matriz de cobertura](docs/operations/COVERAGE.md).
+
+## Integraciones externas existentes
+
+| Integración | Código disponible | Estado actual |
+|---|---|---|
+| Khipu v3 | crear, consultar, eliminar, listar bancos y verificar firma | requiere credenciales; no existe evidencia live en este checkout |
+| Mercado Pago Payments | crear, consultar, reembolsar y verificar firma | requiere credenciales; las pruebas usan transporte falso |
+| Webpay Plus REST | crear, commit, consultar y reembolsar | requiere comercio, ambiente y puesta en producción propios |
+| Oneclick Mall | inscripción, cobro, status, devolución y baja | requiere producto contratado y certificación |
+
+`REQUIRES_CREDENTIALS` significa que existe transporte configurable; no significa que se haya efectuado un pago.
+
+## Comandos principales
+
+```bash
+python scripts/paylab.py doctor
 python scripts/paylab.py catalog
+python scripts/paylab.py states
+python scripts/paylab.py demo chile-webpay --scenario timeout-recovered
+python scripts/paylab.py serve --port 8080
+python -m unittest discover -s tests -v
 python scripts/verify_repository.py
 ```
 
-Para instalar el CLI en un entorno virtual:
+## Ruta de lectura recomendada
 
-```bash
-python -m venv .venv
-# Linux/macOS: source .venv/bin/activate
-# PowerShell:   .venv\Scripts\Activate.ps1
-python -m pip install -e .
-paylab states
-```
+1. [Guía del producto](docs/PRODUCT_GUIDE.md): qué resuelve cada caso y cómo usar el portal.
+2. [Implementación web](docs/IMPLEMENTATION_GUIDE.md): lenguaje, API, alta, costos, pruebas, seguridad y fallos.
+3. [Ciclo de vida](docs/fundamentals/PAYMENT_LIFECYCLE.md): autorizar, capturar y liquidar no son sinónimos.
+4. [Arquitectura](docs/architecture/ARCHITECTURE.md): componentes actuales y arquitectura objetivo.
+5. [Integraciones](docs/integrations/ADAPTERS.md): contrato seguro de los proveedores.
+6. [Runbook](docs/operations/RUNBOOK.md): qué hacer ante timeouts, duplicados y diferencias.
+7. [Roadmap](ROADMAP.md): orden de construcción de DEMO, SANDBOX y capacidades productivas.
+8. [Windows](docs/WINDOWS.md): arranque, aislamiento y límites de exposición local.
 
-### Ejecución real controlada
+## Seguridad
 
-1. Lee el [runbook](docs/operations/RUNBOOK.md) y la [política de seguridad](SECURITY.md).
-2. Carga secretos desde tu shell o secret manager; `.env` no se versiona.
-3. Usa exclusivamente credenciales y ambientes oficiales autorizados.
-4. Define monto máximo, destinatario, evidencia y reversa antes de enviar.
-5. Consulta estado y concilia; el retorno del navegador nunca es la fuente final.
+Este repositorio no es un PSP, adquirente, switch, banco ni procesador certificado. Nunca uses instrumentos, cuentas o credenciales ajenas. No almacenes PAN completo, CVV, PIN, track data, secretos ni payloads sin sanitizar.
 
-Ejemplos de CLI y contratos: [laboratorio de certificación](labs/certification/README.md).
-
-## 🧠 Autorizar no es liquidar
-
-| Etapa | Pregunta que responde | Evidencia esperada |
-|---|---|---|
-| Intent | ¿Qué se pretende cobrar? | `payment_id`, orden, monto, moneda |
-| Autenticación | ¿La persona controla el instrumento? | resultado 3DS/PIN/biometría/redirect |
-| Autorización | ¿El emisor acepta reservar o mover valor? | código y referencia del proveedor |
-| Captura | ¿El comercio confirma el cobro? | identificador y monto capturado |
-| Clearing | ¿Cuánto debe cada participante? | archivo/mensaje, fees y netos |
-| Settlement | ¿Los fondos quedaron abonados? | lote, abono, fecha valor, moneda |
-| Conciliación | ¿Coinciden negocio, proveedor, ledger y banco? | diferencias explicadas |
-
-Profundización: [ciclo de vida](docs/fundamentals/PAYMENT_LIFECYCLE.md) y [conciliación](docs/operations/RECONCILIATION_SETTLEMENT.md).
-
-## 🗺️ Rutas por audiencia
-
-| Si eres… | Empieza por | Resultado |
-|---|---|---|
-| desarrollador/a | [Arquitectura](docs/architecture/ARCHITECTURE.md) → [stack](docs/technology/STACK.md) | integrar sin esconder semántica financiera |
-| SRE / plataforma | [Runbook](docs/operations/RUNBOOK.md) → [fault lab](fault-lab/README.md) | operar timeouts, duplicados y recuperación |
-| seguridad / compliance | [Threat model](docs/security/THREAT_MODEL.md) → [regulación](docs/regulations/README.md) | delimitar datos, controles y evidencia |
-| producto / negocio | [Medios](docs/payment-methods/CATALOG.md) → [glosario](docs/GLOSSARY.md) | elegir por necesidad, no por marca |
-| estudiante | [Currículo](curriculum/README.md) → [laboratorios](labs/README.md) | avanzar de conceptos a evidencia |
-
-## 🗂️ Estructura
-
-```text
-src/payments_lab/core/        invariantes transaccionales
-src/payments_lab/adapters/    transportes hacia proveedores reales
-config/payment_rails.yaml     catálogo canónico y madurez
-docs/                         conocimiento por dominio y audiencia
-labs/                         contratos y guías de ejecución
-fault-lab/                    fallos controlados del software propio
-curriculum/                   recorrido pedagógico
-scripts/                      CLI y verificadores
-tests/                        evidencia automatizada
-```
-
-## 🎯 Qué es y qué no es
-
-### Sí es
-
-- un laboratorio orientado a invariantes, fallos y operación;
-- una taxonomía transversal de instrumentos, canales, rails y tecnologías;
-- código ejecutable para demostrar estados, idempotencia, ledger y conciliación;
-- una base extensible para adaptadores que respeten contratos oficiales;
-- material honesto: cada superficie declara evidencia, dependencias y límites.
-
-### No es
-
-- un procesador listo para custodiar o mover fondos de terceros;
-- una certificación PCI, EMV, de red, bancaria o regulatoria;
-- un sustituto de HSM, POS, switch, cámara o core bancario;
-- asesoría legal, contable, tributaria, de fraude o cumplimiento;
-- autorización para probar credenciales, tarjetas o cuentas ajenas.
-
-## 🛡️ Seguridad y uso responsable
-
-Nunca confirmes por el `return_url`. Verifica servidor-a-servidor o mediante webhook autenticado, procesa eventos de forma idempotente y concilia contra el abono. No registres PAN completo, CVV/CVC/CID, PIN, track data, secretos, tokens de sesión ni payloads sin sanitizar.
-
-Para vulnerabilidades, consulta [SECURITY.md](SECURITY.md). Para cambios, [CONTRIBUTING.md](CONTRIBUTING.md). Licencia: [MIT](LICENSE).
-
----
-
-Hecho para quien quiere entender qué ocurre **después de pulsar Pagar**.
-
-⬆️ [Comenzar por el ciclo de vida](docs/fundamentals/PAYMENT_LIFECYCLE.md) · 💳 [Explorar los medios](docs/payment-methods/CATALOG.md) · 🧪 [Ejecutar un laboratorio](labs/README.md)
-
-Hecho con 🧠 y ☕ por Vladimir Acuña
+Consulta [SECURITY.md](SECURITY.md) antes de conectar un proveedor. Licencia: [MIT](LICENSE).

@@ -4,6 +4,8 @@
 from __future__ import annotations
 
 import ast
+import importlib
+import json
 import re
 import sys
 import tomllib
@@ -12,6 +14,7 @@ from pathlib import Path
 from urllib.parse import unquote
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "src"))
 TEXT_SUFFIXES = {".md", ".py", ".toml", ".yaml", ".yml", ".txt"}
 IGNORED_PARTS = {".git", ".venv", "__pycache__", "build", "dist"}
 ALLOWED_STATUSES = {
@@ -29,8 +32,15 @@ REQUIRED = {
     "CHANGELOG.md",
     "ROADMAP.md",
     "config/payment_rails.yaml",
+    "config/case_guides.json",
+    "docs/PRODUCT_GUIDE.md",
+    "docs/IMPLEMENTATION_GUIDE.md",
     "docs/payment-methods/CATALOG.md",
     "docs/operations/RUNBOOK.md",
+    "web/index.html",
+    "web/styles.css",
+    "web/app.js",
+    "scripts/start_paylab.ps1",
 }
 
 
@@ -81,7 +91,61 @@ def check_catalog(errors: list[str]) -> int:
         errors.append(f"unknown catalog statuses: {unknown}")
     if len(statuses) != len(families):
         errors.append(f"each family needs one status: {len(families)} families, {len(statuses)} statuses")
+    guides = json.loads((ROOT / "config/case_guides.json").read_text(encoding="utf-8"))
+    missing_guides = sorted(set(families) - set(guides))
+    extra_guides = sorted(set(guides) - set(families))
+    if missing_guides or extra_guides:
+        errors.append(f"catalog/guide drift: missing={missing_guides}, extra={extra_guides}")
+    for rail_id, guide in guides.items():
+        missing = sorted({"title", "solves", "demo_focus"} - set(guide))
+        if missing:
+            errors.append(f"incomplete guide for {rail_id}: {missing}")
+    for adapter in re.findall(r"^    adapter: ([A-Za-z0-9_.]+)$", content, flags=re.MULTILINE):
+        module_name, _, class_name = adapter.rpartition(".")
+        try:
+            module = importlib.import_module(module_name)
+            getattr(module, class_name)
+        except (ImportError, AttributeError) as exc:
+            errors.append(f"catalog adapter cannot be imported: {adapter} ({exc})")
     return len(families)
+
+
+def check_product_assets(errors: list[str]) -> None:
+    pyproject = (ROOT / "pyproject.toml").read_text(encoding="utf-8")
+    for asset in (
+        "config/payment_rails.yaml",
+        "config/case_guides.json",
+        "web/index.html",
+        "web/styles.css",
+        "web/app.js",
+    ):
+        if asset not in pyproject:
+            errors.append(f"package data missing from pyproject.toml: {asset}")
+    html = (ROOT / "web/index.html").read_text(encoding="utf-8")
+    if "<script>" in html or "style=" in html:
+        errors.append("portal must keep scripts/styles external for its strict CSP")
+    from payments_lab.catalog import enriched_catalog
+
+    for family in enriched_catalog():
+        guide = family.get("playbook", {})
+        required = {
+            "stack",
+            "access",
+            "pricing",
+            "implementation",
+            "testing",
+            "security",
+            "failures",
+            "go_live",
+            "sources",
+        }
+        missing = sorted(required - set(guide))
+        if missing:
+            errors.append(f"incomplete implementation playbook for {family['id']}: {missing}")
+        if not guide.get("sources") or not all(
+            source.get("url", "").startswith("https://") for source in guide["sources"]
+        ):
+            errors.append(f"implementation playbook needs HTTPS official sources: {family['id']}")
 
 
 def check_markdown_links(errors: list[str]) -> None:
@@ -138,10 +202,11 @@ def main() -> int:
     check_markdown_links(errors)
     check_curriculum(errors)
     check_python_syntax(errors)
+    check_product_assets(errors)
     workflows = check_workflows(errors)
     tests = count_tests()
-    if tests < 4:
-        errors.append(f"expected at least 4 tests, discovered {tests}")
+    if tests < 40:
+        errors.append(f"expected at least 40 tests, discovered {tests}")
     if errors:
         print("Repository verification FAILED")
         for error in errors:

@@ -1,12 +1,16 @@
 # Changelog
 
-Todos los cambios relevantes se documentan aquí siguiendo [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) y versionado semántico cuando exista una release.
-
 ## [Unreleased]
 
 ### Added
 
-- Catálogo transversal de 27 familias de pago y tecnologías asociadas.
+- portal localhost con API y UI responsive;
+- recorridos DEMO deterministas para las 28 familias del catálogo;
+- escenarios de éxito, timeout recuperado, evento duplicado y diferencia de conciliación;
+- comandos `doctor`, `demo` y `serve`;
+- guía de producto, capturas verificadas y arranque específico para Windows.
+- playbooks por modalidad con lenguaje/API, alta, costos, pruebas, seguridad, fallos, puesta en producción y fuentes oficiales.
+- Catálogo transversal de 28 familias de pago y tecnologías asociadas.
 - Documentación profunda de lifecycle, arquitectura, protocolos, seguridad, regulación, operaciones, settlement y conciliación.
 - Currículo de 8 partes y 32 módulos con resultados verificables.
 - Runbooks de certificación, controlled live, fault injection y production readiness.
@@ -22,6 +26,15 @@ Todos los cambios relevantes se documentan aquí siguiendo [Keep a Changelog](ht
 - Transporte HTTP endurecido con HTTPS obligatorio, límites de respuesta y resultados de red inciertos.
 - Adaptadores con validación de contratos, identificadores, URLs e importes sin punto flotante.
 - Operaciones Khipu sin endpoint v3 verificado retiradas hasta disponer del contrato aplicable.
+
+### Fixed
+
+- el catálogo ya no atribuye void/refund inexistentes al adapter Khipu;
+- Oneclick cuenta como integración propia en el catálogo;
+- configuración y assets web se incluyen en la distribución;
+- la documentación distingue ventana de frescura de deduplicación anti-replay.
+
+Todos los cambios relevantes se documentan aquí siguiendo [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) y versionado semántico cuando exista una release.
 
 ## [0.1.0] - 2026-09-07
 

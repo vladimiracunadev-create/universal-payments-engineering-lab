@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Laboratorio local para comprender y ejecutar recorridos de pago seguros en modo DEMO.">
+    <title>PayLab · Laboratorio de pagos</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="PayLab, inicio">
+        <span class="brand-mark" aria-hidden="true">PL</span>
+        <span>PayLab</span>
+      </a>
+      <div class="mode-lock" title="Este servidor no contacta proveedores">
+        <span class="pulse" aria-hidden="true"></span>
+        DEMO seguro · $0 real
+      </div>
+    </header>
+
+    <main>
+      <section class="workspace" aria-labelledby="workspace-title">
+        <div class="intro">
+          <p class="eyebrow">Laboratorio ejecutable en localhost</p>
+          <h1 id="workspace-title">Entiende un pago recorriéndolo.</h1>
+          <p>Elige una tecnología, provoca un resultado y observa qué cambia desde la intención hasta la conciliación.</p>
+        </div>
+
+        <form id="runner" class="runner">
+          <label>
+            Medio o rail
+            <select id="rail" name="rail" required aria-describedby="rail-help"></select>
+          </label>
+          <label>
+            Situación
+            <select id="scenario" name="scenario" required></select>
+          </label>
+          <div class="money-inputs">
+            <label>
+              Monto
+              <input id="amount" name="amount" value="19990" inputmode="decimal" required>
+            </label>
+            <label>
+              Moneda
+              <input id="currency" name="currency" value="CLP" maxlength="3" required>
+            </label>
+          </div>
+          <button type="submit">Ejecutar recorrido</button>
+          <p id="rail-help" class="form-note">La simulación es determinista: repetir estos datos produce la misma referencia.</p>
+        </form>
+      </section>
+
+      <section class="status-strip" aria-label="Estado del laboratorio">
+        <div><strong id="family-count">—</strong><span>familias con DEMO</span></div>
+        <div><strong>4</strong><span>fallos observables</span></div>
+        <div><strong>0</strong><span>credenciales requeridas</span></div>
+        <div><strong id="runtime-status">Comprobando</strong><span>runtime local</span></div>
+      </section>
+
+      <section id="result" class="result" aria-live="polite" aria-busy="false">
+        <div class="empty-state">
+          <span class="empty-icon" aria-hidden="true">→</span>
+          <div>
+            <h2>Listo para ejecutar</h2>
+            <p>Comienza con un pago exitoso o elige un fallo para ver cómo se evita perder o duplicar dinero.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="implementation" class="implementation" aria-labelledby="implementation-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">De DEMO a una web real</p>
+            <h2 id="implementation-title">Cómo implementar la modalidad</h2>
+          </div>
+          <span class="mode sandbox">GUÍA OPERATIVA</span>
+        </div>
+        <div id="playbook" class="playbook" aria-live="polite"></div>
+      </section>
+
+      <section class="catalog-section" aria-labelledby="catalog-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Mapa del producto</p>
+            <h2 id="catalog-title">Casos que puedes explorar</h2>
+          </div>
+          <label class="search">
+            <span class="sr-only">Buscar casos</span>
+            <input id="search" type="search" placeholder="Buscar tarjeta, QR, Chile…">
+          </label>
+        </div>
+        <div id="catalog" class="catalog-grid"></div>
+      </section>
+
+      <section class="truth-section" aria-labelledby="truth-title">
+        <p class="eyebrow">Qué significa cada modo</p>
+        <h2 id="truth-title">Una demostración nunca se presenta como dinero real.</h2>
+        <div class="truth-grid">
+          <article>
+            <span class="mode demo">DEMO</span>
+            <h3>Funciona ahora</h3>
+            <p>Datos deterministas, sin credenciales, proveedores ni movimiento de fondos.</p>
+          </article>
+          <article>
+            <span class="mode sandbox">SANDBOX</span>
+            <h3>Depende del proveedor</h3>
+            <p>Usa ambiente y credenciales de prueba oficiales. Su disponibilidad se diagnostica antes del intento.</p>
+          </article>
+          <article>
+            <span class="mode live">LIVE</span>
+            <h3>Operación controlada</h3>
+            <p>Requiere contrato, permisos y controles. Un timeout queda UNKNOWN; jamás cambia silenciosamente a DEMO.</p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>Universal Payments Engineering Lab</span>
+      <span>Localhost · Python estándar · sin telemetría</span>
+    </footer>
+  </body>
+</html>

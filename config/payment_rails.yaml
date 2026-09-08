@@ -28,9 +28,15 @@ families:
     technologies: [rest-json, redirect, tls]
     status: REQUIRES_CREDENTIALS
     adapter: payments_lab.adapters.transbank.WebpayPlusProvider
+  - id: chile-oneclick
+    instrument: stored_card_credential
+    cases: [enrollment-start, enrollment-finish, authorize, status, refund, delete-enrollment]
+    technologies: [rest-json, redirect, tokenization, stored-credential, tls]
+    status: REQUIRES_CERTIFICATION
+    adapter: payments_lab.adapters.transbank_oneclick.OneclickMallProvider
   - id: chile-khipu
     instrument: bank_account
-    cases: [instant-payment, query, delete, void, refund]
+    cases: [instant-payment, query, delete, webhook]
     technologies: [rest-json, api-key, webhook]
     status: REQUIRES_CREDENTIALS
     adapter: payments_lab.adapters.khipu.KhipuProvider

@@ -1,0 +1,142 @@
+{
+  "cash": {
+    "title": "Efectivo y caja",
+    "solves": "Aceptar valor físico y demostrar custodia, arqueo, depósito y diferencias de caja.",
+    "demo_focus": "Cadena de custodia y conciliación entre caja y depósito."
+  },
+  "paper": {
+    "title": "Cheques y órdenes en papel",
+    "solves": "Cobrar instrumentos documentales cuyo pago puede confirmarse después de la entrega.",
+    "demo_focus": "Presentación, clearing, devolución y estado pendiente."
+  },
+  "cards": {
+    "title": "Tarjetas",
+    "solves": "Aceptar crédito, débito o prepago en flujos presenciales, online o recurrentes.",
+    "demo_focus": "Autenticación, autorización, captura, refund y chargeback."
+  },
+  "chile-webpay": {
+    "title": "Transbank Webpay Plus",
+    "solves": "Aceptar tarjetas en Chile mediante redirección y confirmación servidor a servidor.",
+    "demo_focus": "Create, retorno del navegador, commit, status y refund."
+  },
+  "chile-oneclick": {
+    "title": "Transbank Oneclick Mall",
+    "solves": "Inscribir una tarjeta de forma alojada y realizar cobros posteriores con una credencial tokenizada.",
+    "demo_focus": "Inscripción, tbk_user protegido, autorización por tiendas, status, refund y baja."
+  },
+  "chile-khipu": {
+    "title": "Khipu",
+    "solves": "Iniciar pagos cuenta a cuenta en Chile sin capturar credenciales bancarias.",
+    "demo_focus": "Crear, redirigir, consultar, webhook y eliminación."
+  },
+  "mercado-pago": {
+    "title": "Mercado Pago",
+    "solves": "Aceptar distintos medios mediante Payments API y tokenización del proveedor.",
+    "demo_focus": "Idempotencia, estados, webhook, consulta y refund."
+  },
+  "acceptance-devices": {
+    "title": "POS, mPOS y SoftPOS",
+    "solves": "Aceptar pagos presenciales con hardware o dispositivos certificados.",
+    "demo_focus": "Lectura, CVM, autorización, captura y cierre de lote."
+  },
+  "tokenized-wallets": {
+    "title": "Wallets tokenizadas",
+    "solves": "Pagar con una credencial de red protegida por dispositivo y criptograma.",
+    "demo_focus": "Token de red, autenticación del dispositivo y autorización."
+  },
+  "stored-value": {
+    "title": "Saldo almacenado y gift cards",
+    "solves": "Consumir valor prefinanciado dentro de un programa abierto o cerrado.",
+    "demo_focus": "Reserva de saldo, débito atómico, expiración y restitución."
+  },
+  "mobile-money": {
+    "title": "Mobile money",
+    "solves": "Mover dinero electrónico mediante app, USSD o red de agentes.",
+    "demo_focus": "Cash-in, transferencia, pago a comercio y cash-out."
+  },
+  "qr": {
+    "title": "Pagos QR",
+    "solves": "Transportar una referencia o credencial de pago entre comercio y pagador.",
+    "demo_focus": "QR estático/dinámico, validación, expiración y confirmación."
+  },
+  "bank-transfer": {
+    "title": "Transferencia bancaria",
+    "solves": "Mover fondos de una cuenta a otra usando referencia y beneficiario.",
+    "demo_focus": "Alta de beneficiario, instrucción, confirmación y abono."
+  },
+  "ach": {
+    "title": "ACH y transferencias batch",
+    "solves": "Procesar créditos y débitos masivos con clearing diferido y devoluciones.",
+    "demo_focus": "Archivo, ventana de clearing, settlement y return."
+  },
+  "direct-debit": {
+    "title": "Débito directo",
+    "solves": "Cobrar de una cuenta bajo un mandato previo y revocable.",
+    "demo_focus": "Mandato, presentación, cobro, rechazo y devolución."
+  },
+  "instant-payments": {
+    "title": "Pagos instantáneos",
+    "solves": "Transferir cuenta a cuenta en segundos con confirmación casi inmediata.",
+    "demo_focus": "Alias, request-to-pay, aceptación, finalidad y conciliación."
+  },
+  "payment-initiation": {
+    "title": "Links y solicitud de pago",
+    "solves": "Iniciar un pago desde una URL, factura, QR o notificación.",
+    "demo_focus": "Creación, distribución, expiración y atribución de la orden."
+  },
+  "cash-voucher": {
+    "title": "Voucher pagable en efectivo",
+    "solves": "Permitir que una orden digital sea pagada en una red física.",
+    "demo_focus": "Referencia, barcode, recepción en tienda y confirmación diferida."
+  },
+  "credit-alternatives": {
+    "title": "BNPL y crédito alternativo",
+    "solves": "Financiar la compra y pagar al comercio según un calendario acordado.",
+    "demo_focus": "Evaluación, contrato, desembolso, cuotas y mora."
+  },
+  "carrier-billing": {
+    "title": "Cobro mediante operador móvil",
+    "solves": "Cargar una compra a la factura o saldo de telecomunicaciones.",
+    "demo_focus": "Consentimiento, OTP, cargo, límites y settlement del operador."
+  },
+  "platform-payments": {
+    "title": "Marketplaces, splits y payouts",
+    "solves": "Cobrar una orden y distribuir el valor entre múltiples participantes.",
+    "demo_focus": "Onboarding, split, comisión, reserva y payout."
+  },
+  "b2b": {
+    "title": "Pagos B2B y tesorería",
+    "solves": "Pagar facturas con aprobaciones, controles empresariales y trazabilidad.",
+    "demo_focus": "Factura, aprobación, instrucción, ERP y conciliación."
+  },
+  "international": {
+    "title": "Pagos internacionales",
+    "solves": "Transferir valor entre países considerando corresponsales, FX, fees y sanciones.",
+    "demo_focus": "Cotización FX, screening, cadena bancaria y fecha valor."
+  },
+  "high-value": {
+    "title": "RTGS y alto valor",
+    "solves": "Liquidar obligaciones críticas con finalidad y gestión de liquidez.",
+    "demo_focus": "Cola, prioridad, liquidez, aceptación y finalidad."
+  },
+  "open-finance": {
+    "title": "Open Finance e iniciación",
+    "solves": "Iniciar pagos bancarios bajo consentimiento, identidad y alcance explícitos.",
+    "demo_focus": "OAuth/FAPI, consentimiento, token ligado y confirmación."
+  },
+  "digital-assets": {
+    "title": "Bitcoin, Lightning y activos digitales",
+    "solves": "Transferir activos digitales considerando custodia, fees y finalidad.",
+    "demo_focus": "Dirección/invoice, firma, confirmaciones y conciliación on-chain."
+  },
+  "machine-payments": {
+    "title": "Pagos máquina a máquina",
+    "solves": "Autorizar pagos automáticos limitados por identidad, uso y presupuesto.",
+    "demo_focus": "Identidad del dispositivo, medición, política y liquidación."
+  },
+  "agentic-payments": {
+    "title": "Pagos realizados por agentes",
+    "solves": "Delegar compras a un agente sin entregarle autoridad ilimitada.",
+    "demo_focus": "Mandato verificable, presupuesto, aprobación humana y auditoría."
+  }
+}
