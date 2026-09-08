@@ -101,7 +101,7 @@ function renderConfiguration(family) {
       (variable) => `
         <tr>
           <td><code>${escapeHtml(variable.name)}</code></td>
-          <td>${variable.required ? "requerida" : "opcional"}${variable.secret ? " · secreta" : ""}</td>
+          <td>${variable.required ? "requerida" : "opcional"}${variable.sensitive ? " · secreta" : ""}</td>
           <td>${escapeHtml(variable.purpose)}</td>
         </tr>
       `,

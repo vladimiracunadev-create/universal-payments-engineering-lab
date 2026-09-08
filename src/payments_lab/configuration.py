@@ -6,21 +6,21 @@ GLOBAL_VARIABLES = (
     {
         "name": "PAYLAB_HOST",
         "required": False,
-        "secret": False,
+        "sensitive": False,
         "default": "127.0.0.1",
         "purpose": "Interfaz local. Solo se aceptan direcciones loopback.",
     },
     {
         "name": "PAYLAB_PORT",
         "required": False,
-        "secret": False,
+        "sensitive": False,
         "default": "8080",
         "purpose": "Puerto del portal localhost.",
     },
     {
         "name": "PAYLAB_CONFIG_DIR",
         "required": False,
-        "secret": False,
+        "sensitive": False,
         "default": "config empaquetada",
         "purpose": "Directorio alternativo para catálogo y guías.",
     },
@@ -28,13 +28,18 @@ GLOBAL_VARIABLES = (
 
 PROVIDER_VARIABLES = {
     "chile-khipu": (
-        {"name": "KHIPU_API_KEY", "required": True, "secret": True, "purpose": "Autenticar la API de Khipu."},
+        {
+            "name": "KHIPU_API_KEY",
+            "required": True,
+            "sensitive": True,
+            "purpose": "Autenticar la API de Khipu.",
+        },
     ),
     "mercado-pago": (
         {
             "name": "MERCADOPAGO_ACCESS_TOKEN",
             "required": True,
-            "secret": True,
+            "sensitive": True,
             "purpose": "Autenticar llamadas servidor a servidor.",
         },
     ),
@@ -42,19 +47,19 @@ PROVIDER_VARIABLES = {
         {
             "name": "TRANSBANK_COMMERCE_CODE",
             "required": True,
-            "secret": False,
+            "sensitive": False,
             "purpose": "Identificar el comercio Webpay.",
         },
         {
             "name": "TRANSBANK_API_KEY",
             "required": True,
-            "secret": True,
+            "sensitive": True,
             "purpose": "Autenticar la API Webpay.",
         },
         {
             "name": "TRANSBANK_BASE_URL",
             "required": True,
-            "secret": False,
+            "sensitive": False,
             "purpose": "Separar explícitamente integración y producción.",
         },
     ),
@@ -62,19 +67,19 @@ PROVIDER_VARIABLES = {
         {
             "name": "TRANSBANK_ONECLICK_COMMERCE_CODE",
             "required": True,
-            "secret": False,
+            "sensitive": False,
             "purpose": "Identificar el comercio Oneclick.",
         },
         {
             "name": "TRANSBANK_ONECLICK_API_KEY",
             "required": True,
-            "secret": True,
+            "sensitive": True,
             "purpose": "Autenticar la API Oneclick.",
         },
         {
             "name": "TRANSBANK_ONECLICK_BASE_URL",
             "required": True,
-            "secret": False,
+            "sensitive": False,
             "purpose": "Separar explícitamente integración y producción.",
         },
     ),
