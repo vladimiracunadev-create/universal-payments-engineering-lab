@@ -10,6 +10,9 @@
 - comandos `doctor`, `demo` y `serve`;
 - guía de producto, capturas verificadas y arranque específico para Windows.
 - playbooks por modalidad con lenguaje/API, alta, costos, pruebas, seguridad, fallos, puesta en producción y fuentes oficiales.
+- experiencia pedagógica con objetivo explícito, ejemplo guiado, iconos, mapas del recorrido y lecciones por escenario;
+- guías “Empieza aquí”, ruta de aprendizaje, diagramas y revisión comparativa de repositorios de referencia.
+- casebook pedagógico de 28 modalidades, configuración por variables de entorno y documentación de GitHub Pages.
 - Catálogo transversal de 28 familias de pago y tecnologías asociadas.
 - Documentación profunda de lifecycle, arquitectura, protocolos, seguridad, regulación, operaciones, settlement y conciliación.
 - Currículo de 8 partes y 32 módulos con resultados verificables.

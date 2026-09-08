@@ -7,24 +7,14 @@ import platform
 import sys
 
 from .catalog import enriched_catalog
-
-PROVIDER_REQUIREMENTS = {
-    "chile-khipu": ("KHIPU_API_KEY",),
-    "mercado-pago": ("MERCADOPAGO_ACCESS_TOKEN",),
-    "chile-webpay": ("TRANSBANK_COMMERCE_CODE", "TRANSBANK_API_KEY", "TRANSBANK_BASE_URL"),
-    "chile-oneclick": (
-        "TRANSBANK_ONECLICK_COMMERCE_CODE",
-        "TRANSBANK_ONECLICK_API_KEY",
-        "TRANSBANK_ONECLICK_BASE_URL",
-    ),
-}
+from .configuration import PROVIDER_VARIABLES
 
 
 def diagnose() -> dict[str, object]:
     families = enriched_catalog()
     providers = []
-    for provider, variables in PROVIDER_REQUIREMENTS.items():
-        missing = [name for name in variables if not os.getenv(name)]
+    for provider, variables in PROVIDER_VARIABLES.items():
+        missing = [str(item["name"]) for item in variables if not os.getenv(str(item["name"]))]
         providers.append(
             {
                 "id": provider,

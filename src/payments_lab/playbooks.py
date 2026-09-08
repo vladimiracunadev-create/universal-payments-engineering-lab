@@ -5,6 +5,9 @@ from __future__ import annotations
 
 from copy import deepcopy
 
+from .configuration import configuration_for
+from .teaching import teaching_for
+
 WEB_STACK = {
     "frontend": "TypeScript + HTML/CSS. El navegador presenta el checkout y recibe el retorno; no guarda secretos.",
     "backend": "Python 3.11+ con FastAPI para este laboratorio. Node.js/TypeScript, Java, .NET o Go son equivalentes si el equipo los opera mejor.",
@@ -181,6 +184,8 @@ def build_playbook(rail_id: str, title: str) -> dict[str, object]:
         )
     )
     return {
+        "teaching": teaching_for(rail_id),
+        "configuration": configuration_for(rail_id),
         "decision": f"Usa {title} solo si su cobertura, experiencia, reversibilidad y conciliación resuelven tu caso; compara al menos dos proveedores antes de LIVE.",
         "stack": stack,
         "access": access,

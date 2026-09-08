@@ -1,4 +1,5 @@
 {
-  "description": "💳 Laboratorio profesional de ingeniería de pagos: 27 familias, lifecycle, idempotencia, ledger, conciliación, settlement, seguridad y operación multi-rail.",
+  "description": "💳 Laboratorio autoexplicativo de ingeniería de pagos: 28 familias, DEMO local, estados, ledger, conciliación, seguridad y guías de implementación.",
+  "homepage": "https://vladimiracunadev-create.github.io/universal-payments-engineering-lab/",
   "topics": ["payments", "fintech", "payment-engineering", "payment-processing", "ledger", "reconciliation", "idempotency", "iso-20022", "pci-dss", "open-banking", "python", "education"]
 }

@@ -25,6 +25,7 @@ ALLOWED_STATUSES = {
     "DOCUMENTED",
 }
 REQUIRED = {
+    ".env.example",
     "README.md",
     "LICENSE",
     "SECURITY.md",
@@ -34,6 +35,16 @@ REQUIRED = {
     "config/payment_rails.yaml",
     "config/case_guides.json",
     "docs/PRODUCT_GUIDE.md",
+    "docs/START_HERE.md",
+    "docs/LEARNING_PATH.md",
+    "docs/LOCALHOST_AND_CONFIGURATION.md",
+    "docs/GITHUB_PAGES.md",
+    "docs/index.md",
+    "docs/_layouts/default.html",
+    "docs/assets/docs.css",
+    "docs/REFERENCE_REPOSITORIES.md",
+    "docs/diagrams/PAYMENT_JOURNEY.md",
+    "docs/payment-methods/CASEBOOK.md",
     "docs/IMPLEMENTATION_GUIDE.md",
     "docs/payment-methods/CATALOG.md",
     "docs/operations/RUNBOOK.md",
@@ -41,6 +52,7 @@ REQUIRED = {
     "web/styles.css",
     "web/app.js",
     "scripts/start_paylab.ps1",
+    "scripts/verify_portal_ui.py",
 }
 
 
@@ -107,6 +119,9 @@ def check_catalog(errors: list[str]) -> int:
             getattr(module, class_name)
         except (ImportError, AttributeError) as exc:
             errors.append(f"catalog adapter cannot be imported: {adapter} ({exc})")
+    metadata = json.loads((ROOT / ".github" / "repository-metadata.json").read_text(encoding="utf-8"))
+    if f"{len(families)} familias" not in metadata.get("description", ""):
+        errors.append("repository metadata family count does not match catalog")
     return len(families)
 
 
@@ -118,12 +133,16 @@ def check_product_assets(errors: list[str]) -> None:
         "web/index.html",
         "web/styles.css",
         "web/app.js",
+        "web/icons.svg",
     ):
         if asset not in pyproject:
             errors.append(f"package data missing from pyproject.toml: {asset}")
     html = (ROOT / "web/index.html").read_text(encoding="utf-8")
     if "<script>" in html or "style=" in html:
         errors.append("portal must keep scripts/styles external for its strict CSP")
+    for teaching_marker in ("Empieza aquí", "Qué aprenderás", "Cómo leer el resultado", "Ejemplo guiado"):
+        if teaching_marker not in html:
+            errors.append(f"portal is missing teaching marker: {teaching_marker}")
     from payments_lab.catalog import enriched_catalog
 
     for family in enriched_catalog():
@@ -138,6 +157,8 @@ def check_product_assets(errors: list[str]) -> None:
             "failures",
             "go_live",
             "sources",
+            "teaching",
+            "configuration",
         }
         missing = sorted(required - set(guide))
         if missing:
@@ -146,6 +167,13 @@ def check_product_assets(errors: list[str]) -> None:
             source.get("url", "").startswith("https://") for source in guide["sources"]
         ):
             errors.append(f"implementation playbook needs HTTPS official sources: {family['id']}")
+        teaching = guide.get("teaching", {})
+        if (
+            not teaching.get("mental_model")
+            or not teaching.get("development_path")
+            or not teaching.get("success_evidence")
+        ):
+            errors.append(f"incomplete pedagogical explanation for {family['id']}")
 
 
 def check_markdown_links(errors: list[str]) -> None:

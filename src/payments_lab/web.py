@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import json
 import mimetypes
+import os
 import re
 import sysconfig
 from http import HTTPStatus
@@ -23,6 +24,7 @@ STATIC_FILES = {
     "/index.html": "index.html",
     "/app.js": "app.js",
     "/styles.css": "styles.css",
+    "/icons.svg": "icons.svg",
 }
 
 
@@ -141,8 +143,8 @@ def serve(host: str = "127.0.0.1", port: int = 8080) -> None:
 
 def main(argv: list[str] | None = None) -> None:
     parser = argparse.ArgumentParser(description="Serve the PayLab localhost portal")
-    parser.add_argument("--host", default="127.0.0.1")
-    parser.add_argument("--port", type=int, default=8080)
+    parser.add_argument("--host", default=os.getenv("PAYLAB_HOST", "127.0.0.1"))
+    parser.add_argument("--port", type=int, default=os.getenv("PAYLAB_PORT", "8080"))
     args = parser.parse_args(argv)
     serve(args.host, args.port)
 

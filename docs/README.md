@@ -4,11 +4,17 @@ La documentación está organizada por la pregunta que una persona necesita resp
 
 | Pregunta | Documento |
 |---|---|
+| ¿Qué es este repositorio y qué hago primero? | [🧭 Empieza aquí](START_HERE.md) |
+| ¿Cómo aprendo paso a paso? | [🎓 Ruta de aprendizaje](LEARNING_PATH.md) |
+| ¿Cómo se ve un pago completo? | [📊 Diagramas explicativos](diagrams/PAYMENT_JOURNEY.md) |
 | ¿Qué significa que un pago terminó? | [Ciclo de vida](fundamentals/PAYMENT_LIFECYCLE.md) |
 | ¿Qué medios existen y en qué se diferencian? | [Catálogo](payment-methods/CATALOG.md) |
 | ¿Qué componentes necesita una plataforma? | [Arquitectura](architecture/ARCHITECTURE.md) |
 | ¿Qué protocolos intervienen? | [Stack tecnológico](technology/STACK.md) |
 | ¿Cómo se integra y opera cada proveedor? | [Contrato común](integrations/ADAPTERS.md) · [Khipu](integrations/KHIPU.md) · [Mercado Pago](integrations/MERCADO_PAGO.md) · [Webpay](integrations/TRANSBANK_WEBPAY_PLUS.md) · [Oneclick](integrations/TRANSBANK_ONECLICK.md) |
+| ¿Cómo llevo cada uno de los 28 casos a desarrollo? | [Casebook pedagógico](payment-methods/CASEBOOK.md) |
+| ¿Cómo configuro localhost y variables? | [Configuración local](LOCALHOST_AND_CONFIGURATION.md) |
+| ¿Qué publica GitHub Pages? | [GitHub Pages](GITHUB_PAGES.md) |
 | ¿Qué está realmente implementado? | [Cobertura](operations/COVERAGE.md) |
 | ¿Cómo uso el producto y qué resuelve cada caso? | [Guía del producto](PRODUCT_GUIDE.md) |
 | ¿Qué lenguaje/API uso y cómo contrato, pruebo y protejo una integración web? | [Guía de implementación](IMPLEMENTATION_GUIDE.md) |
@@ -17,6 +23,7 @@ La documentación está organizada por la pregunta que una persona necesita resp
 | ¿Qué puede salir mal? | [Threat model](security/THREAT_MODEL.md) |
 | ¿Qué normas debo identificar? | [Mapa regulatorio](regulations/README.md) |
 | ¿Qué significa un término? | [Glosario](GLOSSARY.md) |
+| ¿Qué aprendimos de otros repositorios? | [Repositorios de referencia](REFERENCE_REPOSITORIES.md) |
 
 ## Regla editorial
 

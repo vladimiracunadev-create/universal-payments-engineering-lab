@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Laboratorio local para comprender y ejecutar recorridos de pago seguros en modo DEMO.">
-    <title>PayLab · Laboratorio de pagos</title>
+    <meta name="description" content="Laboratorio autoexplicativo para aprender cómo se diseña, ejecuta y recupera un pago sin mover dinero real.">
+    <title>PayLab · Aprende ingeniería de pagos</title>
     <link rel="stylesheet" href="/styles.css">
     <script src="/app.js" defer></script>
   </head>
@@ -14,32 +14,84 @@
         <span class="brand-mark" aria-hidden="true">PL</span>
         <span>PayLab</span>
       </a>
+      <nav aria-label="Secciones principales">
+        <a href="#start">Objetivo</a>
+        <a href="#lab">Laboratorio</a>
+        <a href="#configuration">Configuración</a>
+        <a href="#implementation">Implementación</a>
+        <a href="#catalog-title">28 casos</a>
+      </nav>
       <div class="mode-lock" title="Este servidor no contacta proveedores">
         <span class="pulse" aria-hidden="true"></span>
-        DEMO seguro · $0 real
+        DEMO · $0 real
       </div>
     </header>
 
     <main>
-      <section class="workspace" aria-labelledby="workspace-title">
+      <section id="start" class="start" aria-labelledby="start-title">
+        <div class="start-copy">
+          <p class="eyebrow">Empieza aquí · no necesitas saber de pagos</p>
+          <h1 id="start-title">Aprende qué ocurre cuando alguien paga.</h1>
+          <p class="lead">Este repositorio es un laboratorio educativo: convierte procesos invisibles —autorización, confirmación, ledger, fallos y conciliación— en un recorrido que puedes ejecutar y leer.</p>
+          <div class="purpose-note">
+            <svg class="icon" aria-hidden="true"><use href="/icons.svg#shield"></use></svg>
+            <p><strong>No es una pasarela de pagos.</strong> El modo DEMO no llama bancos ni proveedores y no mueve dinero. Enseña decisiones técnicas seguras antes de conectar un sandbox o producción.</p>
+          </div>
+        </div>
+        <aside class="learning-card" aria-labelledby="learning-title">
+          <div class="icon-title">
+            <svg class="icon" aria-hidden="true"><use href="/icons.svg#book"></use></svg>
+            <h2 id="learning-title">Qué aprenderás</h2>
+          </div>
+          <ol>
+            <li><strong>Qué problema</strong> resuelve cada medio de pago.</li>
+            <li><strong>Qué ocurre</strong> entre el clic y la conciliación.</li>
+            <li><strong>Cómo evitar</strong> cobros dobles y estados falsos.</li>
+            <li><strong>Cómo integrarlo</strong> en una web: API, alta, pruebas y seguridad.</li>
+          </ol>
+        </aside>
+      </section>
+
+      <section class="how-it-works" aria-labelledby="how-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Tu primera práctica</p>
+            <h2 id="how-title">Tres pasos, una conclusión verificable</h2>
+          </div>
+        </div>
+        <div class="learning-flow">
+          <article><span>1</span><svg class="icon" aria-hidden="true"><use href="/icons.svg#card"></use></svg><h3>Elige</h3><p>Selecciona el medio y una situación realista.</p></article>
+          <b aria-hidden="true">→</b>
+          <article><span>2</span><svg class="icon" aria-hidden="true"><use href="/icons.svg#play"></use></svg><h3>Ejecuta</h3><p>El motor crea estados, evidencia y asiento contable.</p></article>
+          <b aria-hidden="true">→</b>
+          <article><span>3</span><svg class="icon" aria-hidden="true"><use href="/icons.svg#route"></use></svg><h3>Explica</h3><p>Lee por qué terminó así y qué harías en una web real.</p></article>
+        </div>
+      </section>
+
+      <section id="lab" class="workspace" aria-labelledby="workspace-title">
         <div class="intro">
           <p class="eyebrow">Laboratorio ejecutable en localhost</p>
-          <h1 id="workspace-title">Entiende un pago recorriéndolo.</h1>
-          <p>Elige una tecnología, provoca un resultado y observa qué cambia desde la intención hasta la conciliación.</p>
+          <h2 id="workspace-title">Prueba un recorrido</h2>
+          <p>Si es tu primera vez, usa el ejemplo guiado. Provoca un timeout y observa por qué repetir el cobro sería peligroso.</p>
+          <button id="guided-run" class="secondary-action" type="button">
+            <svg class="icon" aria-hidden="true"><use href="/icons.svg#flask"></use></svg>
+            Ejemplo guiado: Webpay + timeout
+          </button>
+          <div id="selected-summary" class="selected-summary"></div>
         </div>
 
         <form id="runner" class="runner">
           <label>
-            Medio o rail
+            1. Medio de pago
             <select id="rail" name="rail" required aria-describedby="rail-help"></select>
           </label>
           <label>
-            Situación
+            2. Qué quieres provocar
             <select id="scenario" name="scenario" required></select>
           </label>
           <div class="money-inputs">
             <label>
-              Monto
+              3. Monto
               <input id="amount" name="amount" value="19990" inputmode="decimal" required>
             </label>
             <label>
@@ -47,24 +99,52 @@
               <input id="currency" name="currency" value="CLP" maxlength="3" required>
             </label>
           </div>
-          <button type="submit">Ejecutar recorrido</button>
-          <p id="rail-help" class="form-note">La simulación es determinista: repetir estos datos produce la misma referencia.</p>
+          <button type="submit">
+            <svg class="icon" aria-hidden="true"><use href="/icons.svg#play"></use></svg>
+            Ejecutar y explicar
+          </button>
+          <p id="rail-help" class="form-note">Simulación determinista: los mismos datos producen la misma referencia y nunca dinero real.</p>
         </form>
+      </section>
+
+      <section id="configuration" class="configuration-section" aria-labelledby="configuration-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Ventana de configuración</p>
+            <h2 id="configuration-title">Prepara esta modalidad sin exponer secretos</h2>
+          </div>
+          <span class="mode demo">SOLO MUESTRA NOMBRES</span>
+        </div>
+        <p class="section-intro">Cambia automáticamente al elegir un medio. Indica variables, callbacks y límites; nunca devuelve el valor de una credencial.</p>
+        <div id="configuration-panel" class="configuration-panel" aria-live="polite"></div>
       </section>
 
       <section class="status-strip" aria-label="Estado del laboratorio">
         <div><strong id="family-count">—</strong><span>familias con DEMO</span></div>
-        <div><strong>4</strong><span>fallos observables</span></div>
-        <div><strong>0</strong><span>credenciales requeridas</span></div>
+        <div><strong>4</strong><span>situaciones para aprender</span></div>
+        <div><strong>$0</strong><span>dinero real</span></div>
         <div><strong id="runtime-status">Comprobando</strong><span>runtime local</span></div>
+      </section>
+
+      <section class="reading-guide" aria-labelledby="reading-title">
+        <div class="icon-title">
+          <svg class="icon" aria-hidden="true"><use href="/icons.svg#book"></use></svg>
+          <h2 id="reading-title">Cómo leer el resultado</h2>
+        </div>
+        <div class="reading-grid">
+          <p><strong>Actor</strong><span>quién realiza el paso</span></p>
+          <p><strong>Estado</strong><span>decisión guardada por el sistema</span></p>
+          <p><strong>Evidencia</strong><span>dato para demostrar qué ocurrió</span></p>
+          <p><strong>Ledger</strong><span>registro contable que debe sumar cero</span></p>
+        </div>
       </section>
 
       <section id="result" class="result" aria-live="polite" aria-busy="false">
         <div class="empty-state">
-          <span class="empty-icon" aria-hidden="true">→</span>
+          <svg class="empty-icon icon" aria-hidden="true"><use href="/icons.svg#play"></use></svg>
           <div>
-            <h2>Listo para ejecutar</h2>
-            <p>Comienza con un pago exitoso o elige un fallo para ver cómo se evita perder o duplicar dinero.</p>
+            <h2>Aún no hay una ejecución</h2>
+            <p>Pulsa “Ejecutar y explicar”. Aquí aparecerán el mapa, la historia paso a paso y lo que debes aprender.</p>
           </div>
         </div>
       </section>
@@ -77,6 +157,7 @@
           </div>
           <span class="mode sandbox">GUÍA OPERATIVA</span>
         </div>
+        <p class="section-intro">Esta parte no simula: explica qué tecnología elegir, dónde comenzar el alta, qué validar antes de pagar y cómo operar fallos.</p>
         <div id="playbook" class="playbook" aria-live="polite"></div>
       </section>
 
@@ -84,35 +165,24 @@
         <div class="section-heading">
           <div>
             <p class="eyebrow">Mapa del producto</p>
-            <h2 id="catalog-title">Casos que puedes explorar</h2>
+            <h2 id="catalog-title">28 problemas de pago para explorar</h2>
           </div>
           <label class="search">
             <span class="sr-only">Buscar casos</span>
             <input id="search" type="search" placeholder="Buscar tarjeta, QR, Chile…">
           </label>
         </div>
+        <p class="section-intro">No memorices nombres: empieza por el problema que necesitas resolver. Cada tarjeta abre su DEMO y su guía de implementación.</p>
         <div id="catalog" class="catalog-grid"></div>
       </section>
 
       <section class="truth-section" aria-labelledby="truth-title">
-        <p class="eyebrow">Qué significa cada modo</p>
-        <h2 id="truth-title">Una demostración nunca se presenta como dinero real.</h2>
+        <p class="eyebrow">Límites honestos</p>
+        <h2 id="truth-title">DEMO enseña. SANDBOX conecta. LIVE mueve valor.</h2>
         <div class="truth-grid">
-          <article>
-            <span class="mode demo">DEMO</span>
-            <h3>Funciona ahora</h3>
-            <p>Datos deterministas, sin credenciales, proveedores ni movimiento de fondos.</p>
-          </article>
-          <article>
-            <span class="mode sandbox">SANDBOX</span>
-            <h3>Depende del proveedor</h3>
-            <p>Usa ambiente y credenciales de prueba oficiales. Su disponibilidad se diagnostica antes del intento.</p>
-          </article>
-          <article>
-            <span class="mode live">LIVE</span>
-            <h3>Operación controlada</h3>
-            <p>Requiere contrato, permisos y controles. Un timeout queda UNKNOWN; jamás cambia silenciosamente a DEMO.</p>
-          </article>
+          <article><span class="mode demo">DEMO</span><h3>Funciona ahora</h3><p>Datos deterministas, sin credenciales, proveedores ni movimiento de fondos.</p></article>
+          <article><span class="mode sandbox">SANDBOX</span><h3>Prueba el contrato</h3><p>Usa credenciales y ambiente de prueba oficiales. Demuestra conectividad, no liquidación real.</p></article>
+          <article><span class="mode live">LIVE</span><h3>Opera con controles</h3><p>Requiere contrato, permisos y monitoreo. Un timeout queda UNKNOWN; jamás se disfraza como DEMO.</p></article>
         </div>
       </section>
     </main>

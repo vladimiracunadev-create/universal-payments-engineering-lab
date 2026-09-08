@@ -2,6 +2,7 @@
 
 import argparse
 import json
+import os
 from pathlib import Path
 
 from .adapters.khipu import KhipuProvider
@@ -34,8 +35,8 @@ def build_parser() -> argparse.ArgumentParser:
     demo.add_argument("--amount", default="19990")
     demo.add_argument("--currency", default="CLP")
     local = commands.add_parser("serve", help="Open the local DEMO portal")
-    local.add_argument("--host", default="127.0.0.1")
-    local.add_argument("--port", type=int, default=8080)
+    local.add_argument("--host", default=os.getenv("PAYLAB_HOST", "127.0.0.1"))
+    local.add_argument("--port", type=int, default=os.getenv("PAYLAB_PORT", "8080"))
 
     khipu_create = commands.add_parser("khipu-create")
     khipu_create.add_argument("--subject", required=True)

@@ -1,11 +1,34 @@
 # 💳 Universal Payments Engineering Lab
 
-Laboratorio ejecutable en español para **entender un pago completo**: desde la intención hasta el ledger, la liquidación y la conciliación.
+Laboratorio autoexplicativo en español para **aprender qué ocurre realmente cuando alguien paga**: desde la orden hasta el ledger, la liquidación, los fallos y la conciliación.
 
 [![CI](https://github.com/vladimiracunadev-create/universal-payments-engineering-lab/actions/workflows/ci.yml/badge.svg)](https://github.com/vladimiracunadev-create/universal-payments-engineering-lab/actions/workflows/ci.yml)
 [![Python 3.11+](https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white)](pyproject.toml)
 [![License MIT](https://img.shields.io/badge/license-MIT-22c55e)](LICENSE)
 [![Mode: DEMO](https://img.shields.io/badge/mode-DEMO-63e6be)](docs/PRODUCT_GUIDE.md)
+
+## 🎯 Objetivo del repositorio
+
+Una API de proveedor enseña a “crear un pago”, pero no siempre explica cómo evitar duplicados, recuperar un resultado desconocido, contabilizar el efecto o comprobar el abono. PayLab hace visibles esas decisiones mediante recorridos que se pueden ejecutar sin credenciales ni dinero.
+
+No es una pasarela ni afirma que 28 proveedores estén conectados. Es:
+
+- un **laboratorio DEMO** para observar estados, actores, evidencia y fallos;
+- un **modelo común** para comparar 28 familias de pago;
+- código real para idempotencia, ledger, conciliación y cuatro adapters;
+- una guía para llevar el aprendizaje a SANDBOX y, con controles externos, a LIVE.
+
+Si llegas por primera vez, abre [🧭 Empieza aquí](docs/START_HERE.md). Después sigue la [🎓 ruta de aprendizaje](docs/LEARNING_PATH.md) y consulta los [📊 diagramas explicativos](docs/diagrams/PAYMENT_JOURNEY.md).
+
+## 🧪 La primera práctica
+
+1. Ejecuta `python scripts/paylab.py serve`.
+2. Abre `http://127.0.0.1:8080`.
+3. Pulsa **Ejemplo guiado: Webpay + timeout**.
+4. Comprueba que el estado pasa por `UNKNOWN` y se recupera mediante consulta.
+5. Explica por qué un segundo cobro habría sido inseguro.
+
+Para avanzar caso por caso, usa el [🧩 casebook de las 28 modalidades](docs/payment-methods/CASEBOOK.md). La [⚙️ guía de configuración](docs/LOCALHOST_AND_CONFIGURATION.md) separa variables globales, secretos por proveedor y callbacks; [🌐 GitHub Pages](docs/GITHUB_PAGES.md) explica por qué la web pública documenta pero no ejecuta el backend.
 
 ## Qué puedes hacer hoy
 
@@ -44,9 +67,23 @@ paylab serve
 
 ## Qué verás
 
+### 1. Primero entiendes el propósito
+
+La portada define qué enseña el laboratorio, qué no demuestra y cómo completar la primera práctica.
+
 ![Portal local con los controles de ejecución](docs/assets/paylab-home.png)
 
+### 2. Después cada ejecución se explica
+
+El resultado contiene un mapa de decisiones, una conclusión pedagógica, la historia actor por actor, el asiento y la conciliación.
+
 ![Timeout recuperado sin crear un segundo efecto](docs/assets/paylab-timeout-recovered.png)
+
+### 3. La configuración cambia con el medio
+
+La ventana enumera variables y callbacks sin mostrar valores de secretos.
+
+![Configuración segura para Webpay](docs/assets/paylab-configuration.png)
 
 ## Los tres modos no significan lo mismo
 
@@ -129,13 +166,15 @@ python scripts/verify_repository.py
 ## Ruta de lectura recomendada
 
 1. [Guía del producto](docs/PRODUCT_GUIDE.md): qué resuelve cada caso y cómo usar el portal.
-2. [Implementación web](docs/IMPLEMENTATION_GUIDE.md): lenguaje, API, alta, costos, pruebas, seguridad y fallos.
-3. [Ciclo de vida](docs/fundamentals/PAYMENT_LIFECYCLE.md): autorizar, capturar y liquidar no son sinónimos.
-4. [Arquitectura](docs/architecture/ARCHITECTURE.md): componentes actuales y arquitectura objetivo.
-5. [Integraciones](docs/integrations/ADAPTERS.md): contrato seguro de los proveedores.
-6. [Runbook](docs/operations/RUNBOOK.md): qué hacer ante timeouts, duplicados y diferencias.
-7. [Roadmap](ROADMAP.md): orden de construcción de DEMO, SANDBOX y capacidades productivas.
-8. [Windows](docs/WINDOWS.md): arranque, aislamiento y límites de exposición local.
+2. [Empieza aquí](docs/START_HERE.md): objetivo, primer recorrido y relación pantalla-código.
+3. [Ruta de aprendizaje](docs/LEARNING_PATH.md): prácticas con preguntas y criterios verificables.
+4. [Diagramas](docs/diagrams/PAYMENT_JOURNEY.md): actores, estados, timeout, webhook y conciliación.
+5. [Implementación web](docs/IMPLEMENTATION_GUIDE.md): lenguaje, API, alta, costos, pruebas, seguridad y fallos.
+6. [Arquitectura](docs/architecture/ARCHITECTURE.md): componentes actuales y arquitectura objetivo.
+7. [Integraciones](docs/integrations/ADAPTERS.md): contrato seguro de los proveedores.
+8. [Runbook](docs/operations/RUNBOOK.md): qué hacer ante timeouts, duplicados y diferencias.
+9. [Roadmap](ROADMAP.md): orden de construcción de DEMO, SANDBOX y capacidades productivas.
+10. [Windows](docs/WINDOWS.md): arranque, aislamiento y límites de exposición local.
 
 ## Seguridad
 

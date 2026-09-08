@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="{{ site.description }}">
+    <title>{{ page.title }} · {{ site.title }}</title>
+    <link rel="stylesheet" href="{{ '/assets/docs.css' | relative_url }}">
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+      mermaid.initialize({ startOnLoad: true, theme: "dark", securityLevel: "strict" });
+    </script>
+  </head>
+  <body>
+    <header>
+      <a href="{{ '/' | relative_url }}"><strong>PL</strong> PayLab Docs</a>
+      <span>Documentación pública · sin secretos</span>
+    </header>
+    <main>{{ content }}</main>
+    <footer>
+      <span>Universal Payments Engineering Lab</span>
+      <a href="https://github.com/vladimiracunadev-create/universal-payments-engineering-lab">Ver código en GitHub</a>
+    </footer>
+  </body>
+</html>

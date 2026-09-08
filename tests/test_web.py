@@ -1,4 +1,5 @@
 import json
+import os
 import sys
 import threading
 import unittest
@@ -33,6 +34,10 @@ class LocalPortalTests(unittest.TestCase):
         response, body = self.get("/")
         self.assertIn(b"PayLab", body)
         self.assertIn("Cómo implementar la modalidad".encode(), body)
+        self.assertIn("Empieza aquí".encode(), body)
+        response, icon_body = self.get("/icons.svg")
+        self.assertEqual(response.headers["Content-Type"], "image/svg+xml")
+        self.assertIn(b'id="shield"', icon_body)
         self.assertEqual(response.headers["X-Content-Type-Options"], "nosniff")
         response, body = self.get("/api/health")
         self.assertEqual(json.loads(body)["mode"], "DEMO")
@@ -50,7 +55,23 @@ class LocalPortalTests(unittest.TestCase):
             self.assertTrue(guide["testing"])
             self.assertTrue(guide["security"])
             self.assertTrue(guide["failures"])
+            self.assertIn("mental_model", guide["teaching"])
+            self.assertTrue(guide["teaching"]["development_path"])
+            self.assertIn("global_variables", guide["configuration"])
             self.assertTrue(all(source["url"].startswith("https://") for source in guide["sources"]))
+
+    def test_local_port_defaults_can_be_configured_with_environment(self):
+        previous = os.environ.get("PAYLAB_PORT")
+        os.environ["PAYLAB_PORT"] = "9099"
+        try:
+            from payments_lab.cli import build_parser
+
+            self.assertEqual(build_parser().parse_args(["serve"]).port, 9099)
+        finally:
+            if previous is None:
+                os.environ.pop("PAYLAB_PORT", None)
+            else:
+                os.environ["PAYLAB_PORT"] = previous
 
     def test_demo_endpoint_returns_observable_journey(self):
         request = urllib.request.Request(
