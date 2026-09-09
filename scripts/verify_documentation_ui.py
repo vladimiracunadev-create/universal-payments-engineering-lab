@@ -25,6 +25,7 @@ def mermaid_routes() -> list[str]:
 
 
 def assert_rendered_mermaid(page, route: str) -> int:
+    page.locator(".mermaid[data-processed='true']").first.wait_for(timeout=30_000)
     diagrams = page.locator(".mermaid")
     count = diagrams.count()
     assert count > 0, f"{route}: no Mermaid containers"
@@ -56,18 +57,18 @@ def main() -> int:
             else None,
         )
 
-        page.goto(f"{args.origin}/", wait_until="networkidle")
+        page.goto(f"{args.origin}/", wait_until="domcontentloaded")
         page.get_by_role("heading", name="Entiende un pago desde el primer clic hasta la conciliación.").wait_for()
         assert_rendered_mermaid(page, "/")
         page.screenshot(path=args.output / "docs-home.png", full_page=True)
 
-        page.goto(f"{args.origin}/payment-methods/END_TO_END_MATRIX.html", wait_until="networkidle")
+        page.goto(f"{args.origin}/payment-methods/END_TO_END_MATRIX.html", wait_until="domcontentloaded")
         assert page.locator("#docs-case-table tbody tr").count() == 28
         page.locator("#docs-case-filter").fill("Webpay")
         assert page.locator("#docs-case-table tbody tr:visible").count() == 1
         page.screenshot(path=args.output / "docs-28-case-matrix.png", full_page=True)
 
-        page.goto(f"{args.origin}/payment-methods/cases/chile-webpay.html", wait_until="networkidle")
+        page.goto(f"{args.origin}/payment-methods/cases/chile-webpay.html", wait_until="domcontentloaded")
         page.get_by_role("heading", name="04. Transbank Webpay Plus").wait_for()
         for heading in (
             "Ejemplo concreto",
@@ -84,7 +85,7 @@ def main() -> int:
 
         diagram_count = 0
         for route in mermaid_routes():
-            page.goto(f"{args.origin}{route}", wait_until="networkidle")
+            page.goto(f"{args.origin}{route}", wait_until="domcontentloaded")
             diagram_count += assert_rendered_mermaid(page, route)
         browser.close()
 
