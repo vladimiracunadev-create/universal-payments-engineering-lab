@@ -2,6 +2,16 @@
 
 [← Volver a la tabla](../END_TO_END_MATRIX.md) · [Ver esta guía .md en GitHub](https://github.com/vladimiracunadev-create/universal-payments-engineering-lab/blob/main/docs/payment-methods/cases/acceptance-devices.md)
 
+## El mismo caso en tres formatos
+
+| Formato | Para qué sirve | Enlace |
+|---|---|---|
+| Markdown | Fuente única, revisable en GitHub. | [Abrir fuente .md](https://github.com/vladimiracunadev-create/universal-payments-engineering-lab/blob/main/docs/payment-methods/cases/acceptance-devices.md) |
+| HTML | Página generada automáticamente para navegar. | [Abrir en GitHub Pages](https://vladimiracunadev-create.github.io/universal-payments-engineering-lab/payment-methods/cases/acceptance-devices.html) |
+| PDF | Manual descargable; el índice lleva a este caso. | [Abrir PDF en este caso](https://vladimiracunadev-create.github.io/universal-payments-engineering-lab/downloads/universal-payments-engineering-lab.pdf#nameddest=case-acceptance-devices) |
+
+Los tres muestran el mismo catálogo. Markdown es la fuente; HTML y PDF son salidas generadas y verificadas.
+
 ## En una frase
 
 **Sirve para:** Cobro presencial en POS, mPOS o SoftPOS.
@@ -47,8 +57,9 @@ flowchart LR
   A["Inicio<br/>Caja envía monto y referencia al terminal."] --> B["Proceso<br/>Dispositivo certificado lee y autentica la tarjeta."]
   B --> C["Confirmar<br/>Terminal/adquirente devuelve autorización y voucher."]
   C --> D["Cerrar<br/>Cierre de lote se concilia con caja y banco."]
-  B -. "sin respuesta" .-> U["UNKNOWN"]
-  U -. "consultar; no duplicar" .-> C
+  B -.-> U["Sin respuesta<br/>UNKNOWN"]
+  U -.-> R["Consultar misma referencia<br/>no duplicar"]
+  R -.-> C
 ```
 
 ## Qué ocurre si falla

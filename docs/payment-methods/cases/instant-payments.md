@@ -2,6 +2,16 @@
 
 [← Volver a la tabla](../END_TO_END_MATRIX.md) · [Ver esta guía .md en GitHub](https://github.com/vladimiracunadev-create/universal-payments-engineering-lab/blob/main/docs/payment-methods/cases/instant-payments.md)
 
+## El mismo caso en tres formatos
+
+| Formato | Para qué sirve | Enlace |
+|---|---|---|
+| Markdown | Fuente única, revisable en GitHub. | [Abrir fuente .md](https://github.com/vladimiracunadev-create/universal-payments-engineering-lab/blob/main/docs/payment-methods/cases/instant-payments.md) |
+| HTML | Página generada automáticamente para navegar. | [Abrir en GitHub Pages](https://vladimiracunadev-create.github.io/universal-payments-engineering-lab/payment-methods/cases/instant-payments.html) |
+| PDF | Manual descargable; el índice lleva a este caso. | [Abrir PDF en este caso](https://vladimiracunadev-create.github.io/universal-payments-engineering-lab/downloads/universal-payments-engineering-lab.pdf#nameddest=case-instant-payments) |
+
+Los tres muestran el mismo catálogo. Markdown es la fuente; HTML y PDF son salidas generadas y verificadas.
+
 ## En una frase
 
 **Sirve para:** Transferencia cuenta a cuenta casi inmediata 24/7.
@@ -47,8 +57,9 @@ flowchart LR
   A["Inicio<br/>Resuelve alias/cuenta y crea referencia end-to-end."] --> B["Proceso<br/>Rail valida e instruye en tiempo real."]
   B --> C["Confirmar<br/>Confirmación con finalidad declarada cierra el pago."]
   C --> D["Cerrar<br/>Concilia mensajes, cuentas técnicas y banco."]
-  B -. "sin respuesta" .-> U["UNKNOWN"]
-  U -. "consultar; no duplicar" .-> C
+  B -.-> U["Sin respuesta<br/>UNKNOWN"]
+  U -.-> R["Consultar misma referencia<br/>no duplicar"]
+  R -.-> C
 ```
 
 ## Qué ocurre si falla

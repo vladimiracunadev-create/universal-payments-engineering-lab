@@ -82,6 +82,9 @@ def main() -> int:
     matrix = site / "payment-methods" / "END_TO_END_MATRIX.html"
     if not matrix.is_file() or matrix.read_text(encoding="utf-8").count('data-search="') != 28:
         errors.append("built matrix is missing or does not expose 28 searchable rows")
+    pdf = site / "downloads" / "universal-payments-engineering-lab.pdf"
+    if not pdf.is_file() or pdf.stat().st_size < 100_000:
+        errors.append("Pages artifact is missing the navigable PDF")
 
     if errors:
         print("Documentation site verification FAILED")

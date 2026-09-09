@@ -2,6 +2,16 @@
 
 [← Volver a la tabla](../END_TO_END_MATRIX.md) · [Ver esta guía .md en GitHub](https://github.com/vladimiracunadev-create/universal-payments-engineering-lab/blob/main/docs/payment-methods/cases/mercado-pago.md)
 
+## El mismo caso en tres formatos
+
+| Formato | Para qué sirve | Enlace |
+|---|---|---|
+| Markdown | Fuente única, revisable en GitHub. | [Abrir fuente .md](https://github.com/vladimiracunadev-create/universal-payments-engineering-lab/blob/main/docs/payment-methods/cases/mercado-pago.md) |
+| HTML | Página generada automáticamente para navegar. | [Abrir en GitHub Pages](https://vladimiracunadev-create.github.io/universal-payments-engineering-lab/payment-methods/cases/mercado-pago.html) |
+| PDF | Manual descargable; el índice lleva a este caso. | [Abrir PDF en este caso](https://vladimiracunadev-create.github.io/universal-payments-engineering-lab/downloads/universal-payments-engineering-lab.pdf#nameddest=case-mercado-pago) |
+
+Los tres muestran el mismo catálogo. Markdown es la fuente; HTML y PDF son salidas generadas y verificadas.
+
 ## En una frase
 
 **Sirve para:** Checkout regional con tarjetas y otros medios.
@@ -46,8 +56,9 @@ flowchart LR
   A["Inicio<br/>Frontend tokeniza o redirige; backend crea orden."] --> B["Proceso<br/>Payments/Orders API procesa con idempotency key."]
   B --> C["Confirmar<br/>Webhook validado y consulta fijan el estado."]
   C --> D["Cerrar<br/>Reporte y disponibilidad del dinero se concilian."]
-  B -. "sin respuesta" .-> U["UNKNOWN"]
-  U -. "consultar; no duplicar" .-> C
+  B -.-> U["Sin respuesta<br/>UNKNOWN"]
+  U -.-> R["Consultar misma referencia<br/>no duplicar"]
+  R -.-> C
 ```
 
 ## Qué ocurre si falla

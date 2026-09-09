@@ -29,6 +29,7 @@ theme:
 nav:
   - Inicio: index.md
   - Empieza aquí: START_HERE.md
+  - Formatos y trazabilidad: FORMATS_AND_TRACEABILITY.md
   - Tabla de 28 casos: payment-methods/END_TO_END_MATRIX.md
   - Guías individuales:
       - 01 · Efectivo y caja: payment-methods/cases/cash.md
@@ -106,10 +107,10 @@ markdown_extensions:
       custom_fences:
         - name: mermaid
           class: mermaid
-          format: !!python/name:pymdownx.superfences.fence_code_format
+          format: !!python/name:pymdownx.superfences.fence_div_format
 
 extra_css:
   - assets/docs.css
 extra_javascript:
-  - https://unpkg.com/mermaid@11/dist/mermaid.min.js
+  - https://unpkg.com/mermaid@11.17.2/dist/mermaid.min.js
   - assets/docs.js

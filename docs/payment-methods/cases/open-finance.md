@@ -2,6 +2,16 @@
 
 [← Volver a la tabla](../END_TO_END_MATRIX.md) · [Ver esta guía .md en GitHub](https://github.com/vladimiracunadev-create/universal-payments-engineering-lab/blob/main/docs/payment-methods/cases/open-finance.md)
 
+## El mismo caso en tres formatos
+
+| Formato | Para qué sirve | Enlace |
+|---|---|---|
+| Markdown | Fuente única, revisable en GitHub. | [Abrir fuente .md](https://github.com/vladimiracunadev-create/universal-payments-engineering-lab/blob/main/docs/payment-methods/cases/open-finance.md) |
+| HTML | Página generada automáticamente para navegar. | [Abrir en GitHub Pages](https://vladimiracunadev-create.github.io/universal-payments-engineering-lab/payment-methods/cases/open-finance.html) |
+| PDF | Manual descargable; el índice lleva a este caso. | [Abrir PDF en este caso](https://vladimiracunadev-create.github.io/universal-payments-engineering-lab/downloads/universal-payments-engineering-lab.pdf#nameddest=case-open-finance) |
+
+Los tres muestran el mismo catálogo. Markdown es la fuente; HTML y PDF son salidas generadas y verificadas.
+
 ## En una frase
 
 **Sirve para:** Iniciar pago desde una app con consentimiento bancario.
@@ -47,8 +57,9 @@ flowchart LR
   A["Inicio<br/>TPP crea consentimiento con alcance y expiración."] --> B["Proceso<br/>Cliente autentica en banco; FAPI entrega token ligado."]
   B --> C["Confirmar<br/>Payment ID se consulta hasta estado final."]
   C --> D["Cerrar<br/>Banco y comercio concilian referencia end-to-end."]
-  B -. "sin respuesta" .-> U["UNKNOWN"]
-  U -. "consultar; no duplicar" .-> C
+  B -.-> U["Sin respuesta<br/>UNKNOWN"]
+  U -.-> R["Consultar misma referencia<br/>no duplicar"]
+  R -.-> C
 ```
 
 ## Qué ocurre si falla

@@ -58,7 +58,7 @@ def render() -> str:
             [
                 f'<tr data-search="{search_text}">',
                 f'<td class="case-number">{number:02d}</td>',
-                f'<th scope="row"><a href="https://vladimiracunadev-create.github.io/universal-payments-engineering-lab/payment-methods/cases/{rail_id}.html">{title}</a><small><a href="https://github.com/vladimiracunadev-create/universal-payments-engineering-lab/blob/main/docs/payment-methods/cases/{rail_id}.md">ver fuente .md</a></small></th>',
+                f'<th scope="row"><a href="https://vladimiracunadev-create.github.io/universal-payments-engineering-lab/payment-methods/cases/{rail_id}.html">{title}</a><small><a href="https://github.com/vladimiracunadev-create/universal-payments-engineering-lab/blob/main/docs/payment-methods/cases/{rail_id}.md">fuente MD</a> · <a href="https://vladimiracunadev-create.github.io/universal-payments-engineering-lab/downloads/universal-payments-engineering-lab.pdf#nameddest=case-{rail_id}">PDF</a></small></th>',
                 f"<td>{_cell(journey['when'])}</td>",
                 f"<td>{_cell(journey['start'])}</td>",
                 f"<td>{_cell(journey['process'])}</td>",

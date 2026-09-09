@@ -31,9 +31,26 @@ jobs:
           python-version: "3.13"
           cache: pip
       - name: Install documentation toolchain
-        run: python -m pip install -r requirements-docs.txt
+        run: |
+          python -m pip install -r requirements-docs.txt
+          python -m playwright install chromium
+      - name: Generate and verify navigable PDF
+        run: |
+          python scripts/generate_documentation_pdf.py
+          python scripts/verify_documentation_pdf.py
       - name: Build Markdown documentation
         run: mkdocs build --strict
+      - name: Verify every Mermaid diagram in Chromium
+        run: |
+          python -m mkdocs serve -a 127.0.0.1:8000 &
+          server_pid=$!
+          sleep 3
+          python scripts/verify_documentation_ui.py --origin http://127.0.0.1:8000/universal-payments-engineering-lab
+          kill "$server_pid"
+      - name: Add PDF download to Pages artifact
+        run: |
+          mkdir -p site/downloads
+          cp output/pdf/universal-payments-engineering-lab.pdf site/downloads/
       - name: Verify generated pages and internal links
         run: python scripts/verify_documentation_site.py --site-dir site
       - name: Configure Pages

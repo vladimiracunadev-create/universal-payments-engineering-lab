@@ -36,6 +36,7 @@ REQUIRED = {
     "config/case_guides.json",
     "docs/PRODUCT_GUIDE.md",
     "docs/START_HERE.md",
+    "docs/FORMATS_AND_TRACEABILITY.md",
     "docs/LEARNING_PATH.md",
     "docs/LOCALHOST_AND_CONFIGURATION.md",
     "docs/GITHUB_PAGES.md",
@@ -59,6 +60,9 @@ REQUIRED = {
     "scripts/generate_case_guides.py",
     "scripts/verify_documentation_site.py",
     "scripts/verify_documentation_ui.py",
+    "scripts/generate_documentation_pdf.py",
+    "scripts/verify_documentation_pdf.py",
+    "output/pdf/universal-payments-engineering-lab.pdf",
     "mkdocs.yml",
     "requirements-docs.txt",
     ".github/workflows/pages.yml",
@@ -200,6 +204,8 @@ def check_product_assets(errors: list[str]) -> None:
             errors.append(f"published end-to-end matrix is missing {family['id']}")
     if matrix.startswith("---") or matrix.count('<tr data-search="') != 28:
         errors.append("published matrix must be clean Markdown with exactly 28 case rows")
+    if matrix.count("fuente MD</a>") != 28 or matrix.count("nameddest=case-") != 28:
+        errors.append("published matrix must correlate all 28 HTML pages with Markdown and PDF")
     for clean_doc in (
         "START_HERE.md",
         "LEARNING_PATH.md",
@@ -226,6 +232,7 @@ def check_product_assets(errors: list[str]) -> None:
             continue
         content = guide_path.read_text(encoding="utf-8")
         required_sections = (
+            "## El mismo caso en tres formatos",
             "## En una frase",
             "## Ejemplo concreto",
             "## Quién participa",
@@ -242,6 +249,12 @@ def check_product_assets(errors: list[str]) -> None:
             errors.append(f"incomplete individual guide for {rail_id}: {missing_sections}")
         if "case-example-grid" not in content or "### No confundas estas tres cosas" not in content:
             errors.append(f"individual guide lacks a concrete teaching example for {rail_id}")
+        if (
+            "## El mismo caso en tres formatos" not in content
+            or f"cases/{rail_id}.html" not in content
+            or f"nameddest=case-{rail_id}" not in content
+        ):
+            errors.append(f"individual guide lacks Markdown/HTML/PDF traceability for {rail_id}")
 
 
 def check_markdown_links(errors: list[str]) -> None:

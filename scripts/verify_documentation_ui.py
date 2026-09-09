@@ -9,6 +9,35 @@ from pathlib import Path
 from playwright.sync_api import sync_playwright
 
 
+def mermaid_routes() -> list[str]:
+    routes: list[str] = []
+    for source in Path("docs").rglob("*.md"):
+        if "```mermaid" not in source.read_text(encoding="utf-8") or source == Path("docs/README.md"):
+            continue
+        relative = source.relative_to("docs")
+        if relative == Path("index.md"):
+            routes.append("/")
+        elif relative.name == "README.md":
+            routes.append(f"/{relative.parent.as_posix()}/")
+        else:
+            routes.append(f"/{relative.with_suffix('.html').as_posix()}")
+    return sorted(routes)
+
+
+def assert_rendered_mermaid(page, route: str) -> int:
+    diagrams = page.locator(".mermaid")
+    count = diagrams.count()
+    assert count > 0, f"{route}: no Mermaid containers"
+    for index in range(count):
+        diagram = diagrams.nth(index)
+        text = diagram.inner_text()
+        assert "Syntax error" not in text, f"{route}: Mermaid rendered an error"
+        assert diagram.get_attribute("data-processed") == "true", f"{route}: Mermaid was not processed"
+        assert diagram.locator("svg").count() == 1, f"{route}: Mermaid SVG missing"
+        assert diagram.locator(".error-icon").count() == 0, f"{route}: Mermaid error icon found"
+    return count
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--origin", default="http://127.0.0.1:8000/universal-payments-engineering-lab")
@@ -29,7 +58,7 @@ def main() -> int:
 
         page.goto(f"{args.origin}/", wait_until="networkidle")
         page.get_by_role("heading", name="Entiende un pago desde el primer clic hasta la conciliación.").wait_for()
-        assert page.locator(".mermaid svg").count() == 1
+        assert_rendered_mermaid(page, "/")
         page.screenshot(path=args.output / "docs-home.png", full_page=True)
 
         page.goto(f"{args.origin}/payment-methods/END_TO_END_MATRIX.html", wait_until="networkidle")
@@ -50,13 +79,21 @@ def main() -> int:
         ):
             assert page.get_by_role("heading", name=heading).is_visible()
         assert page.locator(".case-example-grid article").count() == 3
-        assert page.locator(".mermaid svg").count() == 1
+        assert_rendered_mermaid(page, "/payment-methods/cases/chile-webpay.html")
         page.screenshot(path=args.output / "docs-webpay-guide.png", full_page=True)
+
+        diagram_count = 0
+        for route in mermaid_routes():
+            page.goto(f"{args.origin}{route}", wait_until="networkidle")
+            diagram_count += assert_rendered_mermaid(page, route)
         browser.close()
 
     if errors:
         raise AssertionError(f"browser console errors: {errors}")
-    print("Documentation UI OK: home, Mermaid, 28-case filter and complete Webpay guide")
+    print(
+        "Documentation UI OK: home, 28-case filter, complete Webpay guide, "
+        f"{diagram_count} Mermaid diagrams rendered without syntax errors"
+    )
     return 0
 
 

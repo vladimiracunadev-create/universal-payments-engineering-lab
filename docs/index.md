@@ -5,6 +5,7 @@
   <div class="hero-actions">
     <a class="primary-button" href="payment-methods/END_TO_END_MATRIX.html">Ver la tabla de los 28 casos</a>
     <a class="secondary-button" href="START_HERE.html">Hacer el recorrido de 10 minutos</a>
+    <a class="secondary-button" href="https://vladimiracunadev-create.github.io/universal-payments-engineering-lab/downloads/universal-payments-engineering-lab.pdf">Descargar PDF navegable</a>
   </div>
   <div class="truth-banner"><strong>DEMO enseña</strong><span>SANDBOX conecta</span><span>LIVE mueve valor</span></div>
 </section>
@@ -33,8 +34,9 @@ flowchart LR
     B --> C["Proceso<br/>proveedor o rail"]
     C --> D["Confirmación<br/>API, webhook o archivo"]
     D --> E["Cierre<br/>ledger + conciliación"]
-    C -. timeout .-> U["UNKNOWN<br/>consultar, no duplicar"]
-    U -. recuperación .-> D
+    C -.-> U["Timeout<br/>UNKNOWN"]
+    U -.-> R["Consultar misma referencia<br/>no duplicar"]
+    R -.-> D
 ```
 
 > La pantalla de retorno no confirma un pago. La prueba llega desde una fuente autoritativa y el cierre exige explicar el dinero en ledger, proveedor y banco.
@@ -50,6 +52,7 @@ flowchart LR
   <a href="diagrams/PAYMENT_JOURNEY.html"><small>Visualizar</small><strong>Diagramas explicados</strong><span>Estados, timeout, webhook duplicado, ledger y conciliación.</span></a>
   <a href="LEARNING_PATH.html"><small>Aprender</small><strong>Ruta por niveles</strong><span>De primer DEMO a un piloto productivo con criterios de salida.</span></a>
   <a href="GITHUB_PAGES.html"><small>Publicación</small><strong>GitHub Pages</strong><span>Qué publica, qué no ejecuta y por qué jamás contiene secretos.</span></a>
+  <a href="FORMATS_AND_TRACEABILITY.html"><small>Correspondencia</small><strong>Markdown, HTML y PDF</strong><span>Qué genera cada formato y cómo abrir el mismo caso en los tres.</span></a>
 </div>
 
 ## Localhost y GitHub Pages no son lo mismo

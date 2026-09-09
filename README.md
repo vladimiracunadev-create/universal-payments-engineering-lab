@@ -92,12 +92,16 @@ Para comprobar la documentación exactamente como se publicará:
 
 ```bash
 python -m pip install -r requirements-docs.txt
+python scripts/generate_documentation_pdf.py
+python scripts/verify_documentation_pdf.py
 python -m mkdocs build --strict
+mkdir -p site/downloads
+cp output/pdf/universal-payments-engineering-lab.pdf site/downloads/
 python scripts/verify_documentation_site.py --site-dir site
 python -m mkdocs serve
 ```
 
-Abre `http://127.0.0.1:8000/universal-payments-engineering-lab/`. La guía [GitHub Pages](docs/GITHUB_PAGES.md) explica de principio a fin la separación entre Markdown fuente, HTML generado y laboratorio ejecutable.
+Abre `http://127.0.0.1:8000/universal-payments-engineering-lab/`. La guía [GitHub Pages](docs/GITHUB_PAGES.md) y el [mapa de formatos](docs/FORMATS_AND_TRACEABILITY.md) explican de principio a fin la separación y correspondencia entre Markdown fuente, HTML generado, PDF navegable y laboratorio ejecutable.
 
 ## Los tres modos no significan lo mismo
 
