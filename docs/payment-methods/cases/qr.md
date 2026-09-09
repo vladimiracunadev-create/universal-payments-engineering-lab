@@ -1,6 +1,6 @@
 # 12. Pagos QR
 
-[← Volver a la tabla](../END_TO_END_MATRIX.html) · [Ver esta guía .md en GitHub](https://github.com/vladimiracunadev-create/universal-payments-engineering-lab/blob/main/docs/payment-methods/cases/qr.md)
+[← Volver a la tabla](../END_TO_END_MATRIX.md) · [Ver esta guía .md en GitHub](https://github.com/vladimiracunadev-create/universal-payments-engineering-lab/blob/main/docs/payment-methods/cases/qr.md)
 
 ## En una frase
 
@@ -155,4 +155,4 @@ El DEMO permite observar el recorrido de **Pagos QR**, incluyendo éxito, timeou
 
 ---
 
-[Abrir Pagos QR en la tabla web](../END_TO_END_MATRIX.html) · [Configurar localhost](../../LOCALHOST_AND_CONFIGURATION.html)
+[Abrir Pagos QR en la tabla](../END_TO_END_MATRIX.md) · [Configurar localhost](../../LOCALHOST_AND_CONFIGURATION.md)

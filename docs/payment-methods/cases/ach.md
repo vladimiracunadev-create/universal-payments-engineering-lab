@@ -1,6 +1,6 @@
 # 14. ACH y transferencias batch
 
-[← Volver a la tabla](../END_TO_END_MATRIX.html) · [Ver esta guía .md en GitHub](https://github.com/vladimiracunadev-create/universal-payments-engineering-lab/blob/main/docs/payment-methods/cases/ach.md)
+[← Volver a la tabla](../END_TO_END_MATRIX.md) · [Ver esta guía .md en GitHub](https://github.com/vladimiracunadev-create/universal-payments-engineering-lab/blob/main/docs/payment-methods/cases/ach.md)
 
 ## En una frase
 
@@ -152,8 +152,8 @@ El DEMO permite observar el recorrido de **ACH y transferencias batch**, incluye
 ## Fuentes
 
 - [ISO · ISO 20022](https://www.iso20022.org/)
-- [BIS CPMI · sistemas de pago](https://www.bis.org/cpmi/index.htm)
+- [BIS CPMI · sistemas de pago](https://www.bis.org/committees/cpmi/overview)
 
 ---
 
-[Abrir ACH y transferencias batch en la tabla web](../END_TO_END_MATRIX.html) · [Configurar localhost](../../LOCALHOST_AND_CONFIGURATION.html)
+[Abrir ACH y transferencias batch en la tabla](../END_TO_END_MATRIX.md) · [Configurar localhost](../../LOCALHOST_AND_CONFIGURATION.md)

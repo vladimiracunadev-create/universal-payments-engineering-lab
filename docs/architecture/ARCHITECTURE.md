@@ -5,7 +5,7 @@
 El checkout actual contiene un motor DEMO, una API HTTP local, un portal estático,
 un diagnóstico de credenciales, invariantes en memoria y cuatro adaptadores. No
 contiene todavía base de datos, cola, workers ni servicios separados. El diagrama
-siguiente es la arquitectura objetivo; el [roadmap](../../ROADMAP.md) indica el
+siguiente es la arquitectura objetivo; el [roadmap](https://github.com/vladimiracunadev-create/universal-payments-engineering-lab/blob/main/ROADMAP.md) indica el
 orden para convertirla en componentes persistentes.
 
 ## Objetivo

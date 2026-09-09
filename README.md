@@ -3,6 +3,7 @@
 Laboratorio autoexplicativo en español para **aprender qué ocurre realmente cuando alguien paga**: desde la orden hasta el ledger, la liquidación, los fallos y la conciliación.
 
 [![CI](https://github.com/vladimiracunadev-create/universal-payments-engineering-lab/actions/workflows/ci.yml/badge.svg)](https://github.com/vladimiracunadev-create/universal-payments-engineering-lab/actions/workflows/ci.yml)
+[![Documentation Pages](https://github.com/vladimiracunadev-create/universal-payments-engineering-lab/actions/workflows/pages.yml/badge.svg)](https://github.com/vladimiracunadev-create/universal-payments-engineering-lab/actions/workflows/pages.yml)
 [![Python 3.11+](https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white)](pyproject.toml)
 [![License MIT](https://img.shields.io/badge/license-MIT-22c55e)](LICENSE)
 [![Mode: DEMO](https://img.shields.io/badge/mode-DEMO-63e6be)](docs/PRODUCT_GUIDE.md)
@@ -85,7 +86,18 @@ La ventana enumera variables y callbacks sin mostrar valores de secretos.
 
 ![Configuración segura para Webpay](docs/assets/paylab-configuration.png)
 
-Cada fila de la matriz abre una guía propia en HTML y Markdown. Por ejemplo: [Webpay Plus](docs/payment-methods/cases/chile-webpay.md), [transferencia bancaria](docs/payment-methods/cases/bank-transfer.md) y [pagos realizados por agentes](docs/payment-methods/cases/agentic-payments.md).
+Cada fila de la matriz abre una guía publicada generada desde **un único archivo Markdown**. No hay copias HTML dentro de `docs/`: MkDocs las crea sólo en el artefacto de GitHub Pages. Por ejemplo: [Webpay Plus](docs/payment-methods/cases/chile-webpay.md), [transferencia bancaria](docs/payment-methods/cases/bank-transfer.md) y [pagos realizados por agentes](docs/payment-methods/cases/agentic-payments.md).
+
+Para comprobar la documentación exactamente como se publicará:
+
+```bash
+python -m pip install -r requirements-docs.txt
+python -m mkdocs build --strict
+python scripts/verify_documentation_site.py --site-dir site
+python -m mkdocs serve
+```
+
+Abre `http://127.0.0.1:8000/universal-payments-engineering-lab/`. La guía [GitHub Pages](docs/GITHUB_PAGES.md) explica de principio a fin la separación entre Markdown fuente, HTML generado y laboratorio ejecutable.
 
 ## Los tres modos no significan lo mismo
 

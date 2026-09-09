@@ -58,7 +58,7 @@ def render() -> str:
             [
                 f'<tr data-search="{search_text}">',
                 f'<td class="case-number">{number:02d}</td>',
-                f'<th scope="row"><a href="cases/{rail_id}.html">{title}</a><small><a href="cases/{rail_id}.md">abrir guía .md</a></small></th>',
+                f'<th scope="row"><a href="https://vladimiracunadev-create.github.io/universal-payments-engineering-lab/payment-methods/cases/{rail_id}.html">{title}</a><small><a href="https://github.com/vladimiracunadev-create/universal-payments-engineering-lab/blob/main/docs/payment-methods/cases/{rail_id}.md">ver fuente .md</a></small></th>',
                 f"<td>{_cell(journey['when'])}</td>",
                 f"<td>{_cell(journey['start'])}</td>",
                 f"<td>{_cell(journey['process'])}</td>",
@@ -83,7 +83,7 @@ def render() -> str:
             "4. **Cómo pruebas el dinero:** ledger balanceado y conciliación contra la fuente externa.",
             "5. **Qué falta para LIVE:** contrato, credenciales separadas, seguridad, operación y regulación.",
             "",
-            "Después abre el [laboratorio en localhost](../LOCALHOST_AND_CONFIGURATION.html) para ejecutar cuatro fallos, o el [casebook detallado](CASEBOOK.html) para revisar cada modalidad.",
+            "Después abre el [laboratorio en localhost](../LOCALHOST_AND_CONFIGURATION.md) para ejecutar cuatro fallos, o el [casebook detallado](CASEBOOK.md) para revisar cada modalidad.",
             "",
             "## La arquitectura común",
             "",

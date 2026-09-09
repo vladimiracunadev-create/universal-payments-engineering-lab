@@ -1,0 +1,115 @@
+site_name: Universal Payments Engineering Lab
+site_description: Laboratorio autoexplicativo para aprender ingeniería de pagos sin mover dinero real.
+site_url: https://vladimiracunadev-create.github.io/universal-payments-engineering-lab/
+repo_url: https://github.com/vladimiracunadev-create/universal-payments-engineering-lab
+repo_name: universal-payments-engineering-lab
+docs_dir: docs
+site_dir: site
+use_directory_urls: false
+strict: true
+
+theme:
+  name: material
+  language: es
+  logo: assets/paylab-mark.svg
+  favicon: assets/paylab-mark.svg
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - toc.follow
+    - search.highlight
+    - search.share
+  palette:
+    scheme: slate
+    primary: teal
+    accent: green
+
+nav:
+  - Inicio: index.md
+  - Empieza aquí: START_HERE.md
+  - Tabla de 28 casos: payment-methods/END_TO_END_MATRIX.md
+  - Guías individuales:
+      - 01 · Efectivo y caja: payment-methods/cases/cash.md
+      - 02 · Cheques y papel: payment-methods/cases/paper.md
+      - 03 · Tarjetas: payment-methods/cases/cards.md
+      - 04 · Webpay Plus: payment-methods/cases/chile-webpay.md
+      - 05 · Oneclick Mall: payment-methods/cases/chile-oneclick.md
+      - 06 · Khipu: payment-methods/cases/chile-khipu.md
+      - 07 · Mercado Pago: payment-methods/cases/mercado-pago.md
+      - 08 · POS, mPOS y SoftPOS: payment-methods/cases/acceptance-devices.md
+      - 09 · Wallets tokenizadas: payment-methods/cases/tokenized-wallets.md
+      - 10 · Stored value y gift cards: payment-methods/cases/stored-value.md
+      - 11 · Mobile money: payment-methods/cases/mobile-money.md
+      - 12 · QR: payment-methods/cases/qr.md
+      - 13 · Transferencia bancaria: payment-methods/cases/bank-transfer.md
+      - 14 · ACH y batch: payment-methods/cases/ach.md
+      - 15 · Débito directo: payment-methods/cases/direct-debit.md
+      - 16 · Pagos instantáneos: payment-methods/cases/instant-payments.md
+      - 17 · Links y solicitudes: payment-methods/cases/payment-initiation.md
+      - 18 · Voucher en efectivo: payment-methods/cases/cash-voucher.md
+      - 19 · BNPL: payment-methods/cases/credit-alternatives.md
+      - 20 · Carrier billing: payment-methods/cases/carrier-billing.md
+      - 21 · Marketplaces y payouts: payment-methods/cases/platform-payments.md
+      - 22 · B2B y tesorería: payment-methods/cases/b2b.md
+      - 23 · Internacional: payment-methods/cases/international.md
+      - 24 · RTGS y alto valor: payment-methods/cases/high-value.md
+      - 25 · Open Finance: payment-methods/cases/open-finance.md
+      - 26 · Bitcoin y activos digitales: payment-methods/cases/digital-assets.md
+      - 27 · Máquina a máquina: payment-methods/cases/machine-payments.md
+      - 28 · Pagos con agentes: payment-methods/cases/agentic-payments.md
+  - Construcción real:
+      - Implementar en una web: IMPLEMENTATION_GUIDE.md
+      - Localhost y configuración: LOCALHOST_AND_CONFIGURATION.md
+      - Ruta de aprendizaje: LEARNING_PATH.md
+      - Casebook resumido: payment-methods/CASEBOOK.md
+      - Catálogo técnico: payment-methods/CATALOG.md
+  - Arquitectura:
+      - Guía del producto: PRODUCT_GUIDE.md
+      - Ciclo de vida: fundamentals/PAYMENT_LIFECYCLE.md
+      - Arquitectura: architecture/ARCHITECTURE.md
+      - Stack tecnológico: technology/STACK.md
+      - Diagramas: diagrams/PAYMENT_JOURNEY.md
+  - Integraciones:
+      - Adaptadores: integrations/ADAPTERS.md
+      - Webpay Plus: integrations/TRANSBANK_WEBPAY_PLUS.md
+      - Oneclick: integrations/TRANSBANK_ONECLICK.md
+      - Khipu: integrations/KHIPU.md
+      - Mercado Pago: integrations/MERCADO_PAGO.md
+  - Operación y seguridad:
+      - Runbook: operations/RUNBOOK.md
+      - Cobertura: operations/COVERAGE.md
+      - Conciliación y settlement: operations/RECONCILIATION_SETTLEMENT.md
+      - Assurance del repositorio: operations/REPOSITORY_ASSURANCE.md
+      - Modelo de amenazas: security/THREAT_MODEL.md
+      - Regulación: regulations/README.md
+  - Referencia:
+      - Glosario: GLOSSARY.md
+      - Windows: WINDOWS.md
+      - GitHub Pages: GITHUB_PAGES.md
+      - Repositorios estudiados: REFERENCE_REPOSITORIES.md
+
+exclude_docs: |
+  /README.md
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - def_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
+extra_css:
+  - assets/docs.css
+extra_javascript:
+  - https://unpkg.com/mermaid@11/dist/mermaid.min.js
+  - assets/docs.js

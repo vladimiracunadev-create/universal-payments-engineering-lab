@@ -1,9 +1,3 @@
----
-layout: default
-title: Aprende ingeniería de pagos
-description: Laboratorio autoexplicativo con 28 recorridos, DEMO local y guía para desarrollo real.
----
-
 <section class="docs-hero">
   <p class="kicker">Laboratorio ejecutable + manual de implementación</p>
   <h1>Entiende un pago desde el primer clic hasta la conciliación.</h1>
@@ -73,4 +67,4 @@ flowchart LR
 
 ## Resultado esperado
 
-Al terminar, debes poder señalar una fila de la [matriz completa](payment-methods/END_TO_END_MATRIX.html) y explicar: **qué inicia la operación, qué sistema tiene autoridad, cómo sobrevives a un estado incierto, qué asiento se genera y con qué reporte se concilia**. Si una de esas respuestas falta, la integración todavía no está lista.
+Al terminar, debes poder señalar una fila de la [matriz completa](payment-methods/END_TO_END_MATRIX.md) y explicar: **qué inicia la operación, qué sistema tiene autoridad, cómo sobrevives a un estado incierto, qué asiento se genera y con qué reporte se concilia**. Si una de esas respuestas falta, la integración todavía no está lista.

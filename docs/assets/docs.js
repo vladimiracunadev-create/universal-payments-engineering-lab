@@ -1,4 +1,9 @@
 (() => {
+  if (globalThis.mermaid) {
+    globalThis.mermaid.initialize({ startOnLoad: false, securityLevel: "strict", theme: "neutral" });
+    globalThis.mermaid.run({ querySelector: ".mermaid" });
+  }
+
   const input = document.querySelector("#docs-case-filter");
   const table = document.querySelector("#docs-case-table");
   const count = document.querySelector("#docs-case-count");

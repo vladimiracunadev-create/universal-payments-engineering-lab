@@ -85,4 +85,4 @@ Antes de mover dinero, debes poder demostrar:
 - refund, disputa y reversa probados;
 - contrato, certificación y obligaciones regulatorias aplicables.
 
-El [roadmap](../ROADMAP.md) indica qué capacidades aún faltan en este repositorio.
+El [roadmap](https://github.com/vladimiracunadev-create/universal-payments-engineering-lab/blob/main/ROADMAP.md) indica qué capacidades aún faltan en este repositorio.

@@ -30,15 +30,22 @@ flowchart LR
     S -. webhook HTTPS .-> B[Backend de desarrollo\nno Pages]
 ```
 
-## Fuente y despliegue
+## Fuente y despliegue: Markdown entra, HTML sale
 
-La fuente de Pages es la carpeta `docs/` de la rama `main`. `docs/index.md` funciona como portada y `docs/_config.yml` define título, descripción y tema.
+La única fuente editorial es `docs/**/*.md`. No se mantienen copias `.html` junto a cada guía. `mkdocs.yml` define navegación y tema; el workflow `.github/workflows/pages.yml` ejecuta `mkdocs build --strict` y genera el HTML en un artefacto temporal llamado `site`.
 
-Cada push a `main` vuelve a publicar la documentación mediante el mecanismo administrado de GitHub Pages. El estado de Pages es independiente de los workflows CI y Security: deben comprobarse ambos.
+```mermaid
+flowchart LR
+    M["docs/**/*.md<br/>fuente revisable"] --> K["MkDocs strict<br/>valida y convierte"]
+    K --> A["artefacto site/<br/>HTML generado"]
+    A --> P["GitHub Pages<br/>sitio público"]
+```
+
+Por eso la URL pública termina en `.html`, pero el árbol `docs/` del repositorio contiene Markdown. Cada push a `main` que toca documentación ejecuta **Documentation Pages**; la publicación sólo continúa si la construcción estricta y la comprobación de enlaces terminan correctamente.
 
 ## Seguridad
 
-Nunca incluyas en Markdown, JavaScript, configuración de Jekyll o capturas:
+Nunca incluyas en Markdown, JavaScript, configuración de MkDocs o capturas:
 
 - access tokens;
 - API keys;

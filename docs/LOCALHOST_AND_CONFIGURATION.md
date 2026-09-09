@@ -28,7 +28,7 @@ python scripts/paylab.py serve
 
 Estas variables se heredan al proceso Python y desaparecen al cerrar la terminal. Es el alcance recomendado para desarrollo. No uses `setx` para secretos: los deja persistentes para otros procesos y complica la rotación.
 
-El archivo [`.env.example`](../.env.example) es inventario, no contiene valores reales y **no se carga automáticamente**. Esta decisión mantiene el runtime sin dependencias y evita una falsa sensación de gestión de secretos.
+El archivo [`.env.example`](https://github.com/vladimiracunadev-create/universal-payments-engineering-lab/blob/main/.env.example) es inventario, no contiene valores reales y **no se carga automáticamente**. Esta decisión mantiene el runtime sin dependencias y evita una falsa sensación de gestión de secretos.
 
 ## Configuración por adapter
 

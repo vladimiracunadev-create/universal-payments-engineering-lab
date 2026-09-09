@@ -1,6 +1,6 @@
 # 07. Mercado Pago
 
-[← Volver a la tabla](../END_TO_END_MATRIX.html) · [Ver esta guía .md en GitHub](https://github.com/vladimiracunadev-create/universal-payments-engineering-lab/blob/main/docs/payment-methods/cases/mercado-pago.md)
+[← Volver a la tabla](../END_TO_END_MATRIX.md) · [Ver esta guía .md en GitHub](https://github.com/vladimiracunadev-create/universal-payments-engineering-lab/blob/main/docs/payment-methods/cases/mercado-pago.md)
 
 ## En una frase
 
@@ -159,4 +159,4 @@ El DEMO permite observar el recorrido de **Mercado Pago**, incluyendo éxito, ti
 
 ---
 
-[Abrir Mercado Pago en la tabla web](../END_TO_END_MATRIX.html) · [Configurar localhost](../../LOCALHOST_AND_CONFIGURATION.html)
+[Abrir Mercado Pago en la tabla](../END_TO_END_MATRIX.md) · [Configurar localhost](../../LOCALHOST_AND_CONFIGURATION.md)

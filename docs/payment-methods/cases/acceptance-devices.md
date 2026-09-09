@@ -1,6 +1,6 @@
 # 08. POS, mPOS y SoftPOS
 
-[← Volver a la tabla](../END_TO_END_MATRIX.html) · [Ver esta guía .md en GitHub](https://github.com/vladimiracunadev-create/universal-payments-engineering-lab/blob/main/docs/payment-methods/cases/acceptance-devices.md)
+[← Volver a la tabla](../END_TO_END_MATRIX.md) · [Ver esta guía .md en GitHub](https://github.com/vladimiracunadev-create/universal-payments-engineering-lab/blob/main/docs/payment-methods/cases/acceptance-devices.md)
 
 ## En una frase
 
@@ -156,4 +156,4 @@ El DEMO permite observar el recorrido de **POS, mPOS y SoftPOS**, incluyendo éx
 
 ---
 
-[Abrir POS, mPOS y SoftPOS en la tabla web](../END_TO_END_MATRIX.html) · [Configurar localhost](../../LOCALHOST_AND_CONFIGURATION.html)
+[Abrir POS, mPOS y SoftPOS en la tabla](../END_TO_END_MATRIX.md) · [Configurar localhost](../../LOCALHOST_AND_CONFIGURATION.md)

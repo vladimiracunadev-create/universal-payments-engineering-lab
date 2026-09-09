@@ -13,6 +13,7 @@ logs/private/
 htmlcov/
 build/
 dist/
+site/
 *.egg-info/
 .idea/
 .vscode/

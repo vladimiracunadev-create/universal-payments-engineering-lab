@@ -1,6 +1,6 @@
 # 28. Pagos realizados por agentes
 
-[← Volver a la tabla](../END_TO_END_MATRIX.html) · [Ver esta guía .md en GitHub](https://github.com/vladimiracunadev-create/universal-payments-engineering-lab/blob/main/docs/payment-methods/cases/agentic-payments.md)
+[← Volver a la tabla](../END_TO_END_MATRIX.md) · [Ver esta guía .md en GitHub](https://github.com/vladimiracunadev-create/universal-payments-engineering-lab/blob/main/docs/payment-methods/cases/agentic-payments.md)
 
 ## En una frase
 
@@ -156,4 +156,4 @@ El DEMO permite observar el recorrido de **Pagos realizados por agentes**, inclu
 
 ---
 
-[Abrir Pagos realizados por agentes en la tabla web](../END_TO_END_MATRIX.html) · [Configurar localhost](../../LOCALHOST_AND_CONFIGURATION.html)
+[Abrir Pagos realizados por agentes en la tabla](../END_TO_END_MATRIX.md) · [Configurar localhost](../../LOCALHOST_AND_CONFIGURATION.md)

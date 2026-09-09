@@ -88,7 +88,7 @@ SOURCES = {
     ],
     "bank": [
         {"title": "ISO · ISO 20022", "url": "https://www.iso20022.org/"},
-        {"title": "BIS CPMI · sistemas de pago", "url": "https://www.bis.org/cpmi/index.htm"},
+        {"title": "BIS CPMI · sistemas de pago", "url": "https://www.bis.org/committees/cpmi/overview"},
     ],
     "open": [
         {"title": "OpenID Foundation · FAPI", "url": "https://openid.net/wg/fapi/"},

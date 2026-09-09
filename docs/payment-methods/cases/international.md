@@ -1,6 +1,6 @@
 # 23. Pagos internacionales
 
-[← Volver a la tabla](../END_TO_END_MATRIX.html) · [Ver esta guía .md en GitHub](https://github.com/vladimiracunadev-create/universal-payments-engineering-lab/blob/main/docs/payment-methods/cases/international.md)
+[← Volver a la tabla](../END_TO_END_MATRIX.md) · [Ver esta guía .md en GitHub](https://github.com/vladimiracunadev-create/universal-payments-engineering-lab/blob/main/docs/payment-methods/cases/international.md)
 
 ## En una frase
 
@@ -151,8 +151,8 @@ El DEMO permite observar el recorrido de **Pagos internacionales**, incluyendo �
 ## Fuentes
 
 - [ISO · ISO 20022](https://www.iso20022.org/)
-- [BIS CPMI · sistemas de pago](https://www.bis.org/cpmi/index.htm)
+- [BIS CPMI · sistemas de pago](https://www.bis.org/committees/cpmi/overview)
 
 ---
 
-[Abrir Pagos internacionales en la tabla web](../END_TO_END_MATRIX.html) · [Configurar localhost](../../LOCALHOST_AND_CONFIGURATION.html)
+[Abrir Pagos internacionales en la tabla](../END_TO_END_MATRIX.md) · [Configurar localhost](../../LOCALHOST_AND_CONFIGURATION.md)

@@ -36,27 +36,18 @@ REQUIRED = {
     "config/case_guides.json",
     "docs/PRODUCT_GUIDE.md",
     "docs/START_HERE.md",
-    "docs/START_HERE.html",
     "docs/LEARNING_PATH.md",
-    "docs/LEARNING_PATH.html",
     "docs/LOCALHOST_AND_CONFIGURATION.md",
-    "docs/LOCALHOST_AND_CONFIGURATION.html",
     "docs/GITHUB_PAGES.md",
-    "docs/GITHUB_PAGES.html",
     "docs/index.md",
-    "docs/_layouts/default.html",
     "docs/assets/docs.css",
     "docs/assets/docs.js",
+    "docs/assets/paylab-mark.svg",
     "docs/REFERENCE_REPOSITORIES.md",
-    "docs/REFERENCE_REPOSITORIES.html",
     "docs/diagrams/PAYMENT_JOURNEY.md",
-    "docs/diagrams/PAYMENT_JOURNEY.html",
     "docs/payment-methods/CASEBOOK.md",
-    "docs/payment-methods/CASEBOOK.html",
     "docs/payment-methods/END_TO_END_MATRIX.md",
-    "docs/payment-methods/END_TO_END_MATRIX.html",
     "docs/IMPLEMENTATION_GUIDE.md",
-    "docs/IMPLEMENTATION_GUIDE.html",
     "docs/payment-methods/CATALOG.md",
     "docs/operations/RUNBOOK.md",
     "web/index.html",
@@ -66,6 +57,11 @@ REQUIRED = {
     "scripts/verify_portal_ui.py",
     "scripts/generate_case_matrix.py",
     "scripts/generate_case_guides.py",
+    "scripts/verify_documentation_site.py",
+    "scripts/verify_documentation_ui.py",
+    "mkdocs.yml",
+    "requirements-docs.txt",
+    ".github/workflows/pages.yml",
 }
 
 
@@ -203,7 +199,7 @@ def check_product_assets(errors: list[str]) -> None:
         if f">{family['title']}</a>" not in matrix:
             errors.append(f"published end-to-end matrix is missing {family['id']}")
     if matrix.startswith("---") or matrix.count('<tr data-search="') != 28:
-        errors.append("published matrix must be clean Markdown with exactly 28 HTML case rows")
+        errors.append("published matrix must be clean Markdown with exactly 28 case rows")
     for clean_doc in (
         "START_HERE.md",
         "LEARNING_PATH.md",
@@ -214,14 +210,14 @@ def check_product_assets(errors: list[str]) -> None:
         "payment-methods/END_TO_END_MATRIX.md",
     ):
         if (ROOT / "docs" / clean_doc).read_text(encoding="utf-8").startswith("---"):
-            errors.append(f"reader-facing Markdown exposes Jekyll front matter: docs/{clean_doc}")
+            errors.append(f"reader-facing Markdown exposes obsolete front matter: docs/{clean_doc}")
     case_dir = ROOT / "docs/payment-methods/cases"
     markdown_guides = sorted(case_dir.glob("*.md"))
-    page_wrappers = sorted(case_dir.glob("*.html"))
-    if len(markdown_guides) != 28 or len(page_wrappers) != 28:
+    html_sources = sorted((ROOT / "docs").rglob("*.html"))
+    if len(markdown_guides) != 28 or html_sources:
         errors.append(
-            f"individual guide coverage must be 28 Markdown + 28 HTML: "
-            f"{len(markdown_guides)} Markdown, {len(page_wrappers)} HTML"
+            f"documentation source must contain 28 case Markdown files and zero HTML: "
+            f"{len(markdown_guides)} Markdown, {len(html_sources)} HTML"
         )
     for family in enriched_catalog():
         rail_id = family["id"]
@@ -258,8 +254,7 @@ def check_markdown_links(errors: list[str]) -> None:
             if not target or "://" in target or target.startswith(("mailto:", "#")):
                 continue
             resolved = (path.parent / unquote(target)).resolve()
-            source_page = resolved.with_suffix(".md") if resolved.suffix == ".html" else resolved
-            if not resolved.exists() and not source_page.exists():
+            if not resolved.exists():
                 errors.append(f"broken link: {path.relative_to(ROOT)} -> {target}")
 
 

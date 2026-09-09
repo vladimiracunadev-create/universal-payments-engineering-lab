@@ -1,6 +1,6 @@
 # 10. Saldo almacenado y gift cards
 
-[← Volver a la tabla](../END_TO_END_MATRIX.html) · [Ver esta guía .md en GitHub](https://github.com/vladimiracunadev-create/universal-payments-engineering-lab/blob/main/docs/payment-methods/cases/stored-value.md)
+[← Volver a la tabla](../END_TO_END_MATRIX.md) · [Ver esta guía .md en GitHub](https://github.com/vladimiracunadev-create/universal-payments-engineering-lab/blob/main/docs/payment-methods/cases/stored-value.md)
 
 ## En una frase
 
@@ -155,4 +155,4 @@ El DEMO permite observar el recorrido de **Saldo almacenado y gift cards**, incl
 
 ---
 
-[Abrir Saldo almacenado y gift cards en la tabla web](../END_TO_END_MATRIX.html) · [Configurar localhost](../../LOCALHOST_AND_CONFIGURATION.html)
+[Abrir Saldo almacenado y gift cards en la tabla](../END_TO_END_MATRIX.md) · [Configurar localhost](../../LOCALHOST_AND_CONFIGURATION.md)

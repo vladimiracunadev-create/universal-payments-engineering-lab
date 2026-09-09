@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # ruff: noqa: E501
-"""Generate one clean Markdown guide and one Pages wrapper per payment case."""
+"""Generate one clean Markdown guide per payment case."""
 
 from __future__ import annotations
 
@@ -108,7 +108,7 @@ def render_markdown(family: dict[str, object], number: int) -> str:
     lines = [
         f"# {number:02d}. {title}",
         "",
-        f"[← Volver a la tabla](../END_TO_END_MATRIX.html) · [Ver esta guía .md en GitHub](https://github.com/vladimiracunadev-create/universal-payments-engineering-lab/blob/main/docs/payment-methods/cases/{rail_id}.md)",
+        f"[← Volver a la tabla](../END_TO_END_MATRIX.md) · [Ver esta guía .md en GitHub](https://github.com/vladimiracunadev-create/universal-payments-engineering-lab/blob/main/docs/payment-methods/cases/{rail_id}.md)",
         "",
         "## En una frase",
         "",
@@ -238,28 +238,10 @@ def render_markdown(family: dict[str, object], number: int) -> str:
         "",
         "---",
         "",
-        f"[Abrir {title} en la tabla web](../END_TO_END_MATRIX.html) · [Configurar localhost](../../LOCALHOST_AND_CONFIGURATION.html)",
+        f"[Abrir {title} en la tabla](../END_TO_END_MATRIX.md) · [Configurar localhost](../../LOCALHOST_AND_CONFIGURATION.md)",
         "",
     ]
     return "\n".join(lines)
-
-
-def render_wrapper(family: dict[str, object], number: int) -> str:
-    rail_id = _text(family["id"])
-    title = _text(family["title"])
-    markdown_heading = f"# {number:02d}. {title}"
-    return "\n".join(
-        [
-            "---",
-            "layout: default",
-            f"title: {title}",
-            "---",
-            f"{{% capture guide %}}{{% include_relative {rail_id}.md %}}{{% endcapture %}}",
-            f'{{% assign case_heading = "{markdown_heading}" %}}',
-            "{{ guide | remove_first: case_heading | markdownify }}",
-            "",
-        ]
-    )
 
 
 def expected_files() -> dict[Path, str]:
@@ -267,7 +249,6 @@ def expected_files() -> dict[Path, str]:
     for number, family in enumerate(enriched_catalog(), 1):
         rail_id = _text(family["id"])
         files[TARGET / f"{rail_id}.md"] = render_markdown(family, number)
-        files[TARGET / f"{rail_id}.html"] = render_wrapper(family, number)
     return files
 
 
@@ -280,14 +261,18 @@ def main() -> int:
         path for path, content in files.items() if not path.is_file() or path.read_text(encoding="utf-8") != content
     ]
     if args.check:
-        if stale:
-            raise SystemExit(f"Individual case guides are stale: {len(stale)} files")
-        print("Individual case guides are synchronized: 28 Markdown + 28 HTML")
+        html_sources = sorted(TARGET.glob("*.html"))
+        if stale or html_sources:
+            raise SystemExit(
+                f"Individual case guides are stale: {len(stale)} Markdown; "
+                f"unexpected HTML sources: {len(html_sources)}"
+            )
+        print("Individual case guides are synchronized: 28 Markdown, 0 HTML sources")
         return 0
     TARGET.mkdir(parents=True, exist_ok=True)
     for path, content in files.items():
         path.write_text(content, encoding="utf-8")
-    print("Generated 28 pedagogical Markdown guides and 28 Pages wrappers")
+    print("Generated 28 pedagogical Markdown guides")
     return 0
 
 

@@ -1,6 +1,6 @@
 # 19. BNPL y crédito alternativo
 
-[← Volver a la tabla](../END_TO_END_MATRIX.html) · [Ver esta guía .md en GitHub](https://github.com/vladimiracunadev-create/universal-payments-engineering-lab/blob/main/docs/payment-methods/cases/credit-alternatives.md)
+[← Volver a la tabla](../END_TO_END_MATRIX.md) · [Ver esta guía .md en GitHub](https://github.com/vladimiracunadev-create/universal-payments-engineering-lab/blob/main/docs/payment-methods/cases/credit-alternatives.md)
 
 ## En una frase
 
@@ -155,4 +155,4 @@ El DEMO permite observar el recorrido de **BNPL y crédito alternativo**, incluy
 
 ---
 
-[Abrir BNPL y crédito alternativo en la tabla web](../END_TO_END_MATRIX.html) · [Configurar localhost](../../LOCALHOST_AND_CONFIGURATION.html)
+[Abrir BNPL y crédito alternativo en la tabla](../END_TO_END_MATRIX.md) · [Configurar localhost](../../LOCALHOST_AND_CONFIGURATION.md)
