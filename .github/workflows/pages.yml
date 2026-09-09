@@ -8,6 +8,14 @@ on:
       - "mkdocs.yml"
       - "requirements-docs.txt"
       - ".github/workflows/pages.yml"
+      - "scripts/generate_case_guides.py"
+      - "scripts/generate_case_matrix.py"
+      - "scripts/generate_documentation_pdf.py"
+      - "scripts/verify_documentation_*.py"
+      - "src/payments_lab/playbooks.py"
+      - "config/case_guides.json"
+      - "config/payment_rails.yaml"
+      - "output/pdf/**"
   workflow_dispatch:
 
 permissions:
