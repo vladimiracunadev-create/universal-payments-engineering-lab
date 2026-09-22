@@ -786,7 +786,9 @@ def run_virtual_economy_demo(scenario: str = "game-currency-success") -> dict[st
     engine = VirtualEconomyEngine()
     order = engine.create_currency_order()
     # A duplicate client retry returns the same order and never creates a second attempt.
-    assert engine.create_currency_order().order_id == order.order_id
+    duplicate_order = engine.create_currency_order()
+    if duplicate_order.order_id != order.order_id:
+        raise RuntimeError("idempotent retry created a second order")
     response_lost = scenario == "game-currency-timeout"
     attempt = engine.submit_payment(order, response_lost=response_lost)
     if response_lost:
