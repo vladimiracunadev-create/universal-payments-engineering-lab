@@ -31,7 +31,11 @@ def main() -> int:
     if reader.metadata.title != "Universal Payments Engineering Lab - Manual navegable":
         errors.append("PDF title metadata is missing")
 
-    expected_destinations = {"contents", *[f"case-{family['id']}" for family in enriched_catalog()]}
+    expected_destinations = {
+        "contents",
+        "vertical-virtual-game-economy",
+        *[f"case-{family['id']}" for family in enriched_catalog()],
+    }
     missing_destinations = sorted(expected_destinations - set(reader.named_destinations))
     if missing_destinations:
         errors.append(f"missing named destinations: {missing_destinations}")
@@ -77,6 +81,14 @@ def main() -> int:
                 errors.append(f"case missing from PDF: {family['id']}")
             if f"Figura {number}. Flujo verificable del caso" not in full_text:
                 errors.append(f"vector flow diagram missing for case: {family['id']}")
+        for marker in (
+            "Caso vertical. Economía virtual y bienes digitales",
+            "Figura V1. Recorrido verificable de CLP a GEM y entitlement",
+            "Dos movimientos que nunca se suman",
+            "10 deliveries",
+        ):
+            if marker not in full_text:
+                errors.append(f"virtual economy PDF chapter is missing: {marker}")
         if "Syntax error" in full_text:
             errors.append("Mermaid error text leaked into PDF")
         if "<b>" in full_text or "<br/>" in full_text or "&gt;" in full_text:
@@ -88,7 +100,7 @@ def main() -> int:
             print(f"- {error}")
         return 1
     print(
-        f"Documentation PDF verification OK: {len(reader.pages)} pages, 28 cases, "
+        f"Documentation PDF verification OK: {len(reader.pages)} pages, 28 cases + 1 vertical, "
         f"{annotations['internal']} internal links, {annotations['external']} external links, "
         "28 vector diagrams"
     )

@@ -12,6 +12,8 @@ No existe una lista cerrada de marcas que equivalga a “todos los pagos”. Sí
 
 Una wallet no siempre es un rail: puede presentar una tarjeta tokenizada. Un QR no siempre es un medio: puede codificar una transferencia A2A, una tarjeta o saldo cerrado. Una API no determina finalidad: solo expone capacidades del sistema subyacente.
 
+Del mismo modo, **un videojuego no es un rail**. Es un vertical que puede cobrar por tarjeta, wallet, transferencia, PSP o store y luego mover stored value y bienes digitales en dominios internos. El caso ejecutable vive en [Economía virtual](../verticals/VIRTUAL_GAME_ECONOMY.md); no añade una fila a la taxonomía de 28 familias.
+
 ```mermaid
 mindmap
   root((Pago))

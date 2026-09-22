@@ -148,6 +148,18 @@ Escenarios que debes probar:
 
 - Disponibilidad, costos y reglas dependen del proveedor y la regulación local.
 
+## Aplicación vertical: moneda de videojuego
+
+Una game currency reutiliza estas operaciones —load, reserve, debit, release, expiration y refund—, pero no se clasifica automáticamente como dinero electrónico. Debes analizar transferibilidad, convertibilidad, cash-out, emisor, aceptación y jurisdicción.
+
+| Objeto | Ejemplo | Evidencia |
+|---|---|---|
+| saldo | 1.000 GEM | wallet + transaction history + journals |
+| bien digital | SKIN_DRAGON | entitlement + inventory movement |
+| pago externo | CLP 5.990 | order + payment attempt + provider + settlement |
+
+Comprar GEM y gastar GEM son operaciones diferentes y usan órdenes e idempotency keys distintas. Ejecuta el recorrido en [Economía virtual](../../verticals/VIRTUAL_GAME_ECONOMY.md).
+
 ## Checklist antes de LIVE
 
 - [ ] Contrato y cuenta comercial aprobados; costos y plazos confirmados directamente con el proveedor.

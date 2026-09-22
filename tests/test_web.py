@@ -91,6 +91,24 @@ class LocalPortalTests(unittest.TestCase):
         self.assertEqual(run["final_state"], "RECONCILED")
         self.assertTrue(any(step["phase"] == "Duplicado" for step in run["steps"]))
 
+    def test_game_demo_endpoint_exposes_scenarios_and_separate_ledgers(self):
+        _, body = self.get("/api/game-scenarios")
+        scenarios = json.loads(body)["scenarios"]
+        self.assertGreaterEqual(len(scenarios), 6)
+        request = urllib.request.Request(
+            self.origin + "/api/game-demo",
+            data=json.dumps({"scenario": "game-currency-duplicate-webhook"}).encode(),
+            headers={"Content-Type": "application/json"},
+            method="POST",
+        )
+        with urllib.request.urlopen(request, timeout=2) as response:
+            run = json.load(response)
+        self.assertEqual(response.status, 201)
+        self.assertEqual(run["order"]["currency"], "CLP")
+        self.assertEqual(run["wallet"]["currency"], "GEM")
+        self.assertEqual(run["webhook_delivery"]["deduplicated"], 9)
+        self.assertEqual(run["client_retry"]["wallet_loads"], 1)
+
     def test_unknown_family_and_oversized_request_are_rejected(self):
         request = urllib.request.Request(
             self.origin + "/api/demo/unknown",

@@ -14,6 +14,7 @@ Al terminar el primer recorrido deberías poder responder:
 4. ¿Cómo evito aplicar dos veces el mismo webhook?
 5. ¿Cómo demuestro que negocio, proveedor, ledger y banco coinciden?
 6. ¿Qué cambia al pasar de DEMO a SANDBOX y a LIVE?
+7. ¿Por qué pagar CLP, acreditar GEM y conceder una skin son tres efectos relacionados pero distintos?
 
 ## Qué es y qué no es
 
@@ -118,3 +119,7 @@ No hay una llamada oculta al proveedor. Todo ocurre dentro del proceso Python y 
 | diferencia de conciliación | ¿cómo conservo una discrepancia sin falsear el ledger? |
 
 Continúa con la [ruta de aprendizaje](LEARNING_PATH.md) si quieres avanzar de principiante a diseño de una integración; usa la [guía de implementación](IMPLEMENTATION_GUIDE.md) si ya tienes una web concreta.
+
+## Segunda práctica: del dinero externo al bien digital
+
+En el mismo portal baja a **Compra 1.000 GEM por CLP 5.990**, selecciona `game-currency-duplicate-webhook` y ejecuta. Comprueba que diez entregas del webhook producen un solo `LOAD` de 1.000 GEM. Después abre la [guía vertical completa](verticals/VIRTUAL_GAME_ECONOMY.md) y explica por qué el ledger CLP y el ledger GEM nunca se suman.

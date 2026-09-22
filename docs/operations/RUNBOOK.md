@@ -39,6 +39,20 @@
 
 `UNKNOWN` tiene owner y SLA. El job de recuperación consulta usando referencia estable, con backoff y límite. Si expira la ventana automática, abre caso manual con orden, attempt, proveedor, timestamps, respuesta/timeout, consulta y asiento; nunca solicita PAN/CVV.
 
+## Economía virtual y bienes digitales
+
+| Incidente | Diagnóstico | Acción segura | Prohibido |
+|---|---|---|---|
+| proveedor `PAID`, wallet 0 | correlacionar order, attempt, provider ID y ausencia de `LOAD` | ejecutar fulfillment idempotente y reconciliar | cobrar otra vez |
+| wallet acreditada dos veces | buscar dos `LOAD` con el mismo source ID | contener consumo, journal compensatorio aprobado y análisis de causa | editar `balance` o borrar historia |
+| entitlement faltante | comprobar debit GEM, orden interna e inventario | conceder desde la misma orden/idempotency key | volver a debitar GEM |
+| refund sin revoke | revisar consumo y política vigente | saldo negativo, revoke, review o absorción según decisión explícita | asumir una política universal |
+| chargeback después del consumo | comparar evento, wallet, entitlement e inventario | restricción/revisión y compensación trazable | ocultar la diferencia |
+| webhook repetido | validar firma/frescura y buscar event ID | responder sin reaplicar y conservar evidencia | desactivar dedupe |
+| mismatch | clasificar monto, moneda, crédito, refund, chargeback o inventario | asignar owner/SLA y preservar todas las fuentes | etiquetarlo como fraude sin evidencia |
+
+El runbook detallado, incluyendo restore y crash recovery, está en [Economía virtual](../verticals/VIRTUAL_GAME_ECONOMY.md#runbooks-del-vertical).
+
 ## Deploy y rollback
 
 Cambios de adaptador usan canary por comercio/método, compatibilidad hacia atrás, feature flag y observación de tasas financieras. Rollback de código no revierte dinero: las operaciones ya enviadas pasan a recuperación y conciliación.

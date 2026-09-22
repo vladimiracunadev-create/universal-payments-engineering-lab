@@ -12,6 +12,7 @@ from .catalog import catalog_text
 from .core.states import PaymentState
 from .demo import SCENARIOS, run_demo
 from .doctor import diagnose
+from .virtual_economy import GAME_SCENARIOS, run_virtual_economy_demo
 from .web import serve
 
 
@@ -34,6 +35,8 @@ def build_parser() -> argparse.ArgumentParser:
     demo.add_argument("--scenario", choices=tuple(SCENARIOS), default="success")
     demo.add_argument("--amount", default="19990")
     demo.add_argument("--currency", default="CLP")
+    game = commands.add_parser("game-demo", help="Run the in-game purchase vertical without money or providers")
+    game.add_argument("--scenario", choices=tuple(GAME_SCENARIOS), default="game-currency-success")
     local = commands.add_parser("serve", help="Open the local DEMO portal")
     local.add_argument("--host", default=os.getenv("PAYLAB_HOST", "127.0.0.1"))
     local.add_argument("--port", type=int, default=os.getenv("PAYLAB_PORT", "8080"))
@@ -80,6 +83,8 @@ def main(argv=None) -> None:
         print_json(diagnose())
     elif args.cmd == "demo":
         print_json(run_demo(args.rail, scenario=args.scenario, amount=args.amount, currency=args.currency))
+    elif args.cmd == "game-demo":
+        print_json(run_virtual_economy_demo(args.scenario))
     elif args.cmd == "serve":
         serve(args.host, args.port)
     elif args.cmd == "khipu-create":

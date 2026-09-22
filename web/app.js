@@ -1,4 +1,4 @@
-const state = { families: [], scenarios: [], doctor: null };
+const state = { families: [], scenarios: [], gameScenarios: [], doctor: null };
 const rail = document.querySelector("#rail");
 const scenario = document.querySelector("#scenario");
 const runner = document.querySelector("#runner");
@@ -8,6 +8,9 @@ const search = document.querySelector("#search");
 const guidedRun = document.querySelector("#guided-run");
 const matrixBody = document.querySelector("#case-matrix-body");
 const matrixFilter = document.querySelector("#matrix-filter");
+const gameRunner = document.querySelector("#game-runner");
+const gameScenario = document.querySelector("#game-scenario");
+const gameResult = document.querySelector("#game-result");
 
 const LESSONS = {
   success: {
@@ -274,6 +277,56 @@ function renderRun(run) {
   `;
 }
 
+function renderGameRun(run) {
+  const stages = run.stages
+    .map((stage, index) => {
+      const warning = ["MISSING", "MISMATCH", "UNKNOWN", "ENTITLEMENT_PENDING"].includes(stage.status);
+      return `<div class="flow-node ${warning ? "warning" : ""}">` + icon(warning ? "alert" : "check") +
+        `<strong>${escapeHtml(stage.name)}</strong><small>${escapeHtml(stage.status)}</small></div>` +
+        (index < run.stages.length - 1 ? '<b class="flow-arrow" aria-hidden="true">→</b>' : "");
+    })
+    .join("");
+  const ids = Object.entries(run.identifiers)
+    .filter(([, value]) => value)
+    .map(([name, value]) => `<p><strong>${escapeHtml(name)}</strong><code>${escapeHtml(value)}</code></p>`)
+    .join("");
+  const money = run.external_money_ledger.flatMap((journal) => journal.entries)
+    .map((entry) => `<p><strong>${escapeHtml(entry.amount)} ${escapeHtml(entry.currency)}</strong> · ${escapeHtml(entry.account)}</p>`)
+    .join("");
+  const virtual = run.virtual_value_ledger.flatMap((journal) => journal.entries)
+    .map((entry) => `<p><strong>${escapeHtml(entry.amount)} ${escapeHtml(entry.currency)}</strong> · ${escapeHtml(entry.account)}</p>`)
+    .join("");
+  const differences = run.reconciliation.differences.length
+    ? run.reconciliation.differences.map((item) => `<p><strong>${escapeHtml(item.kind)}</strong> · ${escapeHtml(item.detail)}</p>`).join("")
+    : "<p><strong>Sin diferencias.</strong> Orden, proveedor, settlement, ledger, wallet y entitlement coinciden.</p>";
+  const timeline = run.timeline.map((event) => `
+    <article class="step">
+      <span class="step-number">${event.sequence}</span>
+      <div><h3>${escapeHtml(event.action)}</h3><small>Actor: ${escapeHtml(event.actor)}</small></div>
+      <div><p>${escapeHtml(event.reason)}</p><span class="state">${escapeHtml(event.before)} → ${escapeHtml(event.after)}</span><div class="evidence">${escapeHtml(event.evidence)} · ${escapeHtml(event.timestamp)}</div></div>
+    </article>`).join("");
+  const entitlement = run.entitlements[0];
+  const inventory = run.inventory_movements[0];
+  gameResult.innerHTML = `
+    <header class="result-head"><div><p class="eyebrow">${escapeHtml(run.vertical)}</p><h2>${escapeHtml(run.scenario_explanation)}</h2><p>${escapeHtml(run.separation.rule)}</p></div><div class="result-identity"><span class="mode demo">DEMO · $0 REAL</span><span class="result-ref">${escapeHtml(run.correlation_id)}</span></div></header>
+    <section class="journey-map"><h3>ORDER → PAYMENT → LEDGER → WALLET → ENTITLEMENT → RECONCILIATION</h3><p>Pago y fulfillment conservan estados independientes.</p><div class="flow-track">${stages}</div></section>
+    <section class="game-explanation">
+      <p class="eyebrow">Qué ocurrió, en lenguaje común</p>
+      <ol>
+        <li><strong>Orden externa:</strong> el backend fijó ${escapeHtml(run.order.amount)} ${escapeHtml(run.order.currency)} por GEM_PACK_1000.</li>
+        <li><strong>Pago:</strong> el intento ${escapeHtml(run.payment_attempt.payment_attempt_id)} quedó ${escapeHtml(run.payment_attempt.state)} bajo la referencia ${escapeHtml(run.provider_transaction.provider_payment_id)}.</li>
+        <li><strong>Crédito interno:</strong> la wallet recibió GEM una sola vez; reintentos=${escapeHtml(run.client_retry.wallet_loads)} load aplicado.</li>
+        <li><strong>Compra posterior:</strong> ${entitlement ? `${escapeHtml(entitlement.product_id)} quedó ${escapeHtml(entitlement.status)}` : "no se concedió un entitlement"}${inventory ? ` y el inventario registró ${escapeHtml(inventory.direction)}` : ""}.</li>
+        <li><strong>Cierre:</strong> conciliación ${escapeHtml(run.reconciliation.status)}; ${escapeHtml(run.reconciliation.differences.length)} diferencia(s).</li>
+      </ol>
+      <p class="production-note"><strong>Retry seguro:</strong> ${run.client_retry.same_payment_attempt ? "se conservó el mismo Payment Attempt" : "revisar intentos"}. <strong>Recovery:</strong> ${run.recovery.process_restarted ? "se simuló reinicio y recuperación" : "no fue necesario reiniciar"}; nunca se creó otro cargo.</p>
+    </section>
+    <section class="lesson"><div class="lesson-heading">${icon("book")}<div><p class="eyebrow">Exactly-once logical effect</p><h3>El transporte puede repetir; el efecto lógico no.</h3></div></div><p>${escapeHtml(run.exactly_once_logical_effect)}</p><p class="production-note"><strong>Separación:</strong> ${escapeHtml(run.separation.movement_a)} ${escapeHtml(run.separation.movement_b)}</p></section>
+    <div class="ledger"><div>${icon("database")}<h3>Ledger monetario</h3>${money}</div><div>${icon("database")}<h3>Ledger virtual</h3>${virtual}</div></div>
+    <div class="ledger"><div><h3>Identificadores correlacionados</h3>${ids}</div><div>${icon(run.reconciliation.status === "MISMATCH" ? "alert" : "check")}<h3>Conciliación · ${escapeHtml(run.reconciliation.status)}</h3>${differences}<p>Wallet: ${escapeHtml(run.wallet.balance)} ${escapeHtml(run.wallet.currency)} · versión ${escapeHtml(run.wallet.version)}</p></div></div>
+    <div class="timeline-heading"><h3>Timeline auditable</h3><p>Quién, qué, estado anterior/posterior, motivo, timestamp y evidencia.</p></div><div class="timeline">${timeline}</div>`;
+}
+
 function renderPlaybook(family) {
   const guide = family.playbook;
   const stack = guide.stack;
@@ -329,18 +382,23 @@ async function json(url, options) {
 
 async function initialize() {
   try {
-    const [catalogData, scenarioData, doctor] = await Promise.all([
+    const [catalogData, scenarioData, gameScenarioData, doctor] = await Promise.all([
       json("/api/catalog"),
       json("/api/scenarios"),
+      json("/api/game-scenarios"),
       json("/api/doctor"),
     ]);
     state.families = catalogData.families;
     state.scenarios = scenarioData.scenarios;
+    state.gameScenarios = gameScenarioData.scenarios;
     state.doctor = doctor;
     rail.innerHTML = state.families
       .map((family) => `<option value="${escapeHtml(family.id)}">${escapeHtml(family.title)}</option>`)
       .join("");
     scenario.innerHTML = state.scenarios
+      .map((item) => `<option value="${escapeHtml(item.id)}">${escapeHtml(item.description)}</option>`)
+      .join("");
+    gameScenario.innerHTML = state.gameScenarios
       .map((item) => `<option value="${escapeHtml(item.id)}">${escapeHtml(item.description)}</option>`)
       .join("");
     document.querySelector("#family-count").textContent = doctor.demo.families;
@@ -394,6 +452,28 @@ runner.addEventListener("submit", async (event) => {
     result.setAttribute("aria-busy", "false");
     button.disabled = false;
     button.innerHTML = icon("play") + "Ejecutar y explicar";
+  }
+});
+
+gameRunner.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const button = gameRunner.querySelector("button");
+  button.disabled = true;
+  gameResult.setAttribute("aria-busy", "true");
+  try {
+    const run = await json("/api/game-demo", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ scenario: gameScenario.value }),
+    });
+    renderGameRun(run);
+    gameResult.scrollIntoView({ behavior: "smooth", block: "start" });
+  } catch (error) {
+    gameResult.innerHTML = `<p class="error" role="alert">${escapeHtml(error.message)}</p>`;
+  } finally {
+    gameResult.setAttribute("aria-busy", "false");
+    button.disabled = false;
+    button.innerHTML = icon("play") + "Ejecutar compra y entrega";
   }
 });
 

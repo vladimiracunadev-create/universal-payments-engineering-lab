@@ -12,6 +12,7 @@ Disponible en localhost:
 - diagnóstico de Python, catálogo y credenciales;
 - estados, idempotencia, ledger y conciliación en memoria;
 - adaptadores HTTP para Khipu, Mercado Pago, Webpay Plus y Oneclick.
+- vertical DEMO de economía virtual: compra GEM, wallet, entitlement, inventario, restore, refund, chargeback y recovery, sin sumar un rail.
 
 Los recorridos DEMO actuales son modelos pedagógicos por tipo de rail. Las siguientes fases añaden semántica especializada y ambientes oficiales.
 
@@ -49,6 +50,8 @@ Estado: **en desarrollo activo**
 - settlement y conciliación específicos;
 - fault injection configurable;
 - diagramas y guías enlazados desde el resultado.
+
+El vertical **Virtual Game Economy** es el primer caso compuesto de esta fase: reutiliza el núcleo en memoria y está `IMPLEMENTED / SIMULATED`. Persistencia durable y stores reales permanecen en fases posteriores.
 
 ### Fase 4 — SANDBOX de proveedores
 

@@ -26,12 +26,15 @@ implementación específica y de su acceso externo.
 | firma de webhooks Khipu/MP | `OPERATIVE_LOCAL` | HMAC, tiempo constante y ventana de frescura + pruebas | deduplicación/inbox persistente, rate limit y gestión real de secretos |
 | motor DEMO | `OPERATIVE_LOCAL` | 28 familias × 4 situaciones verificadas | escenarios especializados por proveedor y persistencia |
 | portal localhost | `OPERATIVE_LOCAL` | API, UI responsive y pruebas HTTP | persistencia, autenticación y despliegue compartido |
+| economía virtual de videojuegos | `OPERATIVE_LOCAL` / `SIMULATED` | nueve escenarios, dos ledgers, wallet, entitlement, inventario, recovery y pruebas | DB, inbox/outbox, store real y operación durable |
 | diagnóstico de modos | `OPERATIVE_LOCAL` | `paylab doctor` | prueba de conectividad/autorización contra cada sandbox |
 | Khipu v3 | `REQUIRES_CREDENTIALS` | adapter + guía de punta a punta | prueba live, devolución habilitada y conciliación propia |
 | Mercado Pago Payments | `REQUIRES_CREDENTIALS` | adapter + guía de punta a punta | prueba live, estados por producto y conciliación propia |
 | Webpay Plus REST | `REQUIRES_CREDENTIALS` | adapter + CLI | flujo navegador, timeout/commit y certificación propia |
 | Oneclick Mall | `REQUIRES_CERTIFICATION` | inscripción, cobro, status, refund y baja | contrato comercial, certificación y prueba live |
 | resto del catálogo | `DOCUMENTED` o acceso externo | catálogo y docs | adaptador, pruebas contractuales y evidencia oficial |
+
+El vertical de videojuegos no incrementa las familias: reutiliza stored value, platform payments y el rail externo elegido. `OPERATIVE_LOCAL / SIMULATED` significa que la lógica se ejecuta de forma determinista, no que exista integración con una store.
 
 > [!CAUTION]
 > `REQUIRES_CREDENTIALS` no afirma que se haya ejecutado una transacción real desde este checkout. Los tests automatizados no hacen cargos ni consumen credenciales.

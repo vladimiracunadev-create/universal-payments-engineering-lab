@@ -82,6 +82,43 @@ Conciliar no significa modificar datos hasta que cuadren; significa detectar, ex
 
 ## Leyenda
 
+## 6. Pago externo y entrega digital
+
+```mermaid
+flowchart LR
+    A[Order 5.990 CLP] --> B[Payment Attempt]
+    B --> C[Provider Payment]
+    C --> D[Ledger CLP]
+    C --> E[Wallet +1.000 GEM]
+    E --> F[Ledger GEM]
+    F --> G[Debit 300 GEM]
+    G --> H[Entitlement]
+    H --> I[Inventory]
+    D --> J[Reconciliation]
+    F --> J
+    I --> J
+```
+
+El proveedor confirma dinero externo. El juego registra valor interno. Una compra posterior debita GEM y concede un derecho; ninguna flecha permite sumar CLP y GEM.
+
+### Recuperación de fulfillment
+
+```mermaid
+sequenceDiagram
+    participant P as Proveedor
+    participant B as Game Backend
+    participant W as Wallet
+    participant R as Reconciliación
+    P-->>B: PAID / PAY-ABC123
+    B-xW: fallo al acreditar
+    R->>R: detecta MISSING_CREDIT
+    R->>W: retry con PAY-ABC123
+    W-->>R: un LOAD de 1.000 GEM
+    Note over B,W: nunca se crea un segundo cobro
+```
+
+## Leyenda
+
 | Elemento | Significado |
 |---|---|
 | rectángulo | actor, dato o decisión observable |

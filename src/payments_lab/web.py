@@ -16,9 +16,11 @@ from urllib.parse import urlsplit
 from .catalog import enriched_catalog
 from .demo import SCENARIOS, run_demo
 from .doctor import diagnose
+from .virtual_economy import GAME_SCENARIOS, run_virtual_economy_demo
 
 MAX_REQUEST_BYTES = 16_384
 DEMO_ROUTE = re.compile(r"^/api/demo/([a-z0-9-]+)$")
+GAME_DEMO_ROUTE = "/api/game-demo"
 STATIC_FILES = {
     "/": "index.html",
     "/index.html": "index.html",
@@ -76,6 +78,9 @@ class PayLabHandler(BaseHTTPRequestHandler):
         if path == "/api/scenarios":
             self._json({"scenarios": [{"id": key, "description": value} for key, value in SCENARIOS.items()]})
             return
+        if path == "/api/game-scenarios":
+            self._json({"scenarios": [{"id": key, "description": value} for key, value in GAME_SCENARIOS.items()]})
+            return
         filename = STATIC_FILES.get(path)
         if filename is None:
             self._error(HTTPStatus.NOT_FOUND, "not_found", "Route not found")
@@ -89,8 +94,9 @@ class PayLabHandler(BaseHTTPRequestHandler):
         self.wfile.write(raw)
 
     def do_POST(self) -> None:  # noqa: N802
-        match = DEMO_ROUTE.fullmatch(urlsplit(self.path).path)
-        if match is None:
+        path = urlsplit(self.path).path
+        match = DEMO_ROUTE.fullmatch(path)
+        if match is None and path != GAME_DEMO_ROUTE:
             self._error(HTTPStatus.NOT_FOUND, "not_found", "Route not found")
             return
         try:
@@ -105,12 +111,15 @@ class PayLabHandler(BaseHTTPRequestHandler):
             payload = json.loads(self.rfile.read(declared) or b"{}")
             if not isinstance(payload, dict):
                 raise ValueError("JSON body must be an object")
-            result = run_demo(
-                match.group(1),
-                scenario=str(payload.get("scenario", "success")),
-                amount=str(payload.get("amount", "19990")),
-                currency=str(payload.get("currency", "CLP")),
-            )
+            if path == GAME_DEMO_ROUTE:
+                result = run_virtual_economy_demo(str(payload.get("scenario", "game-currency-success")))
+            else:
+                result = run_demo(
+                    match.group(1),  # type: ignore[union-attr]
+                    scenario=str(payload.get("scenario", "success")),
+                    amount=str(payload.get("amount", "19990")),
+                    currency=str(payload.get("currency", "CLP")),
+                )
         except KeyError as exc:
             self._error(HTTPStatus.NOT_FOUND, "unknown_rail", str(exc))
             return

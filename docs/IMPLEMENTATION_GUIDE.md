@@ -112,6 +112,29 @@ Las reglas anteriores se especializan en el portal para efectivo, papel, tarjeta
 
 Para cada una, `/api/catalog` entrega `playbook` con stack, alta, costo, pasos, pruebas, pros/contras, seguridad, fallos, checklist LIVE y fuentes. Las modalidades genéricas requieren seleccionar un proveedor/regulación del país antes de poder fijar endpoints o precios reales.
 
+## Aplicarlo a un videojuego sin inventar un rail
+
+Un juego usa el rail que corresponda al canal: StoreKit/App Store, Google Play Billing, Steam Wallet/MicroTxn, Microsoft Store/XStore, checkout web o PSP. Encima construye su propio dominio de orden, wallet, entitlement e inventario.
+
+```text
+Game Client → Game Backend → Store/PSP → verificación backend
+                                      ↓
+                       ledger CLP → wallet GEM → entitlement
+```
+
+La integración real comienza así:
+
+1. definir productos externos y distinguir consumibles de durables;
+2. crear la orden propia y una clave de idempotencia en backend;
+3. iniciar la UI/SDK oficial sin entregar autoridad al cliente;
+4. verificar transacción/recibo y estado contra la plataforma;
+5. deduplicar evento y acreditar wallet o entitlement una sola vez;
+6. reconocer/consumir/finalizar según el contrato de la store;
+7. importar refunds, voided purchases, chargebacks y reportes financieros;
+8. conciliar orden, plataforma, settlement, ledger, wallet e inventario.
+
+En DEMO no se requieren variables adicionales. SANDBOX/entorno de prueba se habilita únicamente con el programa oficial y credenciales autorizadas; LIVE sigue deshabilitado en este repositorio. La [guía de economía virtual](verticals/VIRTUAL_GAME_ECONOMY.md) contiene responsabilidades por plataforma, pruebas y fuentes oficiales.
+
 ## Fuentes transversales
 
 - [PCI Security Standards Council · PCI DSS](https://www.pcisecuritystandards.org/standards/pci-dss/)

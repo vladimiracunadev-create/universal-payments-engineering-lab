@@ -54,6 +54,22 @@ def main() -> int:
         assert page.get_by_text("NO MOVIÓ DINERO", exact=True).is_visible()
         page.locator("#result").screenshot(path=args.output / "paylab-timeout-recovered.png")
 
+        page.locator("#game-scenario").select_option("game-currency-duplicate-webhook")
+        page.get_by_role("button", name="Ejecutar compra y entrega").click()
+        page.get_by_role(
+            "heading",
+            name="El mismo webhook llega diez veces; la wallet recibe 1.000 GEM una vez.",
+        ).wait_for()
+        assert page.locator("#game-result .lesson .eyebrow").get_by_text(
+            "Exactly-once logical effect",
+            exact=True,
+        ).is_visible()
+        assert page.get_by_text(
+            "ORDER → PAYMENT → LEDGER → WALLET → ENTITLEMENT → RECONCILIATION",
+            exact=True,
+        ).is_visible()
+        page.locator("#game-result").screenshot(path=args.output / "paylab-game-economy.png")
+
         mobile = browser.new_page(viewport={"width": 390, "height": 844})
         mobile.goto(args.origin, wait_until="networkidle")
         overflow = mobile.evaluate("document.documentElement.scrollWidth > document.documentElement.clientWidth")
@@ -63,7 +79,7 @@ def main() -> int:
 
     if console_errors:
         raise AssertionError(f"browser console errors: {console_errors}")
-    print("Portal UI OK: purpose, 28-row matrix, icons, configuration, guided timeout and mobile layout")
+    print("Portal UI OK: purpose, 28-row matrix, game economy, configuration, guided timeout and mobile layout")
     return 0
 
 

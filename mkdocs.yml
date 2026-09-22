@@ -61,6 +61,7 @@ nav:
       - 27 · Máquina a máquina: payment-methods/cases/machine-payments.md
       - 28 · Pagos con agentes: payment-methods/cases/agentic-payments.md
   - Construcción real:
+      - Economía virtual y videojuegos: verticals/VIRTUAL_GAME_ECONOMY.md
       - Implementar en una web: IMPLEMENTATION_GUIDE.md
       - Localhost y configuración: LOCALHOST_AND_CONFIGURATION.md
       - Ruta de aprendizaje: LEARNING_PATH.md

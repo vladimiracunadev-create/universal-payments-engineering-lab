@@ -82,6 +82,14 @@ def main() -> int:
     matrix = site / "payment-methods" / "END_TO_END_MATRIX.html"
     if not matrix.is_file() or matrix.read_text(encoding="utf-8").count('data-search="') != 28:
         errors.append("built matrix is missing or does not expose 28 searchable rows")
+    vertical = site / "verticals" / "VIRTUAL_GAME_ECONOMY.html"
+    if not vertical.is_file():
+        errors.append("built documentation is missing the virtual game economy vertical")
+    else:
+        vertical_content = vertical.read_text(encoding="utf-8")
+        for marker in ("Dos movimientos relacionados", "Runbooks del vertical", "De DEMO a una implementación real"):
+            if marker not in vertical_content:
+                errors.append(f"virtual economy page is missing: {marker}")
     pdf = site / "downloads" / "universal-payments-engineering-lab.pdf"
     if not pdf.is_file() or pdf.stat().st_size < 100_000:
         errors.append("Pages artifact is missing the navigable PDF")
@@ -91,7 +99,7 @@ def main() -> int:
         for error in errors:
             print(f"- {error}")
         return 1
-    print(f"Documentation site verification OK: {len(pages)} pages, 28 complete cases, 0 broken links")
+    print(f"Documentation site verification OK: {len(pages)} pages, 28 complete cases + 1 vertical, 0 broken links")
     return 0
 
 

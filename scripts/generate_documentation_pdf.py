@@ -178,12 +178,107 @@ def flow_diagram(number: int, journey: dict[str, str]) -> list[object]:
     return [Paragraph(f"Figura {number}. Flujo verificable del caso", styles["Section"]), table, Spacer(1, 4), recovery]
 
 
+def virtual_economy_chapter() -> list[object]:
+    flow = Table(
+        [[
+            body("Order\n5.990 CLP", style="Tiny"),
+            body("→", style="Tiny"),
+            body("Payment\nPAY-ABC123", style="Tiny"),
+            body("→", style="Tiny"),
+            body("Wallet\n+1.000 GEM", style="Tiny"),
+            body("→", style="Tiny"),
+            body("Skin\n-300 GEM", style="Tiny"),
+            body("→", style="Tiny"),
+            body("Reconciliation", style="Tiny"),
+        ]],
+        colWidths=[78, 18, 88, 18, 78, 18, 78, 18, 102],
+    )
+    flow.setStyle(TableStyle([
+        ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+        ("ALIGN", (0, 0), (-1, -1), "CENTER"),
+        ("BOX", (0, 0), (0, 0), 1, ACCENT),
+        ("BOX", (2, 0), (2, 0), 1, ACCENT),
+        ("BOX", (4, 0), (4, 0), 1, ACCENT),
+        ("BOX", (6, 0), (6, 0), 1, ACCENT),
+        ("BOX", (8, 0), (8, 0), 1, ACCENT),
+        ("BACKGROUND", (0, 0), (2, 0), PANEL),
+        ("BACKGROUND", (4, 0), (6, 0), MINT),
+        ("BACKGROUND", (8, 0), (8, 0), PANEL),
+        ("TOPPADDING", (0, 0), (-1, -1), 8),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 8),
+    ]))
+    return [
+        PageBreak(),
+        anchored(
+            "Caso vertical. Economía virtual y bienes digitales",
+            "CaseTitle",
+            "vertical-virtual-game-economy",
+        ),
+        Paragraph(
+            f'<link href="#contents">Volver al índice</link> | '
+            f'<link href="{GITHUB}/blob/main/docs/verticals/VIRTUAL_GAME_ECONOMY.md">Fuente Markdown</link> | '
+            f'<link href="{PAGES}/verticals/VIRTUAL_GAME_ECONOMY.html">HTML público</link>',
+            styles["IndexLink"],
+        ),
+        body("Este capítulo no es una familia 29. Combina el rail externo elegido, stored value, ledger, idempotencia, webhooks y fulfillment digital."),
+        section("Dos movimientos que nunca se suman"),
+        styled_table(
+            [
+                ["Movimiento", "Unidad", "Ejemplo", "Evidencia"],
+                ["A. Dinero externo", "CLP", "Player paga 5.990", "Order + attempt + provider + settlement + ledger CLP"],
+                ["B. Valor interno", "GEM", "Treasury -1.000; wallet +1.000", "Wallet transaction + journal GEM"],
+                ["Compra posterior", "GEM + bien", "wallet -300; SKIN_DRAGON", "Order interna + entitlement + inventory"],
+            ],
+            [95, 52, 125, 224],
+        ),
+        section("Figura V1. Recorrido verificable de CLP a GEM y entitlement"),
+        flow,
+        section("Dominios e identificadores"),
+        styled_table(
+            [
+                ["Dominio", "Identificador", "Responsabilidad"],
+                ["Order", "order_id", "producto, monto y moneda"],
+                ["Payment Attempt", "payment_attempt_id / idempotency_key", "interacción concreta y retry"],
+                ["Provider Transaction", "provider_payment_id", "hecho reconocido por store/PSP"],
+                ["Wallet Transaction", "wallet_transaction_id", "load/debit/reversal GEM"],
+                ["Entitlement", "entitlement_id", "derecho digital"],
+                ["Inventory Movement", "inventory_transaction_id", "entrada/salida de bien"],
+                ["Refund", "refund_id", "devolución vinculada al original"],
+                ["Timeline", "correlation_id", "reconstrucción end-to-end"],
+            ],
+            [110, 150, 236],
+        ),
+        section("Escenarios ejecutables"),
+        styled_table(
+            [
+                ["Escenario", "Resultado seguro"],
+                ["success", "+1.000 GEM; -300 GEM; un entitlement"],
+                ["timeout", "UNKNOWN → consulta de la misma referencia"],
+                ["duplicate webhook", "10 deliveries → 1 load"],
+                ["fulfillment failure", "MISSING_CREDIT → retry idempotente"],
+                ["response lost", "mismo debit y entitlement"],
+                ["crash recovery", "un attempt; crédito pendiente completado"],
+                ["refund / chargeback", "asiento compensatorio y revisión"],
+                ["restore", "entitlement original; ningún cargo nuevo"],
+            ],
+            [145, 351],
+        ),
+        section("Ambientes y seguridad"),
+        body("DEMO es local, determinista y no mueve dinero. SANDBOX/testing sólo usa el programa oficial y credenciales autorizadas. LIVE permanece deshabilitado. El backend verifica recibo/transacción; nunca confía en paid=true del cliente ni almacena PAN, CVV, PIN, track data o secretos reales."),
+        section("Fuentes oficiales"),
+        Paragraph('- <link href="https://developer.apple.com/documentation/storekit/in-app-purchase">Apple StoreKit In-App Purchase</link>', styles["BodySmall"]),
+        Paragraph('- <link href="https://developer.android.com/google/play/billing/backend">Google Play backend integration</link>', styles["BodySmall"]),
+        Paragraph('- <link href="https://partner.steamgames.com/doc/features/microtransactions/implementation">Steamworks Microtransactions</link>', styles["BodySmall"]),
+        Paragraph('- <link href="https://learn.microsoft.com/en-us/gaming/gdk/docs/store/commerce/getting-started/xstore-choosing-the-right-product-type">Microsoft GDK product types</link>', styles["BodySmall"]),
+    ]
+
+
 def build_story() -> list[object]:
     families = enriched_catalog()
     story: list[object] = [
         Spacer(1, 36 * mm),
         anchored("Universal Payments Engineering Lab", "CoverTitle", "cover"),
-        Paragraph("Manual navegable de 28 modalidades de pago", styles["CoverLead"]),
+        Paragraph("Manual navegable de 28 modalidades y un caso vertical de economía virtual", styles["CoverLead"]),
         Paragraph("Desde el inicio de una orden hasta confirmación, ledger, fallos, seguridad y conciliación.", styles["CoverLead"]),
         Spacer(1, 8 * mm),
         styled_table(
@@ -208,6 +303,8 @@ def build_story() -> list[object]:
         index_cells.append(Paragraph(f'<link href="#case-{rail_id}">{number:02d}. {title}</link>', styles["IndexLink"]))
     story.append(Table([index_cells[i : i + 2] for i in range(0, len(index_cells), 2)], colWidths=[248, 248]))
     story.extend([
+        Spacer(1, 4 * mm),
+        Paragraph('<link href="#vertical-virtual-game-economy">Caso vertical: comprar GEM y entregar un bien digital</link>', styles["IndexLink"]),
         Spacer(1, 8 * mm),
         section("Cómo leer cada caso"),
         body("Cada capítulo conserva el mismo orden: necesidad, ejemplo, recorrido, fallo, implementación, configuración, seguridad, pruebas y checklist LIVE. El diagrama aparece en todos los casos y no depende de Mermaid ni de conexión a Internet."),
@@ -295,6 +392,7 @@ def build_story() -> list[object]:
         story.append(section("Fuentes"))
         for source in guide["sources"]:
             story.append(Paragraph(f'- <link href="{html.escape(source["url"], quote=True)}">{clean(source["title"])}</link>', styles["BodySmall"]))
+    story.extend(virtual_economy_chapter())
     return story
 
 
@@ -313,6 +411,10 @@ def main() -> int:
     for number, family in enumerate(enriched_catalog(), 1):
         title = f"{number:02d}. {family['title']}"
         writer.add_named_destination(f"case-{family['id']}", pages_by_title[title])
+    writer.add_named_destination(
+        "vertical-virtual-game-economy",
+        pages_by_title["Caso vertical. Economía virtual y bienes digitales"],
+    )
     temporary = OUTPUT.with_suffix(".tmp.pdf")
     with temporary.open("wb") as stream:
         writer.write(stream)

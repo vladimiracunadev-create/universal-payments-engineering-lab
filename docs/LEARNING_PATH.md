@@ -86,3 +86,25 @@ Antes de mover dinero, debes poder demostrar:
 - contrato, certificación y obligaciones regulatorias aplicables.
 
 El [roadmap](https://github.com/vladimiracunadev-create/universal-payments-engineering-lab/blob/main/ROADMAP.md) indica qué capacidades aún faltan en este repositorio.
+
+## Nivel 6 · Economía virtual y bienes digitales
+
+### Laboratorio 6 — Comprar GEM y gastar GEM
+
+- **Ejecuta:** `python scripts/paylab.py game-demo --scenario game-currency-success`.
+- **Observa:** una orden CLP, un payment attempt, un `LOAD` GEM y otra orden GEM para `SKIN_DRAGON`.
+- **Criterio:** no describes el crédito GEM como settlement CLP ni la skin como saldo.
+
+### Laboratorio 7 — Efecto lógico único
+
+- **Ejecuta:** `game-currency-duplicate-webhook`, `game-currency-response-lost` y `game-currency-crash-recovery`.
+- **Observa:** delivery repetido, retry cliente y reinicio producen un solo crédito y un solo entitlement.
+- **Criterio:** explicas *exactly-once logical effect* sin prometer transporte exactly-once.
+
+### Laboratorio 8 — Consecuencias posteriores
+
+- **Ejecuta:** refund, chargeback y restore.
+- **Observa:** asientos compensatorios, saldo negativo/revisión y restauración sin segundo cargo.
+- **Criterio:** distingues refund, chargeback, revoke, restore y política comercial.
+
+Guía: [Economía virtual de comienzo a fin](verticals/VIRTUAL_GAME_ECONOMY.md).

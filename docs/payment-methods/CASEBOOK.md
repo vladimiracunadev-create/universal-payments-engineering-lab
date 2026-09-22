@@ -217,3 +217,21 @@ Cada caso responde cuatro preguntas: cómo imaginarlo, qué construir primero, q
 ## Regla de cierre
 
 Un caso pasa de “DEMO comprensible” a “desarrollo real” cuando existe un proveedor concreto, configuración separada, prueba autoritativa, recuperación de fallos, persistencia, ledger y conciliación. Pasa a LIVE solo con contrato, seguridad, operación y regulación verificadas.
+
+## Caso vertical — Compra de GEM en videojuego
+
+Este caso **no cambia el total de 28 familias**. Combina stored value, el rail externo elegido, platform payments, ledger, idempotencia y fulfillment digital.
+
+| Subcaso | Qué debe ocurrir | Evidencia final |
+|---|---|---|
+| éxito | 5.990 CLP confirmados; +1.000 GEM; -300 GEM; skin concedida | dos ledgers, wallet 700 GEM, entitlement e inventario |
+| timeout | pago queda `UNKNOWN` hasta consulta/webhook | mismo provider payment; ningún segundo cobro |
+| webhook duplicado | diez entregas aplican un único load | 1 aceptado, 9 deduplicados, wallet +1.000 |
+| fulfillment fallido | proveedor `PAID`, wallet 0; retry completa | `MISSING_CREDIT` antes y `RECONCILED` después |
+| respuesta perdida | el cliente reintenta tras entrega | mismo resultado lógico, sin segundo debit/entitlement |
+| refund | ya se gastaron 900 GEM | asiento compensatorio, saldo -900 y revisión |
+| chargeback | el rail revierte después del consumo | excepción operativa y trazabilidad del original |
+| restore | cambia dispositivo o reinstala | entitlement original; ningún nuevo payment attempt |
+| crash recovery | proceso cae después del pago | checkpoint simulado, crédito pendiente completado una vez |
+
+Ejecuta los escenarios desde el portal o `paylab game-demo`. Consulta la [guía completa](../verticals/VIRTUAL_GAME_ECONOMY.md).

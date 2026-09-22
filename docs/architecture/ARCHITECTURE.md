@@ -82,6 +82,25 @@ Cada efecto se representa con asientos balanceados por moneda. El código actual
 
 El lote representa lo que el proveedor declara liquidar. El caso conserva una diferencia, su owner, evidencia, antigüedad y resolución; nunca se “arregla” alterando silenciosamente el pago.
 
+### WalletTransaction, Entitlement e InventoryMovement
+
+Son dominios internos posteriores al pago. `WalletTransaction` mueve una sola unidad virtual por journal; `Entitlement` representa un derecho durable o revocable; `InventoryMovement` prueba que un bien digital entró o salió. Ninguno reemplaza `Order`, `PaymentAttempt`, transacción del proveedor o settlement.
+
+```mermaid
+flowchart LR
+    O[Order 5.990 CLP] --> A[Payment Attempt]
+    A --> P[Provider Transaction]
+    P --> M[Ledger monetario CLP]
+    P --> W[Wallet Transaction +1.000 GEM]
+    W --> V[Ledger virtual GEM]
+    V --> D[Orden interna -300 GEM]
+    D --> E[Entitlement SKIN_DRAGON]
+    E --> I[Inventory Movement]
+    M --> R[Reconciliation]
+    V --> R
+    E --> R
+```
+
 ## Contrato de adaptador
 
 Un adaptador traduce sin inventar. Debe exponer capacidades (`authorize`, `capture`, `status`, `reverse`, `refund`) solo si el proveedor las soporta y conservar códigos/referencias originales para auditoría. No debe:
@@ -140,4 +159,4 @@ Definir SLO separados para crear pago, confirmar estado, procesar eventos y conc
 
 ## Producción pendiente
 
-El repositorio no implementa aún persistencia, API de servidor, outbox/inbox, verificador de webhooks, observabilidad ni despliegue. El diagrama es arquitectura objetivo y la [matriz de cobertura](../operations/COVERAGE.md) lo declara para impedir confundir documentación con producto terminado.
+El repositorio sí implementa una API HTTP local y verificadores HMAC para Khipu, Mercado Pago y el DEMO de economía virtual. Sigue sin implementar persistencia, inbox/outbox durable, workers, observabilidad ni despliegue productivo. El diagrama es arquitectura objetivo y la [matriz de cobertura](../operations/COVERAGE.md) evita confundir una simulación local con operación LIVE.

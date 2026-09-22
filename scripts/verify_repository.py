@@ -45,6 +45,7 @@ REQUIRED = {
     "docs/assets/docs.js",
     "docs/assets/paylab-mark.svg",
     "docs/REFERENCE_REPOSITORIES.md",
+    "docs/verticals/VIRTUAL_GAME_ECONOMY.md",
     "docs/diagrams/PAYMENT_JOURNEY.md",
     "docs/payment-methods/CASEBOOK.md",
     "docs/payment-methods/END_TO_END_MATRIX.md",
@@ -159,6 +160,7 @@ def check_product_assets(errors: list[str]) -> None:
         "Cómo leer el resultado",
         "Ejemplo guiado",
         "Los 28 casos: desde la necesidad hasta producción",
+        "Compra 1.000 GEM por CLP 5.990",
     ):
         if teaching_marker not in html:
             errors.append(f"portal is missing teaching marker: {teaching_marker}")
@@ -255,6 +257,19 @@ def check_product_assets(errors: list[str]) -> None:
             or f"nameddest=case-{rail_id}" not in content
         ):
             errors.append(f"individual guide lacks Markdown/HTML/PDF traceability for {rail_id}")
+    from payments_lab.virtual_economy import GAME_SCENARIOS
+
+    if len(GAME_SCENARIOS) < 9:
+        errors.append(f"virtual economy lab must expose at least 9 scenarios, found {len(GAME_SCENARIOS)}")
+    vertical = (ROOT / "docs/verticals/VIRTUAL_GAME_ECONOMY.md").read_text(encoding="utf-8")
+    for marker in (
+        "Dos movimientos relacionados",
+        "exactly-once logical effect",
+        "Runbooks del vertical",
+        "De DEMO a una implementación real",
+    ):
+        if marker not in vertical:
+            errors.append(f"virtual economy guide is missing: {marker}")
 
 
 def check_markdown_links(errors: list[str]) -> None:

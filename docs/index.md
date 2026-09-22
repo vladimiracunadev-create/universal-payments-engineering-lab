@@ -1,7 +1,7 @@
 <section class="docs-hero">
   <p class="kicker">Laboratorio ejecutable + manual de implementación</p>
   <h1>Entiende un pago desde el primer clic hasta la conciliación.</h1>
-  <p class="lede">PayLab convierte 28 modalidades de pago en recorridos legibles: quién inicia, quién procesa, qué prueba el resultado, qué ocurre si falla y qué debes construir antes de producción.</p>
+  <p class="lede">PayLab convierte 28 modalidades de pago y un caso vertical de economía virtual en recorridos legibles: quién inicia, quién procesa, qué prueba el resultado, qué ocurre si falla y qué debes construir antes de producción.</p>
   <div class="hero-actions">
     <a class="primary-button" href="payment-methods/END_TO_END_MATRIX.html">Ver la tabla de los 28 casos</a>
     <a class="secondary-button" href="START_HERE.html">Hacer el recorrido de 10 minutos</a>
@@ -48,6 +48,7 @@ flowchart LR
   <a href="START_HERE.html"><small>Primera vez</small><strong>Empieza aquí</strong><span>Objetivo, vocabulario y una práctica guiada de diez minutos.</span></a>
   <a href="LOCALHOST_AND_CONFIGURATION.html"><small>Ejecutar</small><strong>Localhost y variables</strong><span>Instalación, variables globales, credenciales por proveedor y callbacks.</span></a>
   <a href="IMPLEMENTATION_GUIDE.html"><small>Desarrollar</small><strong>Implementar en cualquier web</strong><span>Lenguaje, API, frontend, backend, datos, seguridad y operación.</span></a>
+  <a href="verticals/VIRTUAL_GAME_ECONOMY.html"><small>Caso vertical ejecutable</small><strong>Comprar GEM y entregar una skin</strong><span>Pago CLP, wallet GEM, entitlement, inventario, fallos, stores, seguridad y conciliación.</span></a>
   <a href="payment-methods/CASEBOOK.html"><small>Profundizar</small><strong>Casebook pedagógico</strong><span>Modelo mental, primer incremento, evidencia y condiciones LIVE por caso.</span></a>
   <a href="diagrams/PAYMENT_JOURNEY.html"><small>Visualizar</small><strong>Diagramas explicados</strong><span>Estados, timeout, webhook duplicado, ledger y conciliación.</span></a>
   <a href="LEARNING_PATH.html"><small>Aprender</small><strong>Ruta por niveles</strong><span>De primer DEMO a un piloto productivo con criterios de salida.</span></a>
@@ -61,7 +62,7 @@ flowchart LR
 |---|---|---|
 | Propósito | ejecutar y observar recorridos | leer, comparar y navegar la documentación |
 | Runtime | Python + API + JavaScript | HTML/CSS/diagramas estáticos |
-| Puede simular | sí, 28 casos × 4 escenarios | no |
+| Puede simular | sí, 28 casos × 4 escenarios y 9 escenarios de economía virtual | no |
 | Variables | lee el proceso local | no usa credenciales |
 | Webhooks | sólo con backend/túnel controlado | no puede recibirlos |
 | Riesgo monetario | $0 en DEMO | $0; es documentación |

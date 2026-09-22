@@ -27,6 +27,8 @@ La [tabla de los 28 casos](payment-methods/END_TO_END_MATRIX.md) presenta, en ca
 
 Cada guía individual repite esa relación al comienzo. Dentro del PDF, el índice es clicable, cada caso tiene un marcador propio y los enlaces **Volver al índice** no salen del documento.
 
+El caso vertical [Economía virtual](verticals/VIRTUAL_GAME_ECONOMY.md) sigue la misma regla: Markdown es fuente, MkDocs produce HTML y el generador incorpora un capítulo vectorial al PDF con destino interno `vertical-virtual-game-economy`. No se agrega a las 28 filas porque no es un rail.
+
 ## Qué se verifica automáticamente
 
 - no existen archivos fuente `.html` dentro de `docs/`;

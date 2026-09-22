@@ -16,6 +16,7 @@ No es una pasarela ni afirma que 28 proveedores estén conectados. Es:
 
 - un **laboratorio DEMO** para observar estados, actores, evidencia y fallos;
 - un **modelo común** para comparar 28 familias de pago;
+- un **caso vertical ejecutable de economía virtual** que combina rails existentes sin inventar una familia 29;
 - código real para idempotencia, ledger, conciliación y cuatro adapters;
 - una guía para llevar el aprendizaje a SANDBOX y, con controles externos, a LIVE.
 
@@ -37,6 +38,7 @@ Sin instalar servicios externos ni configurar credenciales puedes:
 
 - abrir un portal local y explorar **28 familias de pago**;
 - ejecutar cada familia en cuatro situaciones: éxito, timeout recuperado, evento duplicado y diferencia de conciliación;
+- ejecutar la compra ficticia de 1.000 GEM por CLP 5.990, su crédito, gasto, entitlement, refund, chargeback, restore y recovery;
 - observar actores, estados, tecnologías, evidencia, asiento balanceado y resultado de conciliación;
 - comprobar qué integraciones externas están configuradas con el comando `doctor`;
 - usar clientes HTTP para Khipu, Mercado Pago, Webpay Plus y Oneclick cuando dispongas de acceso autorizado.
@@ -85,6 +87,12 @@ El resultado contiene un mapa de decisiones, una conclusión pedagógica, la his
 La ventana enumera variables y callbacks sin mostrar valores de secretos.
 
 ![Configuración segura para Webpay](docs/assets/paylab-configuration.png)
+
+### 4. Un caso vertical conecta pago y bien digital
+
+El laboratorio de economía virtual separa el cobro de CLP, el crédito de GEM y la entrega de `SKIN_DRAGON`, con identificadores y conciliación visibles.
+
+![Compra de GEM y entrega digital en localhost](docs/assets/paylab-game-economy.png)
 
 Cada fila de la matriz abre una guía publicada generada desde **un único archivo Markdown**. No hay copias HTML dentro de `docs/`: MkDocs las crea sólo en el artefacto de GitHub Pages. Por ejemplo: [Webpay Plus](docs/payment-methods/cases/chile-webpay.md), [transferencia bancaria](docs/payment-methods/cases/bank-transfer.md) y [pagos realizados por agentes](docs/payment-methods/cases/agentic-payments.md).
 
@@ -140,6 +148,7 @@ La explicación individual de las 28 familias está en el [mapa de producto](doc
 - firma HMAC y ventana de frescura para webhooks Khipu y Mercado Pago;
 - adaptadores HTTP para Khipu, Mercado Pago, Webpay Plus y Oneclick;
 - motor DEMO para las 28 familias;
+- vertical DEMO de videojuegos con payment attempt, dos ledgers, wallet, entitlement, inventario, timeline y conciliación;
 - API y portal localhost;
 - diagnóstico de credenciales y límites de modo.
 
@@ -176,6 +185,7 @@ python scripts/paylab.py doctor
 python scripts/paylab.py catalog
 python scripts/paylab.py states
 python scripts/paylab.py demo chile-webpay --scenario timeout-recovered
+python scripts/paylab.py game-demo --scenario game-currency-duplicate-webhook
 python scripts/paylab.py serve --port 8080
 python -m unittest discover -s tests -v
 python scripts/verify_repository.py

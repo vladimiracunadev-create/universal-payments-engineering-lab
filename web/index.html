@@ -108,6 +108,46 @@
         </form>
       </section>
 
+      <section id="game-lab" class="workspace game-workspace" aria-labelledby="game-workspace-title">
+        <div class="intro">
+          <p class="eyebrow">Caso vertical · no es un rail nuevo</p>
+          <h2 id="game-workspace-title">Compra 1.000 GEM por CLP 5.990</h2>
+          <p>Observa por separado el pago externo, el crédito de valor virtual y la compra posterior de un bien digital.</p>
+          <div class="selected-summary">
+            <p><strong>Movimiento A</strong><span>CLP mediante store, PSP, wallet, tarjeta o transferencia.</span></p>
+            <p><strong>Movimiento B</strong><span>GEM dentro del ledger y la wallet del juego.</span></p>
+            <p class="mental-model"><strong>Invariante</strong><span>CLP y GEM nunca se suman ni representan la misma transacción.</span></p>
+          </div>
+          <div class="game-howto">
+            <h3>Cómo usar este laboratorio</h3>
+            <ol>
+              <li>Elige un fallo: timeout, webhook repetido, entrega fallida, refund o chargeback.</li>
+              <li>Ejecuta y sigue las seis etapas; una alerta no se oculta como “éxito”.</li>
+              <li>Compara el ledger CLP con el ledger GEM y reconstruye el timeline por correlation ID.</li>
+            </ol>
+            <p><a href="https://vladimiracunadev-create.github.io/universal-payments-engineering-lab/verticals/VIRTUAL_GAME_ECONOMY.html" target="_blank" rel="noreferrer">Abrir la guía completa: implementación real, stores, seguridad y runbooks</a></p>
+          </div>
+        </div>
+        <form id="game-runner" class="runner">
+          <label>
+            Escenario de economía virtual
+            <select id="game-scenario" name="game-scenario" required></select>
+          </label>
+          <button type="submit">
+            <svg class="icon" aria-hidden="true"><use href="/icons.svg#play"></use></svg>
+            Ejecutar compra y entrega
+          </button>
+          <p class="form-note">DEMO local: proveedor, recibos, GEM, inventario y operadores son ficticios.</p>
+        </form>
+      </section>
+
+      <section id="game-result" class="result game-result" aria-live="polite" aria-busy="false">
+        <div class="empty-state">
+          <svg class="empty-icon icon" aria-hidden="true"><use href="/icons.svg#route"></use></svg>
+          <div><h2>Recorrido de juego listo</h2><p>Ejecuta un escenario para ver orden, pago, ledgers, wallet, entitlement y conciliación.</p></div>
+        </div>
+      </section>
+
       <section id="configuration" class="configuration-section" aria-labelledby="configuration-title">
         <div class="section-heading">
           <div>

@@ -83,6 +83,12 @@ def main() -> int:
         assert_rendered_mermaid(page, "/payment-methods/cases/chile-webpay.html")
         page.screenshot(path=args.output / "docs-webpay-guide.png", full_page=True)
 
+        page.goto(f"{args.origin}/verticals/VIRTUAL_GAME_ECONOMY.html", wait_until="domcontentloaded")
+        page.get_by_role("heading", name="Economía virtual: de CLP a GEM y de GEM a un bien digital").wait_for()
+        page.get_by_role("heading", name="Runbooks del vertical").wait_for()
+        assert_rendered_mermaid(page, "/verticals/VIRTUAL_GAME_ECONOMY.html")
+        page.screenshot(path=args.output / "docs-virtual-game-economy.png", full_page=True)
+
         diagram_count = 0
         for route in mermaid_routes():
             page.goto(f"{args.origin}{route}", wait_until="domcontentloaded")

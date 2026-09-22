@@ -4,6 +4,8 @@
 
 PayLab permite seleccionar una tecnología de pago, ejecutar un recorrido seguro en localhost y observar qué ocurre en cada etapa sin necesitar dinero ni credenciales.
 
+Además incluye [Economía virtual](verticals/VIRTUAL_GAME_ECONOMY.md), un caso de uso vertical que enseña cómo un pago externo confirmado puede acreditar valor interno y entregar un bien digital. **No es una familia 29**: combina stored value, plataforma/PSP, ledger, idempotencia, webhooks y conciliación.
+
 ## Cómo usarlo
 
 1. Ejecuta `python scripts/paylab.py doctor`.
@@ -78,6 +80,16 @@ La demostración registra dos entradas que suman cero. Eso prueba la invariante 
 ### Settlement y conciliación
 
 Settlement es el movimiento final declarado por la infraestructura externa. Conciliar significa contrastar negocio, proveedor, ledger y banco; una diferencia se conserva como excepción.
+
+## Caso vertical: comprar GEM y después gastarlos
+
+1. La orden externa fija `CLP 5.990` por `GEM_PACK_1000`.
+2. Un `Payment Attempt` se relaciona con la transacción del proveedor.
+3. Sólo evidencia autoritativa permite acreditar `1.000 GEM` una vez.
+4. Una segunda orden interna debita `300 GEM` y concede `SKIN_DRAGON`.
+5. La conciliación compara orden, proveedor, settlement, ledger CLP, ledger GEM, wallet, entitlement e inventario.
+
+El alumno puede ejecutar timeout, diez webhooks iguales, respuesta perdida, crash recovery, fallo de crédito, refund, chargeback y restore. El portal mantiene separados los estados de pago y fulfillment.
 
 ## Tecnologías
 

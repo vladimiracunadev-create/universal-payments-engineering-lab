@@ -171,6 +171,27 @@ main, footer {
   gap: clamp(40px, 8vw, 110px);
   align-items: center;
 }
+
+.game-workspace {
+  margin-top: 28px;
+  border-color: #2f745f;
+  background: linear-gradient(145deg, #10231f, #0d1718);
+}
+
+.game-result { margin-top: 18px; }
+.game-result code { display: block; margin-top: 4px; color: var(--mint); overflow-wrap: anywhere; }
+.game-howto, .game-explanation {
+  border: 1px solid rgba(99, 230, 190, .22);
+  border-radius: 18px;
+  background: rgba(10, 30, 27, .72);
+  padding: 20px 22px;
+}
+.game-howto { margin-top: 20px; }
+.game-howto h3 { margin-top: 0; }
+.game-howto li, .game-explanation li { margin: 8px 0; line-height: 1.55; }
+.game-howto a { color: var(--mint); }
+.game-explanation { margin: 22px 0; }
+.game-explanation ol { margin-bottom: 18px; padding-left: 22px; }
 .workspace .intro > h2 {
   margin-bottom: 16px;
   font-size: clamp(38px, 5vw, 62px);

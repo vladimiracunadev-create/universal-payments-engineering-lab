@@ -4,6 +4,8 @@
 
 GitHub Pages presenta la documentación: objetivo, guías, diagramas, casos y roadmap. Es una referencia pública para leer antes o después de usar el laboratorio.
 
+La página [Economía virtual](verticals/VIRTUAL_GAME_ECONOMY.md) documenta el vertical de videojuegos y muestra diagramas, fuentes y runbooks. **Pages no ejecuta sus nueve escenarios**: para eso debes levantar localhost y usar la sección “Compra 1.000 GEM por CLP 5.990”. El PDF publicado incluye el mismo vertical como capítulo navegable, sin convertirlo en una familia de pago adicional.
+
 La dirección esperada es:
 
 ```text
